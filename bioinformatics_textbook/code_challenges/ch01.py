@@ -8,7 +8,12 @@ def count_pattern(text: str, pattern: str) -> int:
     :return: A count of times the k-mer pattern appears as a substring of `text`
     :rtype: int
     """
-    print(text)
-    print(pattern)
+    number_kmer_appearances = 0
+    
+    kmer_length = len(pattern)
+    number_windows = (len(text) - kmer_length) + 1
+    for i in range(number_windows):
+        if text[i:i + kmer_length] == pattern:
+            number_kmer_appearances += 1
 
-    return None
+    return number_kmer_appearances
