@@ -1,7 +1,7 @@
 import click
 import pytest
 from bioinformatics_textbook.code_challenges.io import (
-    read_last_line, read_text_pattern
+    read_not_last_line, read_last_line, read_text_pattern
 )
 
 
@@ -21,13 +21,17 @@ def test_read_text_pattern(ba1a_sample_dataset_path):
     assert expected_pattern == actual_pattern
 
 
-def test_read_last_line(fs):
-    # setup fake file
+@pytest.fixture
+def multiline_file(fs):
     fake_file = fs.create_file("multiline_test.txt", contents="first line\nlast line")
 
+    yield fake_file
+
+
+def test_read_last_line(multiline_file):
     expected_last_line = "last line"
 
-    with click.open_file(fake_file.path, "rb") as file:
+    with click.open_file(multiline_file.path, "rb") as file:
         actual_last_line = read_last_line(file)
 
     assert expected_last_line == actual_last_line
