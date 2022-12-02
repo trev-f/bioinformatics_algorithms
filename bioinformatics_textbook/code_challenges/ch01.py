@@ -1,3 +1,14 @@
+import bioinformatics_textbook.code_challenges.inout
+import click
+
+def ba1a(input_file: click.File) -> int:
+    text, pattern = bioinformatics_textbook.code_challenges.inout.read_text_pattern(input_file)
+    
+    kmer_count = count_pattern(text, pattern)
+
+    return kmer_count
+
+
 def count_pattern(text: str, pattern: str) -> int:
     """Count the number of times a k-mer pattern appears as a substring of text using the sliding window method
 
