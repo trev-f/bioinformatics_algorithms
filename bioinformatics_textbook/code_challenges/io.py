@@ -3,11 +3,13 @@ import os
 
 
 def read_text_pattern(input_file: click.File) -> tuple:
-    other_lines = ""
-    # get the last line
-    last_line = read_last_line(input_file)
+    # get the text from all lines except the last
+    text = read_not_last_line(input_file)
 
-    return (other_lines, last_line)
+    # get the pattern from the last line
+    pattern = read_last_line(input_file)
+
+    return (text, pattern)
 
 
 def read_not_last_line(input_file: click.File) -> str:

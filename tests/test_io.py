@@ -14,7 +14,7 @@ def test_read_text_pattern(ba1a_sample_dataset_path):
     expected_text = "GCGCG"
     expected_pattern = "GCG"
 
-    with click.open_file(ba1a_sample_dataset_path) as file:
+    with click.open_file(ba1a_sample_dataset_path, "rb") as file:
         actual_text, actual_pattern = read_text_pattern(file)
 
     assert expected_text == actual_text
