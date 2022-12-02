@@ -40,48 +40,6 @@ def ba1a(config, input_file):
     config.logger.info("Computed the number of times a pattern appears in a text")
 
 
-@cli.command()
-@pass_config
-def download_data(config):
-    """
-    Download external data.
-    Download external data into `data/external`.
-    """
-    config.logger.info("Download external data")
-
-    bioinformatics_textbook.data.download_data.main()
-
-    config.logger.info("External data download complete")
-
-
-@cli.command()
-@pass_config
-def make_dataset(config):
-    """
-    Make an interim dataset.
-    Transform data from `data/raw` and/or `data/external` into a dataset in `data/interim`.
-    """
-    config.logger.info("Make dataset")
-
-    bioinformatics_textbook.data.make_dataset.main()
-
-    config.logger.info("Dataset made")
-
-
-@cli.command()
-@pass_config
-def process_dataset(config):
-    """
-    Make a final processed dataset.
-    Transform data from `data/interim` into a final processed dataset in `data/processed`.
-    """
-    config.logger.info("Make final processed dataset")
-
-    bioinformatics_textbook.data.process_dataset.main()
-
-    config.logger.info("Final processed dataset made")
-
-
 def create_root_logger(verbose):
     """
     Create a root logger

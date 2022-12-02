@@ -1,3 +1,0 @@
-import bioinformatics_textbook.data.download_data
-import bioinformatics_textbook.data.make_dataset
-import bioinformatics_textbook.data.process_dataset
