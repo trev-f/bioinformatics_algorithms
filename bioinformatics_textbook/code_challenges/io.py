@@ -29,7 +29,7 @@ def read_not_last_line(input_file: click.File) -> str:
     
     if position > 0:
         input_file.seek(0, os.SEEK_SET)
-        not_last_lines = input_file.read(position).decode()
+        not_last_lines = input_file.read(position).decode().replace("\n", "")
     
     return not_last_lines
 
