@@ -1,6 +1,6 @@
 import click
 import pytest
-from bioinformatics_textbook.code_challenges.io import (
+from bioinformatics_textbook.code_challenges.inout import (
     read_not_last_line, read_last_line, read_text_pattern
 )
 
