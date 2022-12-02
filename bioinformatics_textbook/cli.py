@@ -24,6 +24,23 @@ def cli(config, verbose):
 
 
 @cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1a(config, input_file):
+    """
+    Program to solve Rosalind problem BA1A: Compute the Number of Times a Pattern Appears in a Text
+
+    https://rosalind.info/problems/ba1a/
+    """
+    config.logger.info("Compute the number of times a pattern appears in a text")
+
+    kmer_count = bioinformatics_textbook.code_challenges.ch01.ba1a(input_file)
+    click.echo(kmer_count)
+
+    config.logger.info("Computed the number of times a pattern appears in a text")
+
+
+@cli.command()
 @pass_config
 def download_data(config):
     """
