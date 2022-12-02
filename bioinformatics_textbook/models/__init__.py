@@ -1,2 +1,0 @@
-import bioinformatics_textbook.models.predict_model
-import bioinformatics_textbook.models.train_model
