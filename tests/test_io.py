@@ -28,6 +28,15 @@ def multiline_file(fs):
     yield fake_file
 
 
+def test_read_not_last_line(multiline_file):
+    expected_not_last_line = "first line"
+
+    with click.open_file(multiline_file.path, "rb") as file:
+        actual_not_last_line = read_not_last_line(file)
+
+    assert expected_not_last_line == actual_not_last_line
+
+
 def test_read_last_line(multiline_file):
     expected_last_line = "last line"
 
