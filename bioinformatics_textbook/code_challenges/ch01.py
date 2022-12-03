@@ -13,6 +13,21 @@ def ba1b(input_file: click.File) -> str:
 def find_frequent_words(text: str, k: int) -> str:
 
     """
+    BetterFrequentWords(Text, k)
+    FrequentPatterns ← an array of strings of length 0
+    freqMap ← FrequencyTable(Text, k)
+    max ← MaxMap(freqMap)
+    for all strings Pattern in freqMap
+        if freqMap[pattern] = max
+            append Pattern to frequentPatterns
+    return frequentPatterns
+    """
+    return ""
+
+
+def construct_kmer_freq_table(text: str, k: int) -> dict:
+
+    """
     FrequencyTable(Text, k)
     freqMap ← empty map
     n ← |Text|
@@ -24,18 +39,14 @@ def find_frequent_words(text: str, k: int) -> str:
            freqMap[pattern] ←freqMap[pattern]+1 
     return freqMap
     """
+    freq_table = {}
+    text_length = len(text)
 
-    """
-    BetterFrequentWords(Text, k)
-    FrequentPatterns ← an array of strings of length 0
-    freqMap ← FrequencyTable(Text, k)
-    max ← MaxMap(freqMap)
-    for all strings Pattern in freqMap
-        if freqMap[pattern] = max
-            append Pattern to frequentPatterns
-    return frequentPatterns
-    """
-    return ""
+    for i in range(text_length - k + 1):
+        pattern = text[i: i + k]
+        freq_table[pattern] = freq_table.get(pattern, 0) + 1
+
+    return freq_table
 
 
 def ba1a(input_file: click.File) -> int:
