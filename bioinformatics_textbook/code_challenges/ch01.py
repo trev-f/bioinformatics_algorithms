@@ -26,24 +26,23 @@ def find_frequent_words(text: str, k: int) -> str:
 
 
 def construct_kmer_freq_table(text: str, k: int) -> dict:
+    """Construct a frequency table of how many times all k-mers appear in a text
 
-    """
-    FrequencyTable(Text, k)
-    freqMap ← empty map
-    n ← |Text|
-    for i ← 0 to n − k
-        Pattern ← Text(i, k)
-        if freqMap[Pattern] doesn't exist
-            freqMap[Pattern]← 1
-        else
-           freqMap[pattern] ←freqMap[pattern]+1 
-    return freqMap
+    :param text: A string of text (typically a DNA string)
+    :type text: str
+    :param k: k-mer length
+    :type k: int
+    :return: Frequency table of k-mers and their counts
+    :rtype: dict
     """
     freq_table = {}
     text_length = len(text)
 
+    # slide windows of length k down the text string
     for i in range(text_length - k + 1):
         pattern = text[i: i + k]
+        # if a k-mer is not present in frequency table, add it and assign a value of 1,
+        # otherwise, increment the count
         freq_table[pattern] = freq_table.get(pattern, 0) + 1
 
     return freq_table
