@@ -2,6 +2,16 @@ import click
 import os
 
 
+def read_text_k(input_file: click.File) -> tuple:
+    # get the text from all lines except the last
+    text = read_not_last_line(input_file)
+
+    # get k from the last line
+    k = read_last_line(input_file)
+
+    return (text, k)
+
+
 def read_text_pattern(input_file: click.File) -> tuple:
     # get the text from all lines except the last
     text = read_not_last_line(input_file)
