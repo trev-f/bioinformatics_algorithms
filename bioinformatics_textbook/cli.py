@@ -40,6 +40,23 @@ def ba1a(config, input_file):
     config.logger.info("Computed the number of times a pattern appears in a text")
 
 
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1b(config, input_file):
+    """
+    Program to solve Rosalind problem BA1B: Find the Most Frequent Words in a String
+
+    https://rosalind.info/problems/ba1b/
+    """
+    config.logger.info("Find the most frequent words in a string")
+
+    most_frequent_words = bioinformatics_textbook.code_challenges.ch01.ba1b(input_file)
+    click.echo(most_frequent_words)
+
+    config.logger.info("Found the most frequent words in a string")
+
+
 def create_root_logger(verbose):
     """
     Create a root logger
