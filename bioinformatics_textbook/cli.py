@@ -58,7 +58,7 @@ def ba1b(config, input_file):
 
 
 @cli.command()
-@click.argument("input_file", type=click.File("rb"))
+@click.argument("input_file", type=click.File("r"))
 @pass_config
 def ba1c(config, input_file):
     """
