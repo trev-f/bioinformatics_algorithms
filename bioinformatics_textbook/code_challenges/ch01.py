@@ -25,6 +25,10 @@ def find_frequent_words(text: str, k: int) -> str:
     return ""
 
 
+def find_max_val_of_dict(d: dict) -> float:
+    return d
+
+
 def construct_kmer_freq_table(text: str, k: int) -> dict:
     """Construct a frequency table of how many times all k-mers appear in a text
 
