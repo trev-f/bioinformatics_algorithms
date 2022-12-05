@@ -26,7 +26,16 @@ def find_frequent_words(text: str, k: int) -> str:
 
 
 def find_max_val_of_dict(d: dict) -> float:
-    return d
+    """Find the max value of a dictionary
+
+    :param d: A dictionary
+    :type d: dict
+    :return: The dictionary's maximum value
+    :rtype: float
+    """
+    max_val = max(d.values())
+
+    return max_val
 
 
 def construct_kmer_freq_table(text: str, k: int) -> dict:
