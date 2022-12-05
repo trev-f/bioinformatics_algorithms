@@ -1,7 +1,7 @@
 import click
 import pytest
 from bioinformatics_textbook.code_challenges.inout import (
-    read_not_last_line, read_last_line, read_text_pattern
+    read_all_lines, read_not_last_line, read_last_line, read_text_pattern
 )
 
 
@@ -26,6 +26,15 @@ def multiline_file(fs):
     fake_file = fs.create_file("multiline_test.txt", contents="first line\nlast line")
 
     yield fake_file
+
+
+def test_read_all_lines(multiline_file):
+    expected_all_lines = "first linelast line"
+
+    with click.open_file(multiline_file.path, "r") as file:
+        actual_all_lines = read_all_lines(file)
+    
+    assert expected_all_lines == actual_all_lines
 
 
 def test_read_not_last_line(multiline_file):

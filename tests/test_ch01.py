@@ -1,7 +1,9 @@
 from bioinformatics_textbook.code_challenges.ch01 import (
+    ba1c,
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
     find_max_val_of_dict, reverse_complement_dna
 )
+import click
 import pytest
 
 
@@ -16,6 +18,16 @@ def sample_reverse_complement():
             self.dataset_path = "tests/datasets/ch01/ba1c_sample_dataset.txt"
     
     yield SampleReverseComplement()
+
+
+def test_ba1c(sample_reverse_complement):
+    input_file = sample_reverse_complement.dataset_path
+    expected_rev_comp = sample_reverse_complement.reverse_complement
+
+    with click.open_file(input_file, "r") as file:
+        actual_rev_comp = ba1c(file)
+    
+    assert expected_rev_comp == actual_rev_comp
 
 
 def test_reverse_complement_dna(sample_reverse_complement):

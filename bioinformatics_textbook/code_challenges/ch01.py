@@ -18,7 +18,17 @@ def ba1c(input_file: click.File) -> str:
 
 
 def reverse_complement_dna(dna: str) -> str:
-    return dna
+    """Find the reverse complement of a DNA string
+
+    :param dna: DNA string
+    :type dna: str
+    :return: Reverse complement of DNA string
+    :rtype: str
+    """
+    complement = complement_dna(dna)
+    reverse_complement = complement[::-1]
+    
+    return reverse_complement
 
 
 def complement_dna(dna: str) -> str:
