@@ -7,7 +7,7 @@ def read_text_k(input_file: click.File) -> tuple:
     text = read_not_last_line(input_file)
 
     # get k from the last line
-    k = read_last_line(input_file)
+    k = int(read_last_line(input_file))
 
     return (text, k)
 
