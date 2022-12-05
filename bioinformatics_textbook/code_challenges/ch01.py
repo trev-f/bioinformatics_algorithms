@@ -11,18 +11,24 @@ def ba1b(input_file: click.File) -> str:
 
 
 def find_frequent_words(text: str, k: int) -> str:
+    """Return the most frequent kmers from a string of text
 
+    :param text: A string of text (typically a DNA string)
+    :type text: str
+    :param k: k-mer length
+    :type k: int
+    :return: The most frequent k-mers each separated by a space
+    :rtype: str
     """
-    BetterFrequentWords(Text, k)
-    FrequentPatterns ← an array of strings of length 0
-    freqMap ← FrequencyTable(Text, k)
-    max ← MaxMap(freqMap)
-    for all strings Pattern in freqMap
-        if freqMap[pattern] = max
-            append Pattern to frequentPatterns
-    return frequentPatterns
-    """
-    return ""
+    freq_table = construct_kmer_freq_table(text, k)
+    max_freq = find_max_val_of_dict(freq_table)
+    
+    most_freq_words = []
+    for pattern in freq_table.keys():
+        if freq_table[pattern] == max_freq:
+            most_freq_words.append(pattern)
+
+    return " ".join(most_freq_words)
 
 
 def find_max_val_of_dict(d: dict) -> float:
