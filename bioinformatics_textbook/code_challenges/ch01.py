@@ -2,6 +2,60 @@ import bioinformatics_textbook.code_challenges.inout
 import click
 
 
+def ba1c(input_file: click.File) -> str:
+    """Find the reverse complement of a string of DNA
+
+    :param input_file: A file containing a string of DNA
+    :type input_file: click.File
+    :return: The reverse complement of the DNA string
+    :rtype: str
+    """
+    dna_string = bioinformatics_textbook.code_challenges.inout.read_all_lines(input_file)
+
+    reverse_complement = reverse_complement_dna(dna_string)
+
+    return reverse_complement
+
+
+def reverse_complement_dna(dna: str) -> str:
+    """Find the reverse complement of a DNA string
+
+    :param dna: DNA string
+    :type dna: str
+    :return: Reverse complement of DNA string
+    :rtype: str
+    """
+    complement = complement_dna(dna)
+    reverse_complement = complement[::-1]
+    
+    return reverse_complement
+
+
+def complement_dna(dna: str) -> str:
+    """Find the complement of a DNA string
+
+    :param dna: DNA string
+    :type dna: str
+    :return: Complement of DNA string
+    :rtype: str
+    """
+    comp_table = make_dna_complementation_table()
+    complement = dna.translate(comp_table)
+
+    return complement
+
+
+def make_dna_complementation_table() -> dict:
+    """Construct a translation table for complementing DNA
+
+    :return: DNA complementation table
+    :rtype: dict
+    """
+    comp_table = str.maketrans("ATCG", "TAGC")
+
+    return comp_table
+
+
 def ba1b(input_file: click.File) -> str:
     text, k = bioinformatics_textbook.code_challenges.inout.read_text_k(input_file)
 

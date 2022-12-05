@@ -22,6 +22,19 @@ def read_text_pattern(input_file: click.File) -> tuple:
     return (text, pattern)
 
 
+def read_all_lines(input_file: click.File) -> str:
+    """Read all lines of a file as a single string with no new lines
+
+    :param input_file: Input file
+    :type input_file: click.File
+    :return: A string with no new lines
+    :rtype: str
+    """
+    all_lines = input_file.read().replace("\n", "")
+
+    return all_lines
+
+
 def read_not_last_line(input_file: click.File) -> str:
     """Read every line of a file except for the last line
 

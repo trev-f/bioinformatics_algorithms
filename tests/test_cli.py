@@ -14,3 +14,10 @@ def test_ba1b():
     result = runner.invoke(cli, ["ba1b", "tests/datasets/ch01/ba1b_sample_dataset.txt"])
     assert result.exit_code == 0
     assert result.output.rstrip() == "GCAT CATG"
+
+
+def test_ba1c():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["ba1c", "tests/datasets/ch01/ba1c_sample_dataset.txt"])
+    assert result.exit_code == 0
+    assert result.output.rstrip() == "ACCGGGTTTT"
