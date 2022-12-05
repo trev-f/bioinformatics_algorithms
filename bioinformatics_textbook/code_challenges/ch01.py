@@ -22,6 +22,13 @@ def reverse_complement_dna(dna: str) -> str:
 
 
 def complement_dna(dna: str) -> str:
+    """Find the complement of a DNA string
+
+    :param dna: DNA string
+    :type dna: str
+    :return: Complement of DNA string
+    :rtype: str
+    """
     comp_table = make_dna_complementation_table()
     complement = dna.translate(comp_table)
 
