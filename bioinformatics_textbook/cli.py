@@ -57,6 +57,23 @@ def ba1b(config, input_file):
     config.logger.info("Found the most frequent words in a string")
 
 
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1c(config, input_file):
+    """
+    Program to solve Rosalind problem BA1C: Find the Reverse Complement of a String
+
+    https://rosalind.info/problems/ba1c/
+    """
+    config.logger.info("Find the reverse complement of a string")
+
+    reverse_complement = bioinformatics_textbook.code_challenges.ch01.ba1c(input_file)
+    click.echo(reverse_complement)
+
+    config.logger.info("Found the reverse complement of a string")
+
+
 def create_root_logger(verbose):
     """
     Create a root logger

@@ -1,8 +1,39 @@
 from bioinformatics_textbook.code_challenges.ch01 import (
-    construct_kmer_freq_table, count_pattern, find_frequent_words,
-    find_max_val_of_dict
+    complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
+    find_max_val_of_dict, reverse_complement_dna
 )
 import pytest
+
+
+@pytest.fixture
+def sample_reverse_complement():
+    class SampleReverseComplement:
+        def __init__(self):
+            self.dna = "AAAACCCGGT"
+            self.complement = "TTTTGGGCCA"
+            self.reverse_complement = "ACCGGGTTTT"
+
+            self.dataset_path = "tests/datasets/ch01/ba1c_sample_dataset.txt"
+    
+    yield SampleReverseComplement()
+
+
+def test_reverse_complement_dna(sample_reverse_complement):
+    dna = sample_reverse_complement.dna
+    expected_rev_comp = sample_reverse_complement.reverse_complement
+
+    actual_rev_comp = reverse_complement_dna(dna)
+
+    assert expected_rev_comp == actual_rev_comp
+
+
+def test_complement_dna(sample_reverse_complement):
+    dna = sample_reverse_complement.dna
+    expected_complement = sample_reverse_complement.complement
+
+    actual_complement = complement_dna(dna)
+
+    assert expected_complement == actual_complement
 
 
 @pytest.fixture
