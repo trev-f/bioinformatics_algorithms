@@ -2,6 +2,22 @@ import bioinformatics_textbook.code_challenges.inout
 import click
 
 
+"""
+ba1d(input_file: click.File) -> str:
+    # Find all occurrences of a pattern in a string.
+    pattern = read_first_lines(input_file)
+    genome = read_last_line(input_file)
+
+    starting_positions = []
+    for i <- 0 to len(text) - k:
+        window = genome(i, k)
+        if window == pattern:
+            starting_positions.append(i)
+    
+    return " ".join(starting_positions)
+"""
+
+
 def ba1c(input_file: click.File) -> str:
     """Find the reverse complement of a string of DNA
 
