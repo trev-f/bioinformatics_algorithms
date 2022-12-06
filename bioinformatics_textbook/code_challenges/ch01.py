@@ -2,20 +2,54 @@ import bioinformatics_textbook.code_challenges.inout
 import click
 
 
-"""
-ba1d(input_file: click.File) -> str:
-    # Find all occurrences of a pattern in a string.
-    pattern = read_first_lines(input_file)
-    genome = read_last_line(input_file)
+# ba1d(input_file: click.File) -> str:
+#     # Find all occurrences of a pattern in a string.
+#     pattern = read_first_lines(input_file)
+#     genome = read_last_line(input_file)
+
+#     starting_positions = []
+#     for i <- 0 to len(text) - k:
+#         window = genome(i, k)
+#         if window == pattern:
+#             starting_positions.append(i)
+    
+#     return " ".join(starting_positions)
+
+
+def find_starting_positions(pattern: str, genome: str) -> list:
+    """Find all occurrences of a pattern (k-mer) in a string (genome)
+
+    :param pattern: A k-mer sequence
+    :type pattern: str
+    :param genome: A DNA string (genome)
+    :type genome: str
+    :return: Starting positions of each occurrence of pattern in genome
+    :rtype: list
+    """
+    k = len(pattern)
+    genome_length = len(genome)
 
     starting_positions = []
-    for i <- 0 to len(text) - k:
-        window = genome(i, k)
+    for i in range(genome_length - k + 1):
+        window = genome[i: i + k]
         if window == pattern:
             starting_positions.append(i)
-    
-    return " ".join(starting_positions)
-"""
+
+    return starting_positions
+
+
+def format_starting_positions(starting_positions: list) -> str:
+    """Format a list of starting positions to a string separated by spaces.
+
+    :param starting_positions: Starting positions
+    :type starting_positions: list
+    :return: Formatted starting positions string
+    :rtype: str
+    """
+    starting_positions = [str(position) for position in starting_positions]
+    formatted_starting_positions = " ".join(starting_positions)
+
+    return formatted_starting_positions
 
 
 def ba1c(input_file: click.File) -> str:
