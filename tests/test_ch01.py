@@ -1,10 +1,54 @@
 from bioinformatics_textbook.code_challenges.ch01 import (
     ba1c,
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
-    find_max_val_of_dict, reverse_complement_dna
+    find_max_val_of_dict, reverse_complement_dna,
+    ba1d, find_starting_positions, format_starting_positions
 )
 import click
 import pytest
+
+
+@pytest.fixture
+def sample_pattern_matching(fs):
+    class SamplePatternMatching:
+        def __init__(self):
+            self.pattern = "ATAT"
+            self.genome = "GATATATGCATATACTT"
+            self.positions = "1 3 9"
+            self.positions_list = [1, 3, 9]
+
+            self.fake_file = fs.create_file("file.txt", contents="ATAT\nGATATATGCATATACTT\n")
+    
+    yield SamplePatternMatching()
+
+
+def test_ba1d(sample_pattern_matching):
+    input_file = sample_pattern_matching.fake_file
+    expected_starting_positions = sample_pattern_matching.positions
+
+    with click.open_file(input_file.path, "rb") as file:
+        actual_starting_positions = ba1d(file)
+
+    assert expected_starting_positions == actual_starting_positions
+
+
+def test_find_starting_positions(sample_pattern_matching):
+    pattern = sample_pattern_matching.pattern
+    genome = sample_pattern_matching.genome
+    expected_positions = sample_pattern_matching.positions_list
+
+    actual_positions = find_starting_positions(pattern, genome)
+
+    assert expected_positions == actual_positions
+
+
+def test_format_starting_positions(sample_pattern_matching):
+    positions_list = sample_pattern_matching.positions_list
+    expected_formatted_positions = sample_pattern_matching.positions
+
+    actual_formatted_positions = format_starting_positions(positions_list)
+
+    assert expected_formatted_positions == actual_formatted_positions
 
 
 @pytest.fixture
