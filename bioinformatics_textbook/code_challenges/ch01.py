@@ -2,18 +2,14 @@ import bioinformatics_textbook.code_challenges.inout
 import click
 
 
-# ba1d(input_file: click.File) -> str:
-#     # Find all occurrences of a pattern in a string.
-#     pattern = read_first_lines(input_file)
-#     genome = read_last_line(input_file)
+def ba1d(input_file: click.File) -> str:
+    pattern = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
+    genome = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
 
-#     starting_positions = []
-#     for i <- 0 to len(text) - k:
-#         window = genome(i, k)
-#         if window == pattern:
-#             starting_positions.append(i)
-    
-#     return " ".join(starting_positions)
+    starting_positions = find_starting_positions(pattern, genome)
+    formatted_starting_positions = format_starting_positions(starting_positions)
+
+    return formatted_starting_positions
 
 
 def find_starting_positions(pattern: str, genome: str) -> list:

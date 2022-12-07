@@ -2,22 +2,34 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     ba1c,
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
     find_max_val_of_dict, reverse_complement_dna,
-    find_starting_positions, format_starting_positions
+    ba1d, find_starting_positions, format_starting_positions
 )
 import click
 import pytest
 
 
 @pytest.fixture
-def sample_pattern_matching():
+def sample_pattern_matching(fs):
     class SamplePatternMatching:
         def __init__(self):
             self.pattern = "ATAT"
             self.genome = "GATATATGCATATACTT"
             self.positions = "1 3 9"
             self.positions_list = [1, 3, 9]
+
+            self.fake_file = fs.create_file("file.txt", contents="ATAT\nGATATATGCATATACTT\n")
     
     yield SamplePatternMatching()
+
+
+def test_ba1d(sample_pattern_matching):
+    input_file = sample_pattern_matching.fake_file
+    expected_starting_positions = sample_pattern_matching.positions
+
+    with click.open_file(input_file.path, "rb") as file:
+        actual_starting_positions = ba1d(file)
+
+    assert expected_starting_positions == actual_starting_positions
 
 
 def test_find_starting_positions(sample_pattern_matching):
