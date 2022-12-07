@@ -26,6 +26,23 @@ def cli(config, verbose):
 @cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
+def ba1d(config, input_file):
+    """
+    Program to solve Rosalind problem BA1D: Find All Occurrences of a Pattern in a String
+
+    https://rosalind.info/problems/ba1d/
+    """
+    config.logger.info("Find all occurrences of a pattern in a string")
+
+    starting_positions = bioinformatics_textbook.code_challenges.ch01.ba1d(input_file)
+    click.echo(starting_positions)
+
+    config.logger.info("Found all occurrences of a pattern in a string")
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
 def ba1a(config, input_file):
     """
     Program to solve Rosalind problem BA1A: Compute the Number of Times a Pattern Appears in a Text
