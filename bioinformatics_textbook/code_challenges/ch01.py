@@ -17,17 +17,6 @@ def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_fr
     :return: All unique k-mers that form clumps, in order of first appearance, separated by spaces
     :rtype: str
     """
-    # FindClumps(Text, k, L, t)
-    #     Patterns ← an array of strings of length 0
-    #     n ← |Text|
-    #     for every integer i between 0 and n − L
-    #         Window ← Text(i, L)
-    #         freqMap ← FrequencyTable(Window, k)
-    #         for every key s in freqMap
-    #             if freqMap[s] ≥ t
-    #                 append s to Patterns
-    #     remove duplicates from Patterns
-    #     return Patterns
     clump_patterns = []
     genome_length = len(genome)
     for i in range(genome_length - window_length + 1):
