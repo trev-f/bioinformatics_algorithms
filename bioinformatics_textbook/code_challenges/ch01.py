@@ -1,5 +1,40 @@
 import bioinformatics_textbook.code_challenges.inout
 import click
+from collections import OrderedDict
+
+
+def find_clumps(genome, pattern_length, window_length, pattern_freq_thresh) -> str:
+    # FindClumps(Text, k, L, t)
+    #     Patterns ← an array of strings of length 0
+    #     n ← |Text|
+    #     for every integer i between 0 and n − L
+    #         Window ← Text(i, L)
+    #         freqMap ← FrequencyTable(Window, k)
+    #         for every key s in freqMap
+    #             if freqMap[s] ≥ t
+    #                 append s to Patterns
+    #     remove duplicates from Patterns
+    #     return Patterns
+    clump_patterns = []
+    genome_length = len(genome)
+    for i in range(genome_length - window_length + 1):
+        window = genome[i: i+window_length]
+        freq_table = construct_kmer_freq_table(window, pattern_length)
+        for key in freq_table.keys():
+            if freq_table[key] >= pattern_freq_thresh:
+                clump_patterns.append(key)
+
+    # remove duplicates from list
+    # note: this is not the fastest way to get unique elements of a list,
+    # but it does preserve order which helps in checking against the Rosalind sample output
+    # Rosalind appears to report unique patterns in the order in which they appear first in the string
+    unique_clump_patterns = list(OrderedDict.fromkeys(clump_patterns))
+
+    # format clumps: separate each kmer by a space
+    formatted_clump_patterns = " ".join(unique_clump_patterns)
+
+
+    return formatted_clump_patterns
 
 
 def ba1d(input_file: click.File) -> str:

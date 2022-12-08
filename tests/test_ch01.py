@@ -2,10 +2,42 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     ba1c,
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
     find_max_val_of_dict, reverse_complement_dna,
-    ba1d, find_starting_positions, format_starting_positions
+    ba1d, find_starting_positions, format_starting_positions,
+    find_clumps
 )
 import click
 import pytest
+
+
+@pytest.fixture
+def sample_ba1e(fs):
+    class SampleBA1E:
+        def __init__(self):
+            self.genome = "CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC"
+            self.k = 5
+            self.L = 75
+            self.t = 4
+
+            self.fake_file = fs.create_file(
+                "sample_dataset.txt",
+                contents="CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC\n5 75 4\n"
+            )
+
+            self.sample_output = "CGACA GAAGA AATGT"
+    
+    yield SampleBA1E()
+
+
+def test_find_clumps(sample_ba1e):
+    genome = sample_ba1e.genome
+    k = sample_ba1e.k
+    L = sample_ba1e.L
+    t = sample_ba1e.t
+    expected_clump_patterns = sample_ba1e.sample_output
+
+    actual_clump_patterns = find_clumps(genome, k, L, t)
+
+    assert expected_clump_patterns == actual_clump_patterns
 
 
 @pytest.fixture
