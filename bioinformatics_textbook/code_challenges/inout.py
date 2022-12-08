@@ -1,4 +1,5 @@
 import click
+import re
 import os
 
 
@@ -72,3 +73,16 @@ def read_last_line(input_file: click.File) -> str:
     last_line = input_file.readline().decode().rstrip()
 
     return last_line
+
+
+def strip_newlines(text: str) -> str:
+    """Strip carriage return and line feed newline characters from a text string
+
+    :param text: A text string
+    :type text: str
+    :return: The text string stripped of newline characters
+    :rtype: str
+    """
+    stripped_text = re.sub(r"\r|\n", "", text)
+
+    return stripped_text

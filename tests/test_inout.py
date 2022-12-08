@@ -1,7 +1,8 @@
 import click
 import pytest
 from bioinformatics_textbook.code_challenges.inout import (
-    read_all_lines, read_not_last_line, read_last_line, read_text_pattern
+    read_all_lines, read_not_last_line, read_last_line, read_text_pattern,
+    strip_newlines
 )
 
 
@@ -53,3 +54,18 @@ def test_read_last_line(multiline_file):
         actual_last_line = read_last_line(file)
 
     assert expected_last_line == actual_last_line
+
+
+def test_strip_newlines():
+    cr_text = "first\rnext\rlast\r"
+    lf_text = "first\nnext\nlast\n"
+    cr_lf_text = "first\r\nnext\r\nlast\r\n"
+    expected_stripped_text = "firstnextlast"
+
+    actual_stripped_text_cr = strip_newlines(cr_text)
+    actual_stripped_text_lf = strip_newlines(lf_text)
+    actual_stripped_text_cf_lf = strip_newlines(cr_lf_text)
+
+    assert expected_stripped_text == actual_stripped_text_cr
+    assert expected_stripped_text == actual_stripped_text_lf
+    assert expected_stripped_text == actual_stripped_text_cf_lf
