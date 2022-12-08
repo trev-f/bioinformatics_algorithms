@@ -1,4 +1,5 @@
 import click
+import re
 import os
 
 
@@ -30,9 +31,10 @@ def read_all_lines(input_file: click.File) -> str:
     :return: A string with no new lines
     :rtype: str
     """
-    all_lines = input_file.read().replace("\n", "")
+    all_lines = input_file.read()
+    all_lines_stripped = strip_newlines(all_lines)
 
-    return all_lines
+    return all_lines_stripped
 
 
 def read_not_last_line(input_file: click.File) -> str:
@@ -52,9 +54,11 @@ def read_not_last_line(input_file: click.File) -> str:
     
     if position > 0:
         input_file.seek(0, os.SEEK_SET)
-        not_last_lines = input_file.read(position).decode().replace("\n", "")
+        not_last_lines = input_file.read(position).decode()
     
-    return not_last_lines
+    not_last_lines_stripped = strip_newlines(not_last_lines)
+    
+    return not_last_lines_stripped
 
 
 def read_last_line(input_file: click.File) -> str:
@@ -70,5 +74,19 @@ def read_last_line(input_file: click.File) -> str:
         input_file.seek(-2, os.SEEK_CUR)
     
     last_line = input_file.readline().decode().rstrip()
+    last_line_stripped = strip_newlines(last_line)
 
-    return last_line
+    return last_line_stripped
+
+
+def strip_newlines(text: str) -> str:
+    """Strip carriage return and line feed newline characters from a text string
+
+    :param text: A text string
+    :type text: str
+    :return: The text string stripped of newline characters
+    :rtype: str
+    """
+    stripped_text = re.sub(r"\r|\n", "", text)
+
+    return stripped_text
