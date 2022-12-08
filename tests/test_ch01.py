@@ -2,7 +2,7 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     ba1c,
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
     find_max_val_of_dict, reverse_complement_dna,
-    ba1d, find_starting_positions, format_starting_positions,
+    ba1d, find_starting_positions,
     find_clumps,
     convert_iterable_to_list_of_str, format_list_for_rosalind
 )
@@ -73,15 +73,6 @@ def test_find_starting_positions(sample_pattern_matching):
     actual_positions = find_starting_positions(pattern, genome)
 
     assert expected_positions == actual_positions
-
-
-def test_format_starting_positions(sample_pattern_matching):
-    positions_list = sample_pattern_matching.positions_list
-    expected_formatted_positions = sample_pattern_matching.positions
-
-    actual_formatted_positions = format_starting_positions(positions_list)
-
-    assert expected_formatted_positions == actual_formatted_positions
 
 
 @pytest.fixture

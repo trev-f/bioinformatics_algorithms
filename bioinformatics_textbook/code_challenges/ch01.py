@@ -44,7 +44,7 @@ def ba1d(input_file: click.File) -> str:
     genome = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
 
     starting_positions = find_starting_positions(pattern, genome)
-    formatted_starting_positions = format_starting_positions(starting_positions)
+    formatted_starting_positions = format_list_for_rosalind(starting_positions)
 
     return formatted_starting_positions
 
@@ -69,20 +69,6 @@ def find_starting_positions(pattern: str, genome: str) -> list:
             starting_positions.append(i)
 
     return starting_positions
-
-
-def format_starting_positions(starting_positions: list) -> str:
-    """Format a list of starting positions to a string separated by spaces.
-
-    :param starting_positions: Starting positions
-    :type starting_positions: list
-    :return: Formatted starting positions string
-    :rtype: str
-    """
-    starting_positions = [str(position) for position in starting_positions]
-    formatted_starting_positions = " ".join(starting_positions)
-
-    return formatted_starting_positions
 
 
 def ba1c(input_file: click.File) -> str:
@@ -164,8 +150,10 @@ def find_frequent_words(text: str, k: int) -> str:
     for pattern in freq_table.keys():
         if freq_table[pattern] == max_freq:
             most_freq_words.append(pattern)
+    
+    formatted_most_freq_words = format_list_for_rosalind(most_freq_words)
 
-    return " ".join(most_freq_words)
+    return formatted_most_freq_words
 
 
 def find_max_val_of_dict(d: dict) -> float:
