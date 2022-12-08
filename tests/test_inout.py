@@ -23,37 +23,61 @@ def test_read_text_pattern(ba1a_sample_dataset_path):
 
 
 @pytest.fixture
-def multiline_file(fs):
-    fake_file = fs.create_file("multiline_test.txt", contents="first line\nlast line")
+def multiline_files(fs):
+    class MultiLineFiles:
+        def __init__(self):
+            self.lf_file = fs.create_file("lf_test.txt", contents="first line\nlast line\n")
+            self.cr_lf_file = fs.create_file("cr_lf_test.txt", contents="first line\r\nlast line\r\n")
 
-    yield fake_file
+    yield MultiLineFiles()
 
 
-def test_read_all_lines(multiline_file):
+def test_read_all_lines(multiline_files):
+    lf_file = multiline_files.lf_file.path
+    cr_lf_file = multiline_files.cr_lf_file.path
     expected_all_lines = "first linelast line"
 
-    with click.open_file(multiline_file.path, "r") as file:
-        actual_all_lines = read_all_lines(file)
+    with click.open_file(lf_file, "r") as file:
+        actual_all_lines_lf = read_all_lines(file)
     
-    assert expected_all_lines == actual_all_lines
+    assert expected_all_lines == actual_all_lines_lf
+
+    with click.open_file(cr_lf_file, "r") as file:
+        actual_all_lines_cr_lf = read_all_lines(file)
+
+    assert expected_all_lines == actual_all_lines_cr_lf
 
 
-def test_read_not_last_line(multiline_file):
+def test_read_not_last_line(multiline_files):
+    lf_file = multiline_files.lf_file.path
+    cr_lf_file = multiline_files.cr_lf_file.path
     expected_not_last_line = "first line"
 
-    with click.open_file(multiline_file.path, "rb") as file:
-        actual_not_last_line = read_not_last_line(file)
+    with click.open_file(lf_file, "rb") as file:
+        actual_not_last_line_lf = read_not_last_line(file)
 
-    assert expected_not_last_line == actual_not_last_line
+    assert expected_not_last_line == actual_not_last_line_lf
+
+    with click.open_file(cr_lf_file, "rb") as file:
+        actual_not_last_line_cr_lf = read_not_last_line(file)
+
+    assert expected_not_last_line == actual_not_last_line_cr_lf
 
 
-def test_read_last_line(multiline_file):
+def test_read_last_line(multiline_files):
+    lf_file = multiline_files.lf_file.path
+    cr_lf_file = multiline_files.cr_lf_file.path
     expected_last_line = "last line"
 
-    with click.open_file(multiline_file.path, "rb") as file:
-        actual_last_line = read_last_line(file)
+    with click.open_file(lf_file, "rb") as file:
+        actual_last_line_lf = read_last_line(file)
 
-    assert expected_last_line == actual_last_line
+    assert expected_last_line == actual_last_line_lf
+
+    with click.open_file(cr_lf_file, "rb") as file:
+        actual_last_line_cf_lf = read_last_line(file)
+    
+    assert expected_last_line == actual_last_line_cf_lf
 
 
 def test_strip_newlines():
