@@ -3,7 +3,20 @@ import click
 from collections import OrderedDict
 
 
-def find_clumps(genome, pattern_length, window_length, pattern_freq_thresh) -> str:
+def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_freq_thresh: int) -> str:
+    """Find k-mers that are found in clumps in the genome
+
+    :param genome: A DNA string to search for clumps
+    :type genome: str
+    :param pattern_length: Length of k-mers
+    :type pattern_length: int
+    :param window_length: Sliding window size
+    :type window_length: int
+    :param pattern_freq_thresh: The minimum number of times a k-mer must appear within a window for the k-mer to form a clump
+    :type pattern_freq_thresh: int
+    :return: All unique k-mers that form clumps, in order of first appearance, separated by spaces
+    :rtype: str
+    """
     # FindClumps(Text, k, L, t)
     #     Patterns ← an array of strings of length 0
     #     n ← |Text|
