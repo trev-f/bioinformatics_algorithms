@@ -3,7 +3,8 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
     find_max_val_of_dict, reverse_complement_dna,
     ba1d, find_starting_positions, format_starting_positions,
-    find_clumps
+    find_clumps,
+    convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
 import pytest
@@ -187,3 +188,28 @@ def test_count_pattern():
     actual_output = count_pattern(text=input_text, pattern=input_pattern)
 
     assert expected_output == actual_output
+
+
+def test_format_list_for_rosalind():
+    list_of_strings = ["AA", "GG"]
+    expected_formatted_strings = "AA GG"
+
+    actual_formatted_strings = format_list_for_rosalind(list_of_strings)
+
+    assert expected_formatted_strings == actual_formatted_strings
+
+    list_of_integers = [1, 2]
+    expected_formatted_integers = "1 2"
+
+    actual_formatted_integers = format_list_for_rosalind(list_of_integers)
+
+    assert expected_formatted_integers == actual_formatted_integers
+
+
+def test_convert_iterable_to_list_of_str():
+    list_of_integers = [1, 2]
+    expected_converted_integers = ["1", "2"]
+
+    actual_converted_integers = convert_iterable_to_list_of_str(list_of_integers)
+
+    assert expected_converted_integers == actual_converted_integers

@@ -1,6 +1,7 @@
 import bioinformatics_textbook.code_challenges.inout
 import click
 from collections import OrderedDict
+import logging
 
 
 def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_freq_thresh: int) -> str:
@@ -33,8 +34,7 @@ def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_fr
     unique_clump_patterns = list(OrderedDict.fromkeys(clump_patterns))
 
     # format clumps: separate each kmer by a space
-    formatted_clump_patterns = " ".join(unique_clump_patterns)
-
+    formatted_clump_patterns = format_list_for_rosalind(unique_clump_patterns)
 
     return formatted_clump_patterns
 
@@ -231,3 +231,34 @@ def count_pattern(text: str, pattern: str) -> int:
             number_kmer_appearances += 1
 
     return number_kmer_appearances
+
+
+def format_list_for_rosalind(list_to_format: list) -> str:
+    """Format a list as a string with elements separated by spaces as is commonly expected for solutions to problems for Rosalind.
+
+    :param list_to_format: List to format. If elements are not strings they will be converted.
+    :type list_to_format: list
+    :return: String of list formatted for Rosalind.
+    :rtype: str
+    """
+    if not isinstance(list_to_format[0], str):
+        list_to_format = convert_iterable_to_list_of_str(list_to_format)
+    formatted_list = " ".join(list_to_format)
+
+    return formatted_list
+
+
+def convert_iterable_to_list_of_str(iterable) -> list:
+    """Convert an iterable to a list of strings
+
+    :param iterable: An iterable to convert
+    :type iterable: _type_
+    :return: A list of strings
+    :rtype: list
+    """
+    try:
+        list_of_strings = [str(member) for member in iterable]
+    except TypeError as e:
+        logging.exception("A TypeError error occurred. Checked that the object to convert is an iterable: %s", e)
+    else:
+        return list_of_strings
