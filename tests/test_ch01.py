@@ -3,7 +3,7 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
     find_max_val_of_dict, reverse_complement_dna,
     ba1d, find_starting_positions,
-    find_clumps,
+    ba1e, find_clumps,
     convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
@@ -27,6 +27,16 @@ def sample_ba1e(fs):
             self.sample_output = "CGACA GAAGA AATGT"
     
     yield SampleBA1E()
+
+
+def test_ba1e(sample_ba1e):
+    input_file = sample_ba1e.fake_file
+    expected_clump_patterns = sample_ba1e.sample_output
+
+    with click.open_file(input_file.path, "rb") as file:
+        actual_clump_patterns = ba1e(file)
+
+    assert expected_clump_patterns == actual_clump_patterns
 
 
 def test_find_clumps(sample_ba1e):

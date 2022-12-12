@@ -4,6 +4,23 @@ from collections import OrderedDict
 import logging
 
 
+def ba1e(input_file: click.File) -> str:
+    """Find patterns forming clumps in a string
+
+    :param input_file: An input file where the first line is a genome string and the second line integers denoting k-mer length, window size, and pattern frequency threshold.
+    :type input_file: click.File
+    :return: A string-separated list of k-mers that form clumps
+    :rtype: str
+    """
+    genome = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
+    last_line = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+    k, L, t = [int(element) for element in last_line.split(" ")]
+
+    clump_patterns = find_clumps(genome, k, L, t)
+
+    return clump_patterns
+
+
 def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_freq_thresh: int) -> str:
     """Find k-mers that are found in clumps in the genome
 
