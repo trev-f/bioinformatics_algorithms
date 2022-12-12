@@ -2,10 +2,53 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     ba1c,
     complement_dna, construct_kmer_freq_table, count_pattern, find_frequent_words,
     find_max_val_of_dict, reverse_complement_dna,
-    ba1d, find_starting_positions, format_starting_positions
+    ba1d, find_starting_positions,
+    ba1e, find_clumps,
+    convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
 import pytest
+
+
+@pytest.fixture
+def sample_ba1e(fs):
+    class SampleBA1E:
+        def __init__(self):
+            self.genome = "CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC"
+            self.k = 5
+            self.L = 75
+            self.t = 4
+
+            self.fake_file = fs.create_file(
+                "sample_dataset.txt",
+                contents="CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC\n5 75 4\n"
+            )
+
+            self.sample_output = "CGACA GAAGA AATGT"
+    
+    yield SampleBA1E()
+
+
+def test_ba1e(sample_ba1e):
+    input_file = sample_ba1e.fake_file
+    expected_clump_patterns = sample_ba1e.sample_output
+
+    with click.open_file(input_file.path, "rb") as file:
+        actual_clump_patterns = ba1e(file)
+
+    assert expected_clump_patterns == actual_clump_patterns
+
+
+def test_find_clumps(sample_ba1e):
+    genome = sample_ba1e.genome
+    k = sample_ba1e.k
+    L = sample_ba1e.L
+    t = sample_ba1e.t
+    expected_clump_patterns = sample_ba1e.sample_output
+
+    actual_clump_patterns = find_clumps(genome, k, L, t)
+
+    assert expected_clump_patterns == actual_clump_patterns
 
 
 @pytest.fixture
@@ -40,15 +83,6 @@ def test_find_starting_positions(sample_pattern_matching):
     actual_positions = find_starting_positions(pattern, genome)
 
     assert expected_positions == actual_positions
-
-
-def test_format_starting_positions(sample_pattern_matching):
-    positions_list = sample_pattern_matching.positions_list
-    expected_formatted_positions = sample_pattern_matching.positions
-
-    actual_formatted_positions = format_starting_positions(positions_list)
-
-    assert expected_formatted_positions == actual_formatted_positions
 
 
 @pytest.fixture
@@ -155,3 +189,28 @@ def test_count_pattern():
     actual_output = count_pattern(text=input_text, pattern=input_pattern)
 
     assert expected_output == actual_output
+
+
+def test_format_list_for_rosalind():
+    list_of_strings = ["AA", "GG"]
+    expected_formatted_strings = "AA GG"
+
+    actual_formatted_strings = format_list_for_rosalind(list_of_strings)
+
+    assert expected_formatted_strings == actual_formatted_strings
+
+    list_of_integers = [1, 2]
+    expected_formatted_integers = "1 2"
+
+    actual_formatted_integers = format_list_for_rosalind(list_of_integers)
+
+    assert expected_formatted_integers == actual_formatted_integers
+
+
+def test_convert_iterable_to_list_of_str():
+    list_of_integers = [1, 2]
+    expected_converted_integers = ["1", "2"]
+
+    actual_converted_integers = convert_iterable_to_list_of_str(list_of_integers)
+
+    assert expected_converted_integers == actual_converted_integers

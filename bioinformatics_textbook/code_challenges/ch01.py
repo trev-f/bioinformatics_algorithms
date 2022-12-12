@@ -1,5 +1,59 @@
 import bioinformatics_textbook.code_challenges.inout
 import click
+from collections import OrderedDict
+import logging
+
+
+def ba1e(input_file: click.File) -> str:
+    """Find patterns forming clumps in a string
+
+    :param input_file: An input file where the first line is a genome string and the second line integers denoting k-mer length, window size, and pattern frequency threshold.
+    :type input_file: click.File
+    :return: A string-separated list of k-mers that form clumps
+    :rtype: str
+    """
+    genome = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
+    last_line = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+    k, L, t = [int(element) for element in last_line.split(" ")]
+
+    clump_patterns = find_clumps(genome, k, L, t)
+
+    return clump_patterns
+
+
+def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_freq_thresh: int) -> str:
+    """Find k-mers that are found in clumps in the genome
+
+    :param genome: A DNA string to search for clumps
+    :type genome: str
+    :param pattern_length: Length of k-mers
+    :type pattern_length: int
+    :param window_length: Sliding window size
+    :type window_length: int
+    :param pattern_freq_thresh: The minimum number of times a k-mer must appear within a window for the k-mer to form a clump
+    :type pattern_freq_thresh: int
+    :return: All unique k-mers that form clumps, in order of first appearance, separated by spaces
+    :rtype: str
+    """
+    clump_patterns = []
+    genome_length = len(genome)
+    for i in range(genome_length - window_length + 1):
+        window = genome[i: i+window_length]
+        freq_table = construct_kmer_freq_table(window, pattern_length)
+        for key in freq_table.keys():
+            if freq_table[key] >= pattern_freq_thresh:
+                clump_patterns.append(key)
+
+    # remove duplicates from list
+    # note: this is not the fastest way to get unique elements of a list,
+    # but it does preserve order which helps in checking against the Rosalind sample output
+    # Rosalind appears to report unique patterns in the order in which they appear first in the string
+    unique_clump_patterns = list(OrderedDict.fromkeys(clump_patterns))
+
+    # format clumps: separate each kmer by a space
+    formatted_clump_patterns = format_list_for_rosalind(unique_clump_patterns)
+
+    return formatted_clump_patterns
 
 
 def ba1d(input_file: click.File) -> str:
@@ -7,7 +61,7 @@ def ba1d(input_file: click.File) -> str:
     genome = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
 
     starting_positions = find_starting_positions(pattern, genome)
-    formatted_starting_positions = format_starting_positions(starting_positions)
+    formatted_starting_positions = format_list_for_rosalind(starting_positions)
 
     return formatted_starting_positions
 
@@ -32,20 +86,6 @@ def find_starting_positions(pattern: str, genome: str) -> list:
             starting_positions.append(i)
 
     return starting_positions
-
-
-def format_starting_positions(starting_positions: list) -> str:
-    """Format a list of starting positions to a string separated by spaces.
-
-    :param starting_positions: Starting positions
-    :type starting_positions: list
-    :return: Formatted starting positions string
-    :rtype: str
-    """
-    starting_positions = [str(position) for position in starting_positions]
-    formatted_starting_positions = " ".join(starting_positions)
-
-    return formatted_starting_positions
 
 
 def ba1c(input_file: click.File) -> str:
@@ -127,8 +167,10 @@ def find_frequent_words(text: str, k: int) -> str:
     for pattern in freq_table.keys():
         if freq_table[pattern] == max_freq:
             most_freq_words.append(pattern)
+    
+    formatted_most_freq_words = format_list_for_rosalind(most_freq_words)
 
-    return " ".join(most_freq_words)
+    return formatted_most_freq_words
 
 
 def find_max_val_of_dict(d: dict) -> float:
@@ -194,3 +236,34 @@ def count_pattern(text: str, pattern: str) -> int:
             number_kmer_appearances += 1
 
     return number_kmer_appearances
+
+
+def format_list_for_rosalind(list_to_format: list) -> str:
+    """Format a list as a string with elements separated by spaces as is commonly expected for solutions to problems for Rosalind.
+
+    :param list_to_format: List to format. If elements are not strings they will be converted.
+    :type list_to_format: list
+    :return: String of list formatted for Rosalind.
+    :rtype: str
+    """
+    if not isinstance(list_to_format[0], str):
+        list_to_format = convert_iterable_to_list_of_str(list_to_format)
+    formatted_list = " ".join(list_to_format)
+
+    return formatted_list
+
+
+def convert_iterable_to_list_of_str(iterable) -> list:
+    """Convert an iterable to a list of strings
+
+    :param iterable: An iterable to convert
+    :type iterable: _type_
+    :return: A list of strings
+    :rtype: list
+    """
+    try:
+        list_of_strings = [str(member) for member in iterable]
+    except TypeError as e:
+        logging.exception("A TypeError error occurred. Checked that the object to convert is an iterable: %s", e)
+    else:
+        return list_of_strings

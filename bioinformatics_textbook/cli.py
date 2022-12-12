@@ -26,6 +26,23 @@ def cli(config, verbose):
 @cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
+def ba1e(config, input_file):
+    """
+    Program to solve Rosalind problem BA1E: Find Patterns Forming Clumps in a String
+
+    https://rosalind.info/problems/ba1e/
+    """
+    config.logger.info("Run CLI command to solve BA1E")
+
+    clump_patterns = bioinformatics_textbook.code_challenges.ch01.ba1e(input_file)
+    click.echo(clump_patterns)
+
+    config.logger.info("Finished CLI command to solve BA1E")
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
 def ba1d(config, input_file):
     """
     Program to solve Rosalind problem BA1D: Find All Occurrences of a Pattern in a String
