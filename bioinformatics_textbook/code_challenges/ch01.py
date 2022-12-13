@@ -4,6 +4,56 @@ from collections import OrderedDict
 import logging
 
 
+def ba1f(input_file: click.File) -> str:
+    """Find a position in a genome minimizing the GC skew
+
+    :param input_file: A text file that defines a genome string
+    :type input_file: click.File
+    :return: The positions in a genome that minimize GC skew
+    :rtype: str
+    """
+    genome = bioinformatics_textbook.code_challenges.inout.read_all_lines(input_file)
+
+    gc_skews = define_dna_gc_skews(genome)
+    min_skew_positions = find_min_skew_positions(gc_skews)
+
+    return format_list_for_rosalind(min_skew_positions)
+
+
+def find_min_skew_positions(skews: list) -> list:
+    """Find positions of a genome where skew is minimal
+
+    :param skews: Skew at each position of a genome (starting from 0)
+    :type skews: list
+    :return: Genome positions where skew is minimal
+    :rtype: list
+    """
+    min_skew = min(skews)
+    min_skew_positions = [i for i, skew in enumerate(skews) if skew == min_skew]
+
+    return min_skew_positions
+
+
+def define_dna_gc_skews(genome: str) -> list:
+    """Define the GC skew of a DNA string as the as the difference between the total number of occurrences of 'G' and 'C' in a genome.
+
+    :param genome: A DNA string
+    :type genome: str
+    :return: The GC skew at each position of a genome. The list starts from 0 and therefore is out of phase with the genome string.
+    :rtype: list
+    """
+    skews = [0]
+    for i, base in enumerate(genome):
+        if base == "C":
+            skews.append(skews[i] - 1)
+        elif base == "G":
+            skews.append(skews[i] + 1)
+        else:
+            skews.append(skews[i])
+
+    return skews
+
+
 def ba1e(input_file: click.File) -> str:
     """Find patterns forming clumps in a string
 
