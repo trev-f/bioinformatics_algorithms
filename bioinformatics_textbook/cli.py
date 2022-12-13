@@ -24,6 +24,22 @@ def cli(config, verbose):
 
 
 @cli.command()
+@click.argument("input_file", type=click.File("r"))
+@pass_config
+def ba1f(config, input_file):
+    """Program to solve Rosalind problem BA1F: Find a Position in a Genome Minimizing the Skew.
+
+    https://rosalind.info/problems/ba1f/
+    """
+    config.logger.info("Run CLI command to solve BA1F")
+
+    min_skew_positions = bioinformatics_textbook.code_challenges.ch01.ba1f(input_file)
+    click.echo(min_skew_positions)
+
+    config.logger.info("Finished CLI command to solve BA1F")
+
+
+@cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
 def ba1e(config, input_file):
