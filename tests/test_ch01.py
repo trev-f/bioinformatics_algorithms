@@ -4,7 +4,7 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     find_max_val_of_dict, reverse_complement_dna,
     ba1d, find_starting_positions,
     ba1e, find_clumps,
-    define_dna_gc_skews,
+    find_min_skew_positions, define_dna_gc_skews,
     convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
@@ -17,9 +17,19 @@ def sample_ba1f(fs):
         def __init__(self):
             self.genome = "CATGGGCATCGGCCATACGCC"
             self.skews = [int(skew) for skew in "0 -1 -1 -1 0 1 2 1 1 1 0 1 2 1 0 0 0 0 -1 0 -1 -2".split()]
+            self.min_skew_positions = [20]
 
     
     yield SampleBA1F()
+
+
+def test_find_min_skew_positions(sample_ba1f):
+    skews = sample_ba1f.skews
+    expected_min_skew_positions = sample_ba1f.min_skew_positions
+
+    actual_min_skew_positions = find_min_skew_positions(skews)
+
+    assert expected_min_skew_positions == actual_min_skew_positions
 
 
 def test_define_dna_gc_skews(sample_ba1f):

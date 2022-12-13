@@ -4,6 +4,20 @@ from collections import OrderedDict
 import logging
 
 
+def find_min_skew_positions(skews: list) -> list:
+    """Find positions of a genome where skew is minimal
+
+    :param skews: Skew at each position of a genome (starting from 0)
+    :type skews: list
+    :return: Genome positions where skew is minimal
+    :rtype: list
+    """
+    min_skew = min(skews)
+    min_skew_positions = [i - 1 for i, skew in enumerate(skews) if skew == min_skew]
+
+    return min_skew_positions
+
+
 def define_dna_gc_skews(genome: str) -> list:
     """Define the GC skew of a DNA string as the as the difference between the total number of occurrences of 'G' and 'C' in a genome.
 
