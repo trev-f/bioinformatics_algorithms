@@ -4,6 +4,26 @@ from collections import OrderedDict
 import logging
 
 
+def define_dna_gc_skews(genome: str) -> list:
+    """Define the GC skew of a DNA string as the as the difference between the total number of occurrences of 'G' and 'C' in a genome.
+
+    :param genome: A DNA string
+    :type genome: str
+    :return: The GC skew at each position of a genome. The list starts from 0 and therefore is out of phase with the genome string.
+    :rtype: list
+    """
+    skews = [0]
+    for i, base in enumerate(genome):
+        if base == "C":
+            skews.append(skews[i] - 1)
+        elif base == "G":
+            skews.append(skews[i] + 1)
+        else:
+            skews.append(skews[i])
+
+    return skews
+
+
 def ba1e(input_file: click.File) -> str:
     """Find patterns forming clumps in a string
 

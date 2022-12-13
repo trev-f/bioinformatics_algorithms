@@ -4,10 +4,31 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     find_max_val_of_dict, reverse_complement_dna,
     ba1d, find_starting_positions,
     ba1e, find_clumps,
+    define_dna_gc_skews,
     convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
 import pytest
+
+
+@pytest.fixture
+def sample_ba1f(fs):
+    class SampleBA1F:
+        def __init__(self):
+            self.genome = "CATGGGCATCGGCCATACGCC"
+            self.skews = [int(skew) for skew in "0 -1 -1 -1 0 1 2 1 1 1 0 1 2 1 0 0 0 0 -1 0 -1 -2".split()]
+
+    
+    yield SampleBA1F()
+
+
+def test_define_dna_gc_skews(sample_ba1f):
+    genome = sample_ba1f.genome
+    expected_skews = sample_ba1f.skews
+
+    actual_skews = define_dna_gc_skews(genome)
+
+    assert expected_skews == actual_skews
 
 
 @pytest.fixture
