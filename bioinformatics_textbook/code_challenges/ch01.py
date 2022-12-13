@@ -4,6 +4,22 @@ from collections import OrderedDict
 import logging
 
 
+def ba1f(input_file: click.File) -> str:
+    """Find a position in a genome minimizing the GC skew
+
+    :param input_file: A text file that defines a genome string
+    :type input_file: click.File
+    :return: The positions in a genome that minimize GC skew
+    :rtype: str
+    """
+    genome = bioinformatics_textbook.code_challenges.inout.read_all_lines(input_file)
+
+    gc_skews = define_dna_gc_skews(genome)
+    min_skew_positions = find_min_skew_positions(gc_skews)
+
+    return format_list_for_rosalind(min_skew_positions)
+
+
 def find_min_skew_positions(skews: list) -> list:
     """Find positions of a genome where skew is minimal
 
@@ -13,7 +29,7 @@ def find_min_skew_positions(skews: list) -> list:
     :rtype: list
     """
     min_skew = min(skews)
-    min_skew_positions = [i - 1 for i, skew in enumerate(skews) if skew == min_skew]
+    min_skew_positions = [i for i, skew in enumerate(skews) if skew == min_skew]
 
     return min_skew_positions
 
