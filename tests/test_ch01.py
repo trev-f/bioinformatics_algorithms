@@ -5,10 +5,71 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     ba1d, find_starting_positions,
     ba1e, find_clumps,
     ba1f, find_min_skew_positions, define_dna_gc_skews,
+    ba1g, compute_hamming_distance, is_mismatch,
     convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
 import pytest
+
+
+@pytest.fixture
+def sample_ba1g(fs):
+    class SampleBA1G:
+        def __init__(self):
+            self.dna_p = "CGAAT"
+            self.dna_q = "CGGAC"
+            self.hamming_distance = 2
+
+            self.sample_dataset = fs.create_file(
+                "sample_dataset.txt",
+                contents="GGGCCGTTGGT\nGGACCGTTGAC\n"
+            )
+            self.sample_output = 3
+
+
+    yield SampleBA1G()
+
+
+def test_ba1g(sample_ba1g):
+    input_file = sample_ba1g.sample_dataset.path
+    expected_hamming_distance = sample_ba1g.sample_output
+
+    with click.open_file(input_file, "rb") as file:
+        actual_hamming_distsance = ba1g(file)
+    
+    assert expected_hamming_distance == actual_hamming_distsance
+
+
+def test_compute_hamming_distance(sample_ba1g):
+    dna_p = sample_ba1g.dna_p
+    dna_q = sample_ba1g.dna_q
+    expected_hamming_distance = sample_ba1g.hamming_distance
+
+    actual_hamming_distance = compute_hamming_distance(dna_p, dna_q)
+
+    assert expected_hamming_distance == actual_hamming_distance
+
+
+def test_is_mismatch():
+    # ensure matches are not called as mismatches
+    assert False == is_mismatch("A", "A")
+    assert False == is_mismatch("C", "C")
+    assert False == is_mismatch("G", "G")
+    assert False == is_mismatch("T", "T")
+
+    # test mismatches
+    assert True == is_mismatch("A", "C")
+    assert True == is_mismatch("A", "G")
+    assert True == is_mismatch("A", "T")
+    assert True == is_mismatch("C", "A")
+    assert True == is_mismatch("C", "G")
+    assert True == is_mismatch("C", "T")
+    assert True == is_mismatch("G", "C")
+    assert True == is_mismatch("G", "A")
+    assert True == is_mismatch("G", "T")
+    assert True == is_mismatch("T", "C")
+    assert True == is_mismatch("T", "G")
+    assert True == is_mismatch("T", "A")
 
 
 @pytest.fixture

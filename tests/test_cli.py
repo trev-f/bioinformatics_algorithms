@@ -2,6 +2,13 @@ from click.testing import CliRunner
 from bioinformatics_textbook.cli import cli
 
 
+def test_ba1g():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["ba1g", "tests/datasets/ch01/ba1g_sample_dataset.txt"])
+    assert result.exit_code == 0
+    assert result.output.rstrip() == "3"
+
+
 def test_ba1f():
     runner = CliRunner()
     result = runner.invoke(cli, ["ba1f", "tests/datasets/ch01/ba1f_sample_dataset.txt"])

@@ -24,6 +24,22 @@ def cli(config, verbose):
 
 
 @cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1g(config, input_file):
+    """Program to solve Rosalind problem BA1G: Compute the Hamming Distance Between Two Strings
+
+    https://rosalind.info/problems/ba1g/
+    """
+    config.logger.info("Run CLI command to solve BA1G")
+
+    hamming_distance = bioinformatics_textbook.code_challenges.ch01.ba1g(input_file)
+    click.echo(hamming_distance)
+
+    config.logger.info("Finished CLI command to solve BA1G")
+
+
+@cli.command()
 @click.argument("input_file", type=click.File("r"))
 @pass_config
 def ba1f(config, input_file):

@@ -4,6 +4,50 @@ from collections import OrderedDict
 import logging
 
 
+def ba1g(input_file: click.File) -> int:
+    dna_p = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
+    dna_q = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+
+    hamming_distance = compute_hamming_distance(dna_p, dna_q)
+
+    return hamming_distance
+
+
+def compute_hamming_distance(dna_p: str, dna_q: str) -> int:
+    """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
+
+    :param dna_p: First DNA string
+    :type dna_p: str
+    :param dna_q: Second DNA string
+    :type dna_q: str
+    :return: Hamming distance
+    :rtype: int
+    """
+    hamming_distance = 0
+    kmer_length = len(dna_p)
+    for i in range(kmer_length):
+        if is_mismatch(dna_p[i], dna_q[i]):
+            hamming_distance += 1
+    
+    return hamming_distance
+
+
+
+def is_mismatch(base_p: str, base_q: str) -> bool:
+    """Are two bases a mismatch?
+
+    :param base_p: Base from first DNA string
+    :type base_p: str
+    :param base_q: Base from second DNA string
+    :type base_q: str
+    :return: Whether the bases are a mismatch
+    :rtype: bool
+    """
+    mismatch = base_p != base_q
+
+    return mismatch
+
+
 def ba1f(input_file: click.File) -> str:
     """Find a position in a genome minimizing the GC skew
 
