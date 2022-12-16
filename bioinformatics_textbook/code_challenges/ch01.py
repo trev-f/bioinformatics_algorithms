@@ -4,6 +4,15 @@ from collections import OrderedDict
 import logging
 
 
+def ba1g(input_file: click.File) -> int:
+    dna_p = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
+    dna_q = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+
+    hamming_distance = compute_hamming_distance(dna_p, dna_q)
+
+    return hamming_distance
+
+
 def compute_hamming_distance(dna_p: str, dna_q: str) -> int:
     """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
 

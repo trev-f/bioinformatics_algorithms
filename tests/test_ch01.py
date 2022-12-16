@@ -5,7 +5,7 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     ba1d, find_starting_positions,
     ba1e, find_clumps,
     ba1f, find_min_skew_positions, define_dna_gc_skews,
-    compute_hamming_distance, is_mismatch,
+    ba1g, compute_hamming_distance, is_mismatch,
     convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
@@ -28,6 +28,16 @@ def sample_ba1g(fs):
 
 
     yield SampleBA1G()
+
+
+def test_ba1g(sample_ba1g):
+    input_file = sample_ba1g.sample_dataset.path
+    expected_hamming_distance = sample_ba1g.sample_output
+
+    with click.open_file(input_file, "rb") as file:
+        actual_hamming_distsance = ba1g(file)
+    
+    assert expected_hamming_distance == actual_hamming_distsance
 
 
 def test_compute_hamming_distance(sample_ba1g):
