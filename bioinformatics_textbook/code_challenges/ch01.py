@@ -5,6 +5,15 @@ import logging
 
 
 def compute_hamming_distance(dna_p: str, dna_q: str) -> int:
+    """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
+
+    :param dna_p: First DNA string
+    :type dna_p: str
+    :param dna_q: Second DNA string
+    :type dna_q: str
+    :return: Hamming distance
+    :rtype: int
+    """
     hamming_distance = 0
     kmer_length = len(dna_p)
     for i in range(kmer_length):
