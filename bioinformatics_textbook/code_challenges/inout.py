@@ -75,6 +75,20 @@ def read_first_line(input_file: click.File) -> str:
     return first_line_stripped
 
 
+def read_second_line(input_file: click.File) -> str:
+    """Read the second line of a file
+
+    :param input_file: The input file. Must be opened for reading in bites mode.
+    :type input_file: click.File
+    :return: The second line.
+    :rtype: str
+    """
+    second_line = input_file.readlines()[1:2][0].decode()
+    second_line_stripped = strip_newlines(second_line)
+
+    return second_line_stripped
+
+
 def read_last_line(input_file: click.File) -> str:
     """Read the last line of a file
 

@@ -1,7 +1,7 @@
 import click
 import pytest
 from bioinformatics_textbook.code_challenges.inout import (
-    read_all_lines, read_not_last_line, read_first_line, read_last_line, read_text_pattern,
+    read_all_lines, read_not_last_line, read_first_line, read_second_line, read_last_line, read_text_pattern,
     strip_newlines
 )
 
@@ -75,6 +75,16 @@ def test_read_first_line(multiline_files):
         actual_first_line = read_first_line(file)
     
     assert expected_first_line == actual_first_line
+
+
+def test_read_second_line(multiline_files):
+    input_file = multiline_files.three_line_file.path
+    expected_second_line = "second line"
+
+    with click.open_file(input_file, "rb") as file:
+        actual_second_line = read_second_line(file)
+    
+    assert expected_second_line == actual_second_line
 
 
 def test_read_last_line(multiline_files):
