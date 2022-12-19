@@ -62,6 +62,13 @@ def read_not_last_line(input_file: click.File) -> str:
 
 
 def read_first_line(input_file: click.File) -> str:
+    """Reada the first line of a file
+
+    :param input_file: The input file. Must be opened for reading in binary mode.
+    :type input_file: click.File
+    :return: The first line of the file.
+    :rtype: str
+    """
     first_line = input_file.readline().decode()
     first_line_stripped = strip_newlines(first_line)
 
