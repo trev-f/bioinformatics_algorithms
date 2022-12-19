@@ -6,10 +6,35 @@ from bioinformatics_textbook.code_challenges.ch01 import (
     ba1e, find_clumps,
     ba1f, find_min_skew_positions, define_dna_gc_skews,
     ba1g, compute_hamming_distance, is_mismatch,
+    find_approx_occurrence_positions,
     convert_iterable_to_list_of_str, format_list_for_rosalind
 )
 import click
 import pytest
+
+
+@pytest.fixture
+def sample_ba1h(fs):
+    class SampleBA1H:
+        def __init__(self):
+            self.pattern = "AAAAA"
+            self.text = "AACAAGCTGATAAACATTTAAAGAG"
+            self.num_allowed_mismatches = 1
+            self.approx_occurrence_positions = [0, 9, 11, 19]
+
+
+    yield SampleBA1H()
+
+
+def test_find_approx_occurrence_positions(sample_ba1h):
+    pattern = sample_ba1h.pattern
+    text = sample_ba1h.text
+    num_allowed_mismatches = sample_ba1h.num_allowed_mismatches
+    expected_approx_occurrence_positions = sample_ba1h.approx_occurrence_positions
+
+    actual_approx_occurrence_positions = find_approx_occurrence_positions(pattern, text, num_allowed_mismatches)
+
+    assert expected_approx_occurrence_positions == actual_approx_occurrence_positions
 
 
 @pytest.fixture

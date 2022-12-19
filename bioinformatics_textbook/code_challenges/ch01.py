@@ -4,6 +4,31 @@ from collections import OrderedDict
 import logging
 
 
+def find_approx_occurrence_positions(pattern: str, text: str, num_allowed_mismatches: str) -> list:
+    """
+    APPROACH:
+        Slide k-mer along text. At each position, compute Hamming distance for k-mer and the window of text.
+
+        Idea to improve efficiency: As soon as soon as number of allowed mismatches is reach, move to next window.
+
+    PSEUDOCODE:
+        ApproximateOccurrences <- []
+        for i <- 0 to |Text| - |Pattern|
+            if HammingDist(Pattern, Text[i, |Pattern|]) <= NumberAllowedMismatches
+                ApproximateOccurrences.append(i)
+        return ApproximateOccurrences
+    """
+    approx_occurrence_positions = []
+    text_length = len(text)
+    kmer_length = len(pattern)
+    for i in range(text_length - kmer_length + 1):
+        print(i, kmer_length)
+        if compute_hamming_distance(pattern, text[i: i+kmer_length]) <= num_allowed_mismatches:
+            approx_occurrence_positions.append(i)
+
+    return approx_occurrence_positions
+
+
 def ba1g(input_file: click.File) -> int:
     dna_p = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
     dna_q = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
