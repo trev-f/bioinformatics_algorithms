@@ -22,8 +22,24 @@ def sample_ba1h(fs):
             self.num_allowed_mismatches = 1
             self.approx_occurrence_positions = [0, 9, 11, 19]
 
+            self.sample_dataset = fs.create_file(
+                "sample_dataset.txt",
+                contents="ATTCTGGA\nCGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC\n3\n"
+            )
+            self.sample_output = "6 7 26 27 78"
+
 
     yield SampleBA1H()
+
+
+def test_ba1h(sample_ba1h):
+    input_file = sample_ba1h.sample_dataset.path
+    expected_approx_occurrence_positions = sample_ba1h.sample_output
+
+    with click.open_file(input_file) as file:
+        actual_approx_occurrence_positions = ba1h(file)
+    
+    assert expected_approx_occurrence_positions == actual_approx_occurrence_positions
 
 
 def test_find_approx_occurrence_positions(sample_ba1h):
