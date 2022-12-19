@@ -1,7 +1,7 @@
 import click
 import pytest
 from bioinformatics_textbook.code_challenges.inout import (
-    read_all_lines, read_not_last_line, read_last_line, read_text_pattern,
+    read_all_lines, read_not_last_line, read_first_line, read_last_line, read_text_pattern,
     strip_newlines
 )
 
@@ -28,6 +28,9 @@ def multiline_files(fs):
         def __init__(self):
             self.lf_file = fs.create_file("lf_test.txt", contents="first line\nlast line\n")
             self.cr_lf_file = fs.create_file("cr_lf_test.txt", contents="first line\r\nlast line\r\n")
+
+            self.three_line_file = fs.create_file("three_line_file.txt", contents="first line\nsecond line\nlast line\n")
+
 
     yield MultiLineFiles()
 
@@ -62,6 +65,16 @@ def test_read_not_last_line(multiline_files):
         actual_not_last_line_cr_lf = read_not_last_line(file)
 
     assert expected_not_last_line == actual_not_last_line_cr_lf
+
+
+def test_read_first_line(multiline_files):
+    input_file = multiline_files.three_line_file.path
+    expected_first_line = "first line"
+
+    with click.open_file(input_file, "rb") as file:
+        actual_first_line = read_first_line(file)
+    
+    assert expected_first_line == actual_first_line
 
 
 def test_read_last_line(multiline_files):

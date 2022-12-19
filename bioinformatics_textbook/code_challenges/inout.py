@@ -61,6 +61,13 @@ def read_not_last_line(input_file: click.File) -> str:
     return not_last_lines_stripped
 
 
+def read_first_line(input_file: click.File) -> str:
+    first_line = input_file.readline().decode()
+    first_line_stripped = strip_newlines(first_line)
+
+    return first_line_stripped
+
+
 def read_last_line(input_file: click.File) -> str:
     """Read the last line of a file
 
