@@ -14,13 +14,10 @@ def ba1h(input_file: click.File):
     logger.info("Pattern = %s", pattern)
     logger.info("Text = %s", text)
     logger.info("Number allowed mismatches = %s", num_allowed_mismatches)
-    print(pattern, text, num_allowed_mismatches)
 
     approx_occurrence_positions = find_approx_occurrence_positions(
         pattern, text, num_allowed_mismatches
     )
-
-    print(approx_occurrence_positions)
 
     formatted_approx_occurrence_positions = format_list_for_rosalind(approx_occurrence_positions)
 
@@ -45,7 +42,6 @@ def find_approx_occurrence_positions(pattern: str, text: str, num_allowed_mismat
     text_length = len(text)
     kmer_length = len(pattern)
     for i in range(text_length - kmer_length + 1):
-        print(i, kmer_length)
         if compute_hamming_distance(pattern, text[i: i+kmer_length]) <= num_allowed_mismatches:
             approx_occurrence_positions.append(i)
 
