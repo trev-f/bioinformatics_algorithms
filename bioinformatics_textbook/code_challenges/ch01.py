@@ -4,6 +4,29 @@ from collections import OrderedDict
 import logging
 
 
+logger = logging.getLogger(__name__)
+
+def ba1h(input_file: click.File):
+    pattern = bioinformatics_textbook.code_challenges.inout.read_first_line(input_file)
+    text = bioinformatics_textbook.code_challenges.inout.read_second_line(input_file)
+    num_allowed_mismatches = int(bioinformatics_textbook.code_challenges.inout.read_last_line(input_file))
+
+    logger.info("Pattern = %s", pattern)
+    logger.info("Text = %s", text)
+    logger.info("Number allowed mismatches = %s", num_allowed_mismatches)
+    print(pattern, text, num_allowed_mismatches)
+
+    approx_occurrence_positions = find_approx_occurrence_positions(
+        pattern, text, num_allowed_mismatches
+    )
+
+    print(approx_occurrence_positions)
+
+    formatted_approx_occurrence_positions = format_list_for_rosalind(approx_occurrence_positions)
+
+    return formatted_approx_occurrence_positions
+
+
 def find_approx_occurrence_positions(pattern: str, text: str, num_allowed_mismatches: str) -> list:
     """
     APPROACH:
