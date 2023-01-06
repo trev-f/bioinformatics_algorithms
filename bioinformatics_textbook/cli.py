@@ -26,6 +26,28 @@ def cli(config, verbose):
 @cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
+def ba1n(config, input_file):
+    """Program to solve Rosalind problem BA1N: Generate the d-Neighborhood of a String
+    
+    https://rosalind.info/problems/ba1n/
+    """
+    config.logger.info("Run CLI command to solve BA1N")
+
+    pattern_hamming_dist = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.PatternHammingDist(input_file)
+    config.logger.info("Pattern: %s", pattern_hamming_dist.pattern)
+    config.logger.info("Max Hamming distance: %s", pattern_hamming_dist.hamming_dist)
+
+    neighborhood = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.FrequentWords().find_neighbors(pattern=pattern_hamming_dist.pattern, num_allowed_mismatches=pattern_hamming_dist.hamming_dist)
+    formatted_neighborhood = bioinformatics_textbook.code_challenges.ch01.format_list_for_rosalind(neighborhood)
+
+    click.echo(formatted_neighborhood)
+
+    config.logger.info("Finished CLI command to solve BA1N")
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
 def ba1h(config, input_file):
     """Program to solve Rosalind problem BA1H: Find All Approximate Occurrences of a Pattern in a String
 

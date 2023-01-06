@@ -2,13 +2,26 @@ from click.testing import CliRunner
 from bioinformatics_textbook.cli import cli
 
 
+def test_ba1n():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["ba1n", "tests/datasets/ch01/ba1n_sample_dataset.txt"])
+    
+    assert result.exit_code == 0
+
+    expected_neighborhood = {
+        "CCG", "TCG", "GCG", "AAG", "ATG", "AGG", "ACA", "ACC", "ACT", "ACG"
+    }
+    actual_neighborhood = set(result.output.rstrip().split(" "))
+
+    assert expected_neighborhood == actual_neighborhood
+
 def test_ba1i():
     runner = CliRunner()
     result = runner.invoke(cli, ["ba1i", "tests/datasets/ch01/ba1i_sample_dataset.txt"])
     assert result.exit_code == 0
     assert result.output.rstrip() == "GATG ATGC ATGT"
 
-    
+
 def test_ba1g():
     runner = CliRunner()
     result = runner.invoke(cli, ["ba1g", "tests/datasets/ch01/ba1g_sample_dataset.txt"])
