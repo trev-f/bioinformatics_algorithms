@@ -129,6 +129,8 @@ def strip_newlines(text: str) -> str:
 
 
 class RosalindSubmission():
+    """A representation of a submission to Rosalind
+    """
     
     def __init__(self, answer: list, logger: logging.Logger = logging.getLogger(__name__)) -> None:
         self.answer = answer if isinstance(answer[0], str) else self.convert_iterable_to_list_of_str(answer)
