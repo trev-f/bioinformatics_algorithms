@@ -31,7 +31,7 @@ def ba1n(config, input_file):
     
     https://rosalind.info/problems/ba1n/
     """
-    config.logger.info("Run CLI command to solve BA1N")
+    config.logger.info("Run CLI command to solve BA1N: Generated the d-Neighborhood of a String")
 
     pattern_hamming_dist = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.PatternHammingDist(input_file)
     config.logger.info("Pattern: %s", pattern_hamming_dist.pattern)
@@ -42,7 +42,7 @@ def ba1n(config, input_file):
 
     click.echo(formatted_neighborhood)
 
-    config.logger.info("Finished CLI command to solve BA1N")
+    config.logger.info("Finished CLI command to solve BA1N: Generated the d-Neighborhood of a String")
 
 
 @cli.command()
