@@ -2,6 +2,8 @@ import click
 import re
 import os
 
+import logging
+
 
 def read_text_k(input_file: click.File) -> tuple:
     # get the text from all lines except the last
@@ -124,3 +126,42 @@ def strip_newlines(text: str) -> str:
     stripped_text = re.sub(r"\r|\n", "", text)
 
     return stripped_text
+
+
+class RosalindSubmission():
+    
+    def __init__(self, answer: list, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        self.answer = answer if isinstance(answer[0], str) else self.convert_iterable_to_list_of_str(answer)
+        self.logger = logger
+
+
+    def format_list_for_rosalind(self) -> str:
+        """Format a list as a string with elements separated by spaces as is commonly expected for solutions to problems for Rosalind.
+
+        :param list_to_format: List to format. If elements are not strings they will be converted.
+        :type list_to_format: list
+        :return: String of list formatted for Rosalind.
+        :rtype: str
+        """
+        self.logger.info("Formatting answer for submission to Rosalind")
+        
+        formatted_answer = " ".join(self.answer)
+        return formatted_answer
+    
+
+    def convert_iterable_to_list_of_str(self, iterable) -> list:
+        """Convert an iterable to a list of strings
+
+        :param iterable: An iterable to convert
+        :type iterable: _type_
+        :return: A list of strings
+        :rtype: list
+        """
+        self.logger.info("Converting iterable answer to a list of strings.")
+
+        try:
+            list_of_strings = [str(member) for member in iterable]
+        except TypeError as e:
+            self.logger.exception("A TypeError error occurred. Checked that the object to convert is an iterable: %s", e)
+        else:
+            return list_of_strings
