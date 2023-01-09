@@ -95,5 +95,40 @@ class PatternHammingDist(RosalindDataset):
 
     def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
         super().__init__(input_file=input_file, logger=logger)
+
+        self.logger.info("Initialize object with pattern and max allowed Hamming distance")
+
         self.pattern = self._read_first_line()
         self.hamming_dist = int(self._read_last_line())
+
+        self._log_init()
+
+
+    def _log_init(self) -> None:
+        """Log attributes created during initializtion
+        """
+        self.logger.info("Pattern: %s", self.pattern)
+        self.logger.info("Max allowed Hamming distance: %s", self.hamming_dist)
+
+
+class TextKmerLengthHammingDist(RosalindDataset):
+
+    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        super().__init__(input_file=input_file, logger=logger)
+
+        self.logger.info("Initialize object with a DNA string, k-mer length, and max allowed Hamming distance.")
+
+        self.text = self._read_first_line()
+        k_hamming = self._read_last_line()
+        self.kmer_length = int(k_hamming.split(" ")[0])
+        self.hamming_dist = int(k_hamming.split(" ")[1])
+
+        self._log_init()
+
+
+    def _log_init(self) -> None:
+        """Log attributes created during initializtion
+        """
+        self.logger.info("Text: %s+...", self.text[:10])
+        self.logger.info("k-mer length: %s", self.kmer_length)
+        self.logger.info("Max allowed Hamming distance: %s", self.hamming_dist)

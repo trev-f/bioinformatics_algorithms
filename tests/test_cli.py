@@ -18,8 +18,13 @@ def test_ba1n():
 def test_ba1i():
     runner = CliRunner()
     result = runner.invoke(cli, ["ba1i", "tests/datasets/ch01/ba1i_sample_dataset.txt"])
+    
     assert result.exit_code == 0
-    assert result.output.rstrip() == "GATG ATGC ATGT"
+
+    expected_freq_words = set("GATG ATGC ATGT".split(" "))
+    actual_freq_words = set(result.output.rstrip().split(" "))
+
+    assert expected_freq_words == actual_freq_words
 
 
 def test_ba1g():
