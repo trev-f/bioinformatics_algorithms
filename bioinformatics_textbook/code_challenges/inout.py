@@ -128,7 +128,81 @@ def strip_newlines(text: str) -> str:
     return stripped_text
 
 
-class RosalindSubmission():
+class RosalindDataset:
+
+    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        """Constructor method
+        """
+        self._input_file = input_file
+        self.logger = logger
+    
+
+    def _read_all_lines(self) -> str:
+        """Read all lines of a file into a single string with no new lines
+
+        :return: A string with no new lines
+        :rtype: str
+        """
+        self.logger.info("Read all lines of the input file.")
+
+        all_lines = self._input_file.read()
+        all_lines_stripped = self._strip_newlines(all_lines)
+
+        return all_lines_stripped
+
+    
+    def _read_first_line(self) -> str:
+        """Read the first line of a file
+
+        :return: The first line of the file.
+        :rtype: str
+        """
+        self.logger.info("Read the first line of the input file.")
+
+        self._set_file_position_to_beginning()
+        
+        first_line = self._input_file.readline().decode()
+
+        return self._strip_newlines(first_line)
+    
+
+    def _read_last_line(self) -> str:
+        """Read the last line of a file
+
+        :return: The last line.
+        :rtype: str
+        """
+        self.logger.info("Read the last line of the input file.")
+
+        self._input_file.seek(-2, os.SEEK_END)
+        while self._input_file.read(1) != b"\n":
+            self._input_file.seek(-2, os.SEEK_CUR)
+        
+        last_line = self._input_file.readline().decode().rstrip()
+
+        return self._strip_newlines(last_line)
+    
+
+    def _strip_newlines(self, text: str) -> str:
+        """Strip carriage return and line feed newline characters from a text string
+
+        :param text: A text string
+        :type text: str
+        :return: The text string stripped of newline characters
+        :rtype: str
+        """
+        return re.sub(r"\r|\n", "", text)
+    
+
+    def _set_file_position_to_beginning(self) -> None:
+        """Set the file position back to the beginning
+        """
+        self._input_file.seek(0, os.SEEK_SET)
+
+        return None
+
+
+class RosalindSubmission:
     """A representation of a submission to Rosalind
     """
     

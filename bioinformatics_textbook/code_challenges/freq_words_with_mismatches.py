@@ -1,14 +1,19 @@
+import click
+
 import logging
 
-import bioinformatics_textbook.code_challenges.inout
+from bioinformatics_textbook.code_challenges.inout import RosalindDataset
 from bioinformatics_textbook.code_challenges.ch01 import compute_hamming_distance
 
 
-logger = logging.getLogger(__name__)
-
 class FrequentWords:
+
+    def __init__(self, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        self.logger = logger
+
     
     def find_most_freq_words_with_mismatches(self, text: str, kmer_length: int, num_allowed_mismatches: int) -> list:
+        self.logger.info("Find most frequent words.")
         # initialize empty collections and 
         patterns = []
         freq_table = {}
@@ -86,9 +91,9 @@ class FrequentWords:
         return pattern[:1]
 
 
-class PatternHammingDist:
+class PatternHammingDist(RosalindDataset):
 
-    def __init__(self, dataset):
-        self.dataset = dataset
-        self.pattern = bioinformatics_textbook.code_challenges.inout.read_first_line(self.dataset)
-        self.hamming_dist = int(bioinformatics_textbook.code_challenges.inout.read_last_line(self.dataset))
+    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        super().__init__(input_file=input_file, logger=logger)
+        self.pattern = self._read_first_line()
+        self.hamming_dist = int(self._read_last_line())
