@@ -137,7 +137,7 @@ class RosalindSubmission():
         self.logger = logger
 
 
-    def format_list_for_rosalind(self) -> str:
+    def format_rosalind_answer(self, sep: str = " ") -> str:
         """Format a list as a string with elements separated by spaces as is commonly expected for solutions to problems for Rosalind.
 
         :param list_to_format: List to format. If elements are not strings they will be converted.
@@ -147,7 +147,7 @@ class RosalindSubmission():
         """
         self.logger.info("Formatting answer for submission to Rosalind")
         
-        formatted_answer = " ".join(self.answer)
+        formatted_answer = sep.join(self.answer)
         return formatted_answer
     
 

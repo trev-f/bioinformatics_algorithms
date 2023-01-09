@@ -11,7 +11,7 @@ def test_ba1n():
     expected_neighborhood = {
         "CCG", "TCG", "GCG", "AAG", "ATG", "AGG", "ACA", "ACC", "ACT", "ACG"
     }
-    actual_neighborhood = set(result.output.rstrip().split(" "))
+    actual_neighborhood = set(result.output.rstrip().split("\n"))
 
     assert expected_neighborhood == actual_neighborhood
 

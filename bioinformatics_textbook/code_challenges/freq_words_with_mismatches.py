@@ -55,7 +55,6 @@ class FrequentWords:
         suffix_neighbors = self.find_neighbors(self.slice_suffix(pattern), num_allowed_mismatches)
         for suffix_neighbor in suffix_neighbors:
             # the suffix neighbors must have a Hamming distance to pattern that is greater than or equal to the max allowed Hamming distance
-            # TODO: it feels like there has to be some way to keep from having to explicitly compute the Hamming distance for each suffix neighbor
             if compute_hamming_distance(self.slice_suffix(pattern), suffix_neighbor) < num_allowed_mismatches:
                 for nucleotide in nucleotides:
                     neighborhood.add(nucleotide + suffix_neighbor)

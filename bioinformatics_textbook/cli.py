@@ -38,7 +38,7 @@ def ba1n(config, input_file):
     config.logger.info("Max Hamming distance: %s", pattern_hamming_dist.hamming_dist)
 
     neighborhood = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.FrequentWords().find_neighbors(pattern=pattern_hamming_dist.pattern, num_allowed_mismatches=pattern_hamming_dist.hamming_dist)
-    formatted_neighborhood = bioinformatics_textbook.code_challenges.inout.RosalindSubmission(neighborhood).format_list_for_rosalind()
+    formatted_neighborhood = bioinformatics_textbook.code_challenges.inout.RosalindSubmission(neighborhood).format_rosalind_answer(sep="\n")
 
     click.echo(formatted_neighborhood)
 
