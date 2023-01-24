@@ -243,6 +243,40 @@ def ba1c(config, input_file):
     config.logger.info("Found the reverse complement of a string")
 
 
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1j(config, input_file):
+    """Program to solve Rosalind problem BA1J: Find Frequent Words with Mismatches and Reverse Complements
+
+    https://rosalind.info/problems/ba1j/
+    """
+    config.logger.info(
+        "Run command to solve BA1J: Find Frequent Words with Mismatches and Reverse Complements"
+    )
+
+    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLengthHammingDist(
+        input_file
+    )
+
+    freq_words = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_most_freq_words_with_mismatches_and_rc(
+        text=dataset.text,
+        kmer_length=dataset.kmer_length,
+        num_allowed_mismatches=dataset.hamming_dist,
+    )
+    formatted_freq_words = (
+        bioinformatics_textbook.code_challenges.inout.RosalindSubmission(
+            freq_words
+        ).format_rosalind_answer()
+    )
+
+    click.echo(formatted_freq_words)
+
+    config.logger.info(
+        "Finished command to solve BA1J: Find Frequent Words with Mismatches and Reverse Complements"
+    )
+
+
 def create_root_logger(verbose):
     """
     Create a root logger

@@ -3,7 +3,9 @@ import click
 import logging
 
 from bioinformatics_textbook.code_challenges.inout import RosalindDataset
-from bioinformatics_textbook.code_challenges.ch01 import compute_hamming_distance
+from bioinformatics_textbook.code_challenges.ch01 import (
+    compute_hamming_distance, reverse_complement_dna
+)
 
 
 class FrequentWords:
@@ -62,9 +64,32 @@ class FrequentWords:
         max_freq = self._find_max_val_of_dict(d=freq_table)
         for kmer in freq_table.keys():
             if freq_table[kmer] == max_freq:
-                patterns.append(kmer)
+                most_freq_words.append(kmer)
 
-        return patterns
+        return most_freq_words
+    
+
+    def find_most_freq_words_with_mismatches_and_rc(self, text: str, kmer_length: int, num_allowed_mismatches: int) -> list:
+        self.logger.info("Find most frequent words with mismatches and reverse complements.")
+
+        # construct frequency table of k-mers with mismatches and reverse complements
+        freq_table = {}
+        for i in range(self._compute_number_sliding_windows(text=text, kmer_length=kmer_length)):
+            kmer = text[i: i+kmer_length]
+            neighborhood = self.find_neighbors(kmer, num_allowed_mismatches)
+            for neighbor in neighborhood:
+                freq_table[neighbor] = freq_table.get(neighbor, 0) + 1
+                rc = reverse_complement_dna(dna=neighbor)
+                freq_table[rc] = freq_table.get(rc, 0) + 1
+
+        # compute most frequent k-mers with reverse compliments
+        most_freq_words = []
+        max_freq = self._find_max_val_of_dict(d=freq_table)
+        for kmer in freq_table.keys():
+            if freq_table[kmer] == max_freq:
+                most_freq_words.append(kmer)
+
+        return most_freq_words
 
 
     def find_neighbors(self, pattern: str, num_allowed_mismatches: int) -> list:
@@ -113,8 +138,6 @@ class FrequentWords:
         :rtype: dict
         """
         freq_table = {}
-        text_length = len(text)
-
         # slide windows of length k down the text string
         for i in range(self._compute_number_sliding_windows(text, kmer_length)):
             pattern = text[i: i + kmer_length]
@@ -123,6 +146,21 @@ class FrequentWords:
             freq_table[pattern] = freq_table.get(pattern, 0) + 1
 
         return freq_table
+    
+
+    def _construct_kmer_rc_neighborhood(self, kmer_neighborhood: list) -> list:
+        """Construct a k-mer mismatch neighborhood that also includes reverse complements
+
+        :param kmer_neighborhood: The d-neighborhood of a k-mer
+        :type kmer_neighborhood: list
+        :return: The d-neighborhood of a k-mer with its reverse complements. Duplicates removed.
+        :rtype: list
+        """
+        rc_neighborhood = [reverse_complement_dna(kmer) for kmer in kmer_neighborhood]
+
+        # coerce to set to remove duplicates then back to list
+        return list(set(kmer_neighborhood + rc_neighborhood))
+
 
 
     def _slice_suffix(self, pattern: str) -> str:
