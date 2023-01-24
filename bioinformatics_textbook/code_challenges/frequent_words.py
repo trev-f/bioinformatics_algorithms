@@ -12,6 +12,27 @@ class FrequentWords:
         self.logger = logger
 
 
+    def find_most_freq_words(self, text: str, kmer_length: int) -> list:
+        """Find the most frequent k-mers in a string of text
+
+        :param text: A string of text (typically a DNA string)
+        :type text: str
+        :param kmer_length: k-mer length
+        :type kmer_length: int
+        :return: The most frequent k-mers in the text
+        :rtype: list
+        """
+        freq_table = self._construct_kmer_freq_table(text=text, kmer_length=kmer_length)
+        max_freq = self._find_max_val_of_dict(d=freq_table)
+
+        most_freq_words = []
+        for pattern in freq_table.keys():
+            if freq_table[pattern] == max_freq:
+                most_freq_words.append(pattern)
+        
+        return most_freq_words
+
+    
     def find_most_freq_words_with_mismatches(self, text: str, kmer_length: int, num_allowed_mismatches: int) -> list:
         self.logger.info("Find most frequent words.")
         # initialize empty collections and 
@@ -26,7 +47,7 @@ class FrequentWords:
                 # otherwise, increment the count
                 freq_table[neighbor] = freq_table.get(neighbor, 0) + 1
         
-        max_freq = max(freq_table.values())
+        max_freq = self._find_max_val_of_dict(d=freq_table)
         for kmer in freq_table.keys():
             if freq_table[kmer] == max_freq:
                 patterns.append(kmer)
