@@ -89,14 +89,14 @@ class FrequentWords:
         
         # making a neighborhood a set instead of a list means duplicates do not have to be explicitly removed
         neighborhood = set()
-        suffix_neighbors = self.find_neighbors(self.slice_suffix(pattern), num_allowed_mismatches)
+        suffix_neighbors = self.find_neighbors(self._slice_suffix(pattern), num_allowed_mismatches)
         for suffix_neighbor in suffix_neighbors:
             # the suffix neighbors must have a Hamming distance to pattern that is greater than or equal to the max allowed Hamming distance
-            if compute_hamming_distance(self.slice_suffix(pattern), suffix_neighbor) < num_allowed_mismatches:
+            if compute_hamming_distance(self._slice_suffix(pattern), suffix_neighbor) < num_allowed_mismatches:
                 for nucleotide in nucleotides:
                     neighborhood.add(nucleotide + suffix_neighbor)
             else:
-                neighborhood.add(self.slice_first_nucleotide(pattern) + suffix_neighbor)
+                neighborhood.add(self._slice_first_nucleotide(pattern) + suffix_neighbor)
         
         return list(neighborhood)
     
@@ -124,7 +124,7 @@ class FrequentWords:
         return freq_table
 
 
-    def slice_suffix(self, pattern: str) -> str:
+    def _slice_suffix(self, pattern: str) -> str:
         """Get the suffix of a string
 
         :param pattern: The string to slice
@@ -135,7 +135,7 @@ class FrequentWords:
         return pattern[1:]
     
 
-    def slice_first_nucleotide(self, pattern: str) -> str:
+    def _slice_first_nucleotide(self, pattern: str) -> str:
         """Get the first nucleotide of a DNA string
 
         :param pattern: The DNA string to slice
