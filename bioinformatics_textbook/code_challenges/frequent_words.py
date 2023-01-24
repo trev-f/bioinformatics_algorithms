@@ -45,19 +45,21 @@ class FrequentWords:
         :return: The most frequent k-mers in the text with at most the allowed number of mismatches
         :rtype: list
         """
-        self.logger.info("Find most frequent words.")
-        # initialize empty collections and 
-        patterns = []
+        self.logger.info("Find most frequent words with mismatches.")
+
+        # construct frequency table of k-mers with mismatches
         freq_table = {}
-        n = len(text)
-        for i in range(n - kmer_length + 1):
-            pattern = text[i: i+kmer_length]
-            neighborhood = self.find_neighbors(pattern, num_allowed_mismatches)
+        text_length = len(text)
+        for i in range(text_length - kmer_length + 1):
+            kmer = text[i: i+kmer_length]
+            neighborhood = self.find_neighbors(kmer, num_allowed_mismatches)
             for neighbor in neighborhood:
                 # if a k-mer is not present in frequency table, add it and assign a value of 1,
                 # otherwise, increment the count
                 freq_table[neighbor] = freq_table.get(neighbor, 0) + 1
         
+        # select most frequent words
+        most_freq_words = []
         max_freq = self._find_max_val_of_dict(d=freq_table)
         for kmer in freq_table.keys():
             if freq_table[kmer] == max_freq:
