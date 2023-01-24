@@ -34,6 +34,17 @@ class FrequentWords:
 
     
     def find_most_freq_words_with_mismatches(self, text: str, kmer_length: int, num_allowed_mismatches: int) -> list:
+        """Find the most frequent k-mers with up to a number of allowed mismatches in a string of text
+
+        :param text: A string of text (typically a DNA string)
+        :type text: str
+        :param kmer_length: k-mer length
+        :type kmer_length: int
+        :param num_allowed_mismatches: The maximum Hamming distance (the number of allowed mismatches)
+        :type num_allowed_mismatches: int
+        :return: The most frequent k-mers in the text with at most the allowed number of mismatches
+        :rtype: list
+        """
         self.logger.info("Find most frequent words.")
         # initialize empty collections and 
         patterns = []
