@@ -280,50 +280,6 @@ def make_dna_complementation_table() -> dict:
     return comp_table
 
 
-def ba1b(input_file: click.File) -> str:
-    text, k = bioinformatics_textbook.code_challenges.inout.read_text_k(input_file)
-
-    most_frequent_words = find_frequent_words(text, k)
-
-    return most_frequent_words
-
-
-def find_frequent_words(text: str, k: int) -> str:
-    """Return the most frequent kmers from a string of text
-
-    :param text: A string of text (typically a DNA string)
-    :type text: str
-    :param k: k-mer length
-    :type k: int
-    :return: The most frequent k-mers each separated by a space
-    :rtype: str
-    """
-    freq_table = construct_kmer_freq_table(text, k)
-    max_freq = find_max_val_of_dict(freq_table)
-    
-    most_freq_words = []
-    for pattern in freq_table.keys():
-        if freq_table[pattern] == max_freq:
-            most_freq_words.append(pattern)
-    
-    formatted_most_freq_words = format_list_for_rosalind(most_freq_words)
-
-    return formatted_most_freq_words
-
-
-def find_max_val_of_dict(d: dict) -> float:
-    """Find the max value of a dictionary
-
-    :param d: A dictionary
-    :type d: dict
-    :return: The dictionary's maximum value
-    :rtype: float
-    """
-    max_val = max(d.values())
-
-    return max_val
-
-
 def construct_kmer_freq_table(text: str, k: int) -> dict:
     """Construct a frequency table of how many times all k-mers appear in a text
 

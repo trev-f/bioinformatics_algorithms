@@ -33,9 +33,9 @@ def ba1n(config, input_file):
     """
     config.logger.info("Run CLI command to solve BA1N: Generate the d-Neighborhood of a String")
 
-    pattern_hamming_dist = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.PatternHammingDist(input_file)
+    pattern_hamming_dist = bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(input_file)
 
-    neighborhood = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.FrequentWords().find_neighbors(pattern=pattern_hamming_dist.pattern, num_allowed_mismatches=pattern_hamming_dist.hamming_dist)
+    neighborhood = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_neighbors(pattern=pattern_hamming_dist.pattern, num_allowed_mismatches=pattern_hamming_dist.hamming_dist)
     formatted_neighborhood = bioinformatics_textbook.code_challenges.inout.RosalindSubmission(neighborhood).format_rosalind_answer(sep="\n")
 
     click.echo(formatted_neighborhood)
@@ -53,9 +53,11 @@ def ba1i(config, input_file):
     """
     config.logger.info("Run command to solve BA1I: Find the Most Frequent Words with Mismatches in a String")
 
-    dataset = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.TextKmerLengthHammingDist(input_file)
+    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLengthHammingDist(
+        input_file
+    )
 
-    freq_words = bioinformatics_textbook.code_challenges.freq_words_with_mismatches.FrequentWords().find_most_freq_words_with_mismatches(
+    freq_words = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_most_freq_words_with_mismatches(
         text=dataset.text,
         kmer_length=dataset.kmer_length,
         num_allowed_mismatches=dataset.hamming_dist
@@ -177,12 +179,19 @@ def ba1b(config, input_file):
 
     https://rosalind.info/problems/ba1b/
     """
-    config.logger.info("Find the most frequent words in a string")
+    config.logger.info("Run command to solve BA1B: Find the most frequent words in a string")
 
-    most_frequent_words = bioinformatics_textbook.code_challenges.ch01.ba1b(input_file)
-    click.echo(most_frequent_words)
+    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLength(input_file)
 
-    config.logger.info("Found the most frequent words in a string")
+    most_freq_words = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_most_freq_words(
+        text=dataset.text,
+        kmer_length=dataset.kmer_length
+    )
+    formatted_freq_words = bioinformatics_textbook.code_challenges.inout.RosalindSubmission(most_freq_words).format_rosalind_answer()
+
+    click.echo(formatted_freq_words)
+
+    config.logger.info("Finished command to solve BA1B: Found the most frequent words in a string")
 
 
 @cli.command()

@@ -1,5 +1,29 @@
 import pytest
-from bioinformatics_textbook.code_challenges.freq_words_with_mismatches import FrequentWords
+from bioinformatics_textbook.code_challenges.frequent_words import FrequentWords
+
+
+@pytest.fixture
+def freq_words():
+    class FreqWords:
+        def __init__(self):
+            self.text = "ACGTTTCACGTTTTACGG"
+            self.kmer_length = 3
+
+            self.most_freq_words = ["ACG", "TTT"]
+    
+
+    yield FreqWords()
+
+
+def test_find_most_freq_words(freq_words):
+    expected_most_freq_words = freq_words.most_freq_words
+
+    actual_most_freq_words = FrequentWords().find_most_freq_words(
+        text=freq_words.text,
+        kmer_length=freq_words.kmer_length
+    )
+
+    assert actual_most_freq_words == expected_most_freq_words
 
 
 @pytest.fixture

@@ -11,7 +11,7 @@ class FrequentWords:
     def __init__(self, logger: logging.Logger = logging.getLogger(__name__)) -> None:
         self.logger = logger
 
-    
+
     def find_most_freq_words_with_mismatches(self, text: str, kmer_length: int, num_allowed_mismatches: int) -> list:
         self.logger.info("Find most frequent words.")
         # initialize empty collections and 
@@ -67,6 +67,29 @@ class FrequentWords:
                 neighborhood.add(self.slice_first_nucleotide(pattern) + suffix_neighbor)
         
         return list(neighborhood)
+    
+
+    def _construct_kmer_freq_table(self, text: str, kmer_length: int) -> dict:
+        """Construct a frequency table of how many times all k-mers appear in a text
+
+        :param text: A string of text (typically a DNA string)
+        :type text: str
+        :param k: k-mer length
+        :type k: int
+        :return: Frequency table of k-mers and their counts
+        :rtype: dict
+        """
+        freq_table = {}
+        text_length = len(text)
+
+        # slide windows of length k down the text string
+        for i in range(text_length - kmer_length + 1):
+            pattern = text[i: i + kmer_length]
+            # if a k-mer is not present in frequency table, add it and assign a value of 1,
+            # otherwise, increment the count
+            freq_table[pattern] = freq_table.get(pattern, 0) + 1
+
+        return freq_table
 
 
     def slice_suffix(self, pattern: str) -> str:
@@ -89,6 +112,19 @@ class FrequentWords:
         :rtype: str
         """
         return pattern[:1]
+
+
+    def _find_max_val_of_dict(self, d: dict) -> float:
+        """Find the max value of a dictionary
+
+        :param d: A dictionary
+        :type d: dict
+        :return: The dictionary's maximum value
+        :rtype: float
+        """
+        max_val = max(d.values())
+
+        return max_val
 
 
 class PatternHammingDist(RosalindDataset):
@@ -132,3 +168,23 @@ class TextKmerLengthHammingDist(RosalindDataset):
         self.logger.info("Text: %s+...", self.text[:10])
         self.logger.info("k-mer length: %s", self.kmer_length)
         self.logger.info("Max allowed Hamming distance: %s", self.hamming_dist)
+
+
+class TextKmerLength(RosalindDataset):
+    
+    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)):
+        super().__init__(input_file=input_file, logger=logger)
+
+        self.logger.info("Initialize object with a DNA string and k-mer length.")
+
+        self.text = self._read_not_last_line()
+        self.kmer_length = int(self._read_last_line())
+
+        self._log_init()
+    
+
+    def _log_init(self) -> None:
+        """Log attributes created during initializtion
+        """
+        self.logger.info("Text: %s+...", self.text[:10])
+        self.logger.info("k-mer length: %s", self.kmer_length)
