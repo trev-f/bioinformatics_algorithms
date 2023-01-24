@@ -49,8 +49,7 @@ class FrequentWords:
 
         # construct frequency table of k-mers with mismatches
         freq_table = {}
-        text_length = len(text)
-        for i in range(text_length - kmer_length + 1):
+        for i in range(self._compute_number_sliding_windows(text=text, kmer_length=kmer_length)):
             kmer = text[i: i+kmer_length]
             neighborhood = self.find_neighbors(kmer, num_allowed_mismatches)
             for neighbor in neighborhood:
@@ -117,7 +116,7 @@ class FrequentWords:
         text_length = len(text)
 
         # slide windows of length k down the text string
-        for i in range(text_length - kmer_length + 1):
+        for i in range(self._compute_number_sliding_windows(text, kmer_length)):
             pattern = text[i: i + kmer_length]
             # if a k-mer is not present in frequency table, add it and assign a value of 1,
             # otherwise, increment the count
@@ -159,6 +158,19 @@ class FrequentWords:
         max_val = max(d.values())
 
         return max_val
+    
+
+    def _compute_number_sliding_windows(self, text: str, kmer_length: int) -> int:
+        """Convenience method to compute the number of sliding windows down a string of text. The return value will most commonly be the input of a range constructor.
+
+        :param text: A string of text (typically a DNA string).
+        :type text: str
+        :param kmer_length: k-mer length
+        :type kmer_length: int
+        :return: The number of sliding windows to use along text.
+        :rtype: int
+        """
+        return len(text) - kmer_length + 1
 
 
 class PatternHammingDist(RosalindDataset):
