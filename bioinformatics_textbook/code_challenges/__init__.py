@@ -1,2 +1,2 @@
 import bioinformatics_textbook.code_challenges.ch01
-import bioinformatics_textbook.code_challenges.freq_words_with_mismatches
+import bioinformatics_textbook.code_challenges.frequent_words

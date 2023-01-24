@@ -181,6 +181,30 @@ class RosalindDataset:
         last_line = self._input_file.readline().decode().rstrip()
 
         return self._strip_newlines(last_line)
+
+
+    def _read_not_last_line(self) -> str:
+        """Read every line of a file except for the last line
+
+        :return: The lines.
+        :rtype: str
+        """
+        self.logger.info("Read every line of the input file except for the last line.")
+
+        self._input_file.seek(0, os.SEEK_END)
+        position = self._input_file.tell() - 1
+
+        while position > 0 and self._input_file.read(1) != b"\n":
+            position -= 1
+            self._input_file.seek(position, os.SEEK_SET)
+        
+        if position > 0:
+            self._input_file.seek(0, os.SEEK_SET)
+            not_last_lines = self._input_file.read(position).decode()
+        
+        not_last_lines_stripped = strip_newlines(not_last_lines)
+        
+        return not_last_lines_stripped
     
 
     def _strip_newlines(self, text: str) -> str:
