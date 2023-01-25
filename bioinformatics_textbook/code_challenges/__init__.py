@@ -1,32 +1,49 @@
-import click
+from bioinformatics_textbook.code_challenges.frequent_words import (
+    FrequentWords
+)
 
-import logging
+from bioinformatics_textbook.code_challenges.inout import (
+    RosalindSolution
+)
 
-import bioinformatics_textbook.code_challenges.ch01
-import bioinformatics_textbook.code_challenges.frequent_words
 
-
-class BA1N:
-
-    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
-        self.logger = logger
-        
-        self.logger.info("Create instance to solve BA1N")
-        
-        pattern_hamming_dist = (
-            bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(
-                input_file
-            )
+class BA1B(RosalindSolution):
+    def _solve_problem(self) -> str:
+        most_freq_words = FrequentWords().find_most_freq_words(
+            text=self.dataset.text,
+            kmer_length=self.dataset.kmer_length,
         )
 
-        neighborhood = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_neighbors(
-            pattern=pattern_hamming_dist.pattern,
-            num_allowed_mismatches=pattern_hamming_dist.hamming_dist,
-        )
-        formatted_neighborhood = (
-            bioinformatics_textbook.code_challenges.inout.RosalindSubmission(
-                neighborhood
-            ).format_rosalind_answer(sep="\n")
+        return self._format_rosalind_answer(most_freq_words)
+
+
+class BA1I(RosalindSolution):
+    def _solve_problem(self) -> str:
+        most_freq_words = FrequentWords().find_most_freq_words_with_mismatches(
+            text=self.dataset.text,
+            kmer_length=self.dataset.kmer_length,
+            num_allowed_mismatches=self.dataset.hamming_dist,
         )
 
-        click.echo(formatted_neighborhood)
+        return self._format_rosalind_answer(most_freq_words)
+
+
+class BA1J(RosalindSolution):
+    def _solve_problem(self) -> str:
+        most_freq_words = FrequentWords().find_most_freq_words_with_mismatches_and_rc(
+            text=self.dataset.text,
+            kmer_length=self.dataset.kmer_length,
+            num_allowed_mismatches=self.dataset.hamming_dist,
+        )
+
+        return self._format_rosalind_answer(most_freq_words)
+
+
+class BA1N(RosalindSolution):
+    def _solve_problem(self) -> str:
+        neighborhood = FrequentWords().find_neighbors(
+            pattern=self.dataset.pattern,
+            num_allowed_mismatches=self.dataset.hamming_dist,
+        )
+
+        return self._format_rosalind_answer(neighborhood, sep='\n')
