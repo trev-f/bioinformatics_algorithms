@@ -140,7 +140,6 @@ def ba1f(config, input_file):
     config.logger.info("Finished CLI command to solve BA1F")
 
 
-
 @cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
@@ -255,23 +254,7 @@ def ba1n(config, input_file):
         "Run CLI command to solve BA1N: Generate the d-Neighborhood of a String"
     )
 
-    pattern_hamming_dist = (
-        bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(
-            input_file
-        )
-    )
-
-    neighborhood = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_neighbors(
-        pattern=pattern_hamming_dist.pattern,
-        num_allowed_mismatches=pattern_hamming_dist.hamming_dist,
-    )
-    formatted_neighborhood = (
-        bioinformatics_textbook.code_challenges.inout.RosalindSubmission(
-            neighborhood
-        ).format_rosalind_answer(sep="\n")
-    )
-
-    click.echo(formatted_neighborhood)
+    bioinformatics_textbook.code_challenges.BA1N(input_file)
 
     config.logger.info(
         "Finished CLI command to solve BA1N: Generate the d-Neighborhood of a String"
