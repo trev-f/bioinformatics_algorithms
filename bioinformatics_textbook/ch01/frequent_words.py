@@ -2,7 +2,7 @@ import click
 
 import logging
 
-from bioinformatics_textbook.ch01.inout import RosalindDataset
+from bioinformatics_textbook.inout import RosalindDataset
 from bioinformatics_textbook.ch01.ch01 import (
     compute_hamming_distance, reverse_complement_dna
 )

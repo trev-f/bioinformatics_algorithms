@@ -6,7 +6,7 @@ from bioinformatics_textbook.ch01.frequent_words import (
     FrequentWords
 )
 
-from bioinformatics_textbook.ch01.inout import (
+from bioinformatics_textbook.inout import (
     RosalindSolution
 )
 

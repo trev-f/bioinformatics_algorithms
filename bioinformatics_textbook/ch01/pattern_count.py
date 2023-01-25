@@ -2,7 +2,7 @@ import logging
 
 import click
 
-from bioinformatics_textbook.ch01.inout import RosalindDataset
+from bioinformatics_textbook.inout import RosalindDataset
 
 
 class PatternCount:
