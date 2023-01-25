@@ -32,12 +32,18 @@ def ba1a(config, input_file):
 
     https://rosalind.info/problems/ba1a/
     """
-    config.logger.info("Compute the number of times a pattern appears in a text")
+    config.logger.info(
+        "Run command to solve BA1A: Compute the Number of Times a Pattern Appears in a Text"
+    )
 
-    kmer_count = bioinformatics_textbook.code_challenges.ch01.ba1a(input_file)
-    click.echo(kmer_count)
+    dataset = bioinformatics_textbook.code_challenges.pattern_count.TextPattern(
+        input_file
+    )
+    bioinformatics_textbook.code_challenges.BA1A(dataset=dataset)
 
-    config.logger.info("Computed the number of times a pattern appears in a text")
+    config.logger.info(
+        "Finished command to solve BA1A: Compute the Number of Times a Pattern Appears in a Text"
+    )
 
 
 @cli.command()
@@ -220,7 +226,9 @@ def ba1n(config, input_file):
         "Run CLI command to solve BA1N: Generate the d-Neighborhood of a String"
     )
 
-    dataset = bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(input_file)
+    dataset = bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(
+        input_file
+    )
     bioinformatics_textbook.code_challenges.BA1N(dataset=dataset)
 
     config.logger.info(

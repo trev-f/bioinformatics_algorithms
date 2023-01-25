@@ -16,16 +16,6 @@ def read_text_k(input_file: click.File) -> tuple:
     return (text, k)
 
 
-def read_text_pattern(input_file: click.File) -> tuple:
-    # get the text from all lines except the last
-    text = read_not_last_line(input_file)
-
-    # get the pattern from the last line
-    pattern = read_last_line(input_file)
-
-    return (text, pattern)
-
-
 def read_all_lines(input_file: click.File) -> str:
     """Read all lines of a file as a single string with no new lines
 

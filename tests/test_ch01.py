@@ -1,6 +1,6 @@
 from bioinformatics_textbook.code_challenges.ch01 import (
     ba1c,
-    complement_dna, construct_kmer_freq_table, count_pattern,
+    complement_dna, construct_kmer_freq_table,
     reverse_complement_dna,
     ba1d, find_starting_positions,
     ba1e, find_clumps,
@@ -303,16 +303,6 @@ def test_construct_kmer_freq_table():
     actual_freq_table = construct_kmer_freq_table(text=input_text, k = input_k)
 
     assert expected_freq_table == actual_freq_table
-
-
-def test_count_pattern():
-    input_text = "GCGCG"
-    input_pattern = "GCG"
-
-    expected_output = 2
-    actual_output = count_pattern(text=input_text, pattern=input_pattern)
-
-    assert expected_output == actual_output
 
 
 def test_format_list_for_rosalind():

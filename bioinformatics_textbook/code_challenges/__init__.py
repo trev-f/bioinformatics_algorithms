@@ -1,3 +1,7 @@
+from bioinformatics_textbook.code_challenges.pattern_count import (
+    PatternCount
+)
+
 from bioinformatics_textbook.code_challenges.frequent_words import (
     FrequentWords
 )
@@ -5,6 +9,16 @@ from bioinformatics_textbook.code_challenges.frequent_words import (
 from bioinformatics_textbook.code_challenges.inout import (
     RosalindSolution
 )
+
+
+class BA1A(RosalindSolution):
+    def _solve_problem(self) -> str:
+        kmer_count = PatternCount().count_pattern(
+            text=self.dataset.text,
+            pattern=self.dataset.pattern
+        )
+
+        return kmer_count
 
 
 class BA1B(RosalindSolution):
