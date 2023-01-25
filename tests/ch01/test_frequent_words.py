@@ -1,5 +1,5 @@
 import pytest
-from bioinformatics_textbook.code_challenges.frequent_words import FrequentWords
+from bioinformatics_textbook.ch01.frequent_words import FrequentWords
 
 
 @pytest.fixture

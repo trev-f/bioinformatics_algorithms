@@ -36,10 +36,8 @@ def ba1a(config, input_file):
         "Run command to solve BA1A: Compute the Number of Times a Pattern Appears in a Text"
     )
 
-    dataset = bioinformatics_textbook.code_challenges.pattern_count.TextPattern(
-        input_file
-    )
-    bioinformatics_textbook.code_challenges.BA1A(dataset=dataset)
+    dataset = bioinformatics_textbook.ch01.pattern_count.TextPattern(input_file)
+    bioinformatics_textbook.ch01.BA1A(dataset=dataset)
 
     config.logger.info(
         "Finished command to solve BA1A: Compute the Number of Times a Pattern Appears in a Text"
@@ -59,10 +57,8 @@ def ba1b(config, input_file):
         "Run command to solve BA1B: Find the most frequent words in a string"
     )
 
-    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLength(
-        input_file
-    )
-    bioinformatics_textbook.code_challenges.BA1B(dataset=dataset)
+    dataset = bioinformatics_textbook.ch01.frequent_words.TextKmerLength(input_file)
+    bioinformatics_textbook.ch01.BA1B(dataset=dataset)
 
     config.logger.info(
         "Finished command to solve BA1B: Found the most frequent words in a string"
@@ -80,7 +76,7 @@ def ba1c(config, input_file):
     """
     config.logger.info("Find the reverse complement of a string")
 
-    reverse_complement = bioinformatics_textbook.code_challenges.ch01.ba1c(input_file)
+    reverse_complement = bioinformatics_textbook.ch01.ch01.ba1c(input_file)
     click.echo(reverse_complement)
 
     config.logger.info("Found the reverse complement of a string")
@@ -97,7 +93,7 @@ def ba1d(config, input_file):
     """
     config.logger.info("Find all occurrences of a pattern in a string")
 
-    starting_positions = bioinformatics_textbook.code_challenges.ch01.ba1d(input_file)
+    starting_positions = bioinformatics_textbook.ch01.ch01.ba1d(input_file)
     click.echo(starting_positions)
 
     config.logger.info("Found all occurrences of a pattern in a string")
@@ -114,7 +110,7 @@ def ba1e(config, input_file):
     """
     config.logger.info("Run CLI command to solve BA1E")
 
-    clump_patterns = bioinformatics_textbook.code_challenges.ch01.ba1e(input_file)
+    clump_patterns = bioinformatics_textbook.ch01.ch01.ba1e(input_file)
     click.echo(clump_patterns)
 
     config.logger.info("Finished CLI command to solve BA1E")
@@ -130,7 +126,7 @@ def ba1f(config, input_file):
     """
     config.logger.info("Run CLI command to solve BA1F")
 
-    min_skew_positions = bioinformatics_textbook.code_challenges.ch01.ba1f(input_file)
+    min_skew_positions = bioinformatics_textbook.ch01.ch01.ba1f(input_file)
     click.echo(min_skew_positions)
 
     config.logger.info("Finished CLI command to solve BA1F")
@@ -146,7 +142,7 @@ def ba1g(config, input_file):
     """
     config.logger.info("Run CLI command to solve BA1G")
 
-    hamming_distance = bioinformatics_textbook.code_challenges.ch01.ba1g(input_file)
+    hamming_distance = bioinformatics_textbook.ch01.ch01.ba1g(input_file)
     click.echo(hamming_distance)
 
     config.logger.info("Finished CLI command to solve BA1G")
@@ -162,9 +158,7 @@ def ba1h(config, input_file):
     """
     config.logger.info("Run CLI command to solve BA1H")
 
-    approx_occurrence_positions = bioinformatics_textbook.code_challenges.ch01.ba1h(
-        input_file
-    )
+    approx_occurrence_positions = bioinformatics_textbook.ch01.ch01.ba1h(input_file)
     click.echo(approx_occurrence_positions)
 
     config.logger.info("Finished CLI command to solve BA1H")
@@ -182,10 +176,10 @@ def ba1i(config, input_file):
         "Run command to solve BA1I: Find the Most Frequent Words with Mismatches in a String"
     )
 
-    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLengthHammingDist(
+    dataset = bioinformatics_textbook.ch01.frequent_words.TextKmerLengthHammingDist(
         input_file
     )
-    bioinformatics_textbook.code_challenges.BA1I(dataset=dataset)
+    bioinformatics_textbook.ch01.BA1I(dataset=dataset)
 
     config.logger.info(
         "Finished command to solve BA1I: Find the Most Frequent Words with Mismatches in a String"
@@ -204,10 +198,10 @@ def ba1j(config, input_file):
         "Run command to solve BA1J: Find Frequent Words with Mismatches and Reverse Complements"
     )
 
-    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLengthHammingDist(
+    dataset = bioinformatics_textbook.ch01.frequent_words.TextKmerLengthHammingDist(
         input_file
     )
-    bioinformatics_textbook.code_challenges.BA1J(dataset=dataset)
+    bioinformatics_textbook.ch01.BA1J(dataset=dataset)
 
     config.logger.info(
         "Finished command to solve BA1J: Find Frequent Words with Mismatches and Reverse Complements"
@@ -226,10 +220,8 @@ def ba1n(config, input_file):
         "Run CLI command to solve BA1N: Generate the d-Neighborhood of a String"
     )
 
-    dataset = bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(
-        input_file
-    )
-    bioinformatics_textbook.code_challenges.BA1N(dataset=dataset)
+    dataset = bioinformatics_textbook.ch01.frequent_words.PatternHammingDist(input_file)
+    bioinformatics_textbook.ch01.BA1N(dataset=dataset)
 
     config.logger.info(
         "Finished CLI command to solve BA1N: Generate the d-Neighborhood of a String"

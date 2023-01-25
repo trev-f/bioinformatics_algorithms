@@ -1,4 +1,4 @@
-import bioinformatics_textbook.code_challenges.inout
+import bioinformatics_textbook.ch01.inout
 import click
 from collections import OrderedDict
 import logging
@@ -7,9 +7,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 def ba1h(input_file: click.File):
-    pattern = bioinformatics_textbook.code_challenges.inout.read_first_line(input_file)
-    text = bioinformatics_textbook.code_challenges.inout.read_second_line(input_file)
-    num_allowed_mismatches = int(bioinformatics_textbook.code_challenges.inout.read_last_line(input_file))
+    pattern = bioinformatics_textbook.ch01.inout.read_first_line(input_file)
+    text = bioinformatics_textbook.ch01.inout.read_second_line(input_file)
+    num_allowed_mismatches = int(bioinformatics_textbook.ch01.inout.read_last_line(input_file))
 
     logger.info("Pattern = %s", pattern)
     logger.info("Text = %s", text)
@@ -49,8 +49,8 @@ def find_approx_occurrence_positions(pattern: str, text: str, num_allowed_mismat
 
 
 def ba1g(input_file: click.File) -> int:
-    dna_p = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
-    dna_q = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+    dna_p = bioinformatics_textbook.ch01.inout.read_not_last_line(input_file)
+    dna_q = bioinformatics_textbook.ch01.inout.read_last_line(input_file)
 
     hamming_distance = compute_hamming_distance(dna_p, dna_q)
 
@@ -100,7 +100,7 @@ def ba1f(input_file: click.File) -> str:
     :return: The positions in a genome that minimize GC skew
     :rtype: str
     """
-    genome = bioinformatics_textbook.code_challenges.inout.read_all_lines(input_file)
+    genome = bioinformatics_textbook.ch01.inout.read_all_lines(input_file)
 
     gc_skews = define_dna_gc_skews(genome)
     min_skew_positions = find_min_skew_positions(gc_skews)
@@ -150,8 +150,8 @@ def ba1e(input_file: click.File) -> str:
     :return: A string-separated list of k-mers that form clumps
     :rtype: str
     """
-    genome = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
-    last_line = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+    genome = bioinformatics_textbook.ch01.inout.read_not_last_line(input_file)
+    last_line = bioinformatics_textbook.ch01.inout.read_last_line(input_file)
     k, L, t = [int(element) for element in last_line.split(" ")]
 
     clump_patterns = find_clumps(genome, k, L, t)
@@ -195,8 +195,8 @@ def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_fr
 
 
 def ba1d(input_file: click.File) -> str:
-    pattern = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
-    genome = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+    pattern = bioinformatics_textbook.ch01.inout.read_not_last_line(input_file)
+    genome = bioinformatics_textbook.ch01.inout.read_last_line(input_file)
 
     starting_positions = find_starting_positions(pattern, genome)
     formatted_starting_positions = format_list_for_rosalind(starting_positions)
@@ -234,7 +234,7 @@ def ba1c(input_file: click.File) -> str:
     :return: The reverse complement of the DNA string
     :rtype: str
     """
-    dna_string = bioinformatics_textbook.code_challenges.inout.read_all_lines(input_file)
+    dna_string = bioinformatics_textbook.ch01.inout.read_all_lines(input_file)
 
     reverse_complement = reverse_complement_dna(dna_string)
 

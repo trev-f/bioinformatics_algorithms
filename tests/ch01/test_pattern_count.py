@@ -1,5 +1,5 @@
 import pytest
-from bioinformatics_textbook.code_challenges.pattern_count import PatternCount
+from bioinformatics_textbook.ch01.pattern_count import PatternCount
 
 
 @pytest.fixture

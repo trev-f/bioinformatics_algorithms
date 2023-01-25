@@ -1,1 +1,1 @@
-import bioinformatics_textbook.code_challenges
+import bioinformatics_textbook.ch01

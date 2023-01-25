@@ -1,4 +1,4 @@
-from bioinformatics_textbook.code_challenges.ch01 import (
+from bioinformatics_textbook.ch01.ch01 import (
     ba1c,
     complement_dna, construct_kmer_freq_table,
     reverse_complement_dna,

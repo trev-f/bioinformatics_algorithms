@@ -1,12 +1,12 @@
-from bioinformatics_textbook.code_challenges.pattern_count import (
+from bioinformatics_textbook.ch01.pattern_count import (
     PatternCount
 )
 
-from bioinformatics_textbook.code_challenges.frequent_words import (
+from bioinformatics_textbook.ch01.frequent_words import (
     FrequentWords
 )
 
-from bioinformatics_textbook.code_challenges.inout import (
+from bioinformatics_textbook.ch01.inout import (
     RosalindSolution
 )
 
