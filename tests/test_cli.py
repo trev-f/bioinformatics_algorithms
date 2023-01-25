@@ -51,6 +51,18 @@ def test_ba1g():
     assert result.output.rstrip() == "3"
 
 
+def test_ba1h():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["ba1h", "tests/datasets/ch01/ba1h_sample_dataset.txt"])
+    
+    assert result.exit_code == 0
+
+    expected_freq_words = set("6 7 26 27 78".split(" "))
+    actual_freq_words = set(result.output.rstrip().split(" "))
+
+    assert expected_freq_words == actual_freq_words
+
+
 def test_ba1i():
     runner = CliRunner()
     result = runner.invoke(cli, ["ba1i", "tests/datasets/ch01/ba1i_sample_dataset.txt"])
