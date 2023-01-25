@@ -26,159 +26,6 @@ def cli(config, verbose):
 @cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
-def ba1n(config, input_file):
-    """Program to solve Rosalind problem BA1N: Generate the d-Neighborhood of a String
-
-    https://rosalind.info/problems/ba1n/
-    """
-    config.logger.info(
-        "Run CLI command to solve BA1N: Generate the d-Neighborhood of a String"
-    )
-
-    pattern_hamming_dist = (
-        bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(
-            input_file
-        )
-    )
-
-    neighborhood = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_neighbors(
-        pattern=pattern_hamming_dist.pattern,
-        num_allowed_mismatches=pattern_hamming_dist.hamming_dist,
-    )
-    formatted_neighborhood = (
-        bioinformatics_textbook.code_challenges.inout.RosalindSubmission(
-            neighborhood
-        ).format_rosalind_answer(sep="\n")
-    )
-
-    click.echo(formatted_neighborhood)
-
-    config.logger.info(
-        "Finished CLI command to solve BA1N: Generate the d-Neighborhood of a String"
-    )
-
-
-@cli.command()
-@click.argument("input_file", type=click.File("rb"))
-@pass_config
-def ba1i(config, input_file):
-    """Program to solve Rosalind problem BA1I: Find the Most Frequent Words with Mismatches in a String
-
-    https://rosalind.info/problems/ba1i/
-    """
-    config.logger.info(
-        "Run command to solve BA1I: Find the Most Frequent Words with Mismatches in a String"
-    )
-
-    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLengthHammingDist(
-        input_file
-    )
-
-    freq_words = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_most_freq_words_with_mismatches(
-        text=dataset.text,
-        kmer_length=dataset.kmer_length,
-        num_allowed_mismatches=dataset.hamming_dist,
-    )
-    formatted_freq_words = (
-        bioinformatics_textbook.code_challenges.inout.RosalindSubmission(
-            freq_words
-        ).format_rosalind_answer()
-    )
-
-    click.echo(formatted_freq_words)
-
-    config.logger.info(
-        "Finished command to solve BA1I: Find the Most Frequent Words with Mismatches in a String"
-    )
-
-
-@cli.command()
-@click.argument("input_file", type=click.File("rb"))
-@pass_config
-def ba1h(config, input_file):
-    """Program to solve Rosalind problem BA1H: Find All Approximate Occurrences of a Pattern in a String
-
-    https://rosalind.info/problems/ba1h/
-    """
-    config.logger.info("Run CLI command to solve BA1H")
-
-    approx_occurrence_positions = bioinformatics_textbook.code_challenges.ch01.ba1h(
-        input_file
-    )
-    click.echo(approx_occurrence_positions)
-
-    config.logger.info("Finished CLI command to solve BA1H")
-
-
-@cli.command()
-@click.argument("input_file", type=click.File("rb"))
-@pass_config
-def ba1g(config, input_file):
-    """Program to solve Rosalind problem BA1G: Compute the Hamming Distance Between Two Strings
-
-    https://rosalind.info/problems/ba1g/
-    """
-    config.logger.info("Run CLI command to solve BA1G")
-
-    hamming_distance = bioinformatics_textbook.code_challenges.ch01.ba1g(input_file)
-    click.echo(hamming_distance)
-
-    config.logger.info("Finished CLI command to solve BA1G")
-
-
-@cli.command()
-@click.argument("input_file", type=click.File("r"))
-@pass_config
-def ba1f(config, input_file):
-    """Program to solve Rosalind problem BA1F: Find a Position in a Genome Minimizing the Skew.
-
-    https://rosalind.info/problems/ba1f/
-    """
-    config.logger.info("Run CLI command to solve BA1F")
-
-    min_skew_positions = bioinformatics_textbook.code_challenges.ch01.ba1f(input_file)
-    click.echo(min_skew_positions)
-
-    config.logger.info("Finished CLI command to solve BA1F")
-
-
-@cli.command()
-@click.argument("input_file", type=click.File("rb"))
-@pass_config
-def ba1e(config, input_file):
-    """
-    Program to solve Rosalind problem BA1E: Find Patterns Forming Clumps in a String
-
-    https://rosalind.info/problems/ba1e/
-    """
-    config.logger.info("Run CLI command to solve BA1E")
-
-    clump_patterns = bioinformatics_textbook.code_challenges.ch01.ba1e(input_file)
-    click.echo(clump_patterns)
-
-    config.logger.info("Finished CLI command to solve BA1E")
-
-
-@cli.command()
-@click.argument("input_file", type=click.File("rb"))
-@pass_config
-def ba1d(config, input_file):
-    """
-    Program to solve Rosalind problem BA1D: Find All Occurrences of a Pattern in a String
-
-    https://rosalind.info/problems/ba1d/
-    """
-    config.logger.info("Find all occurrences of a pattern in a string")
-
-    starting_positions = bioinformatics_textbook.code_challenges.ch01.ba1d(input_file)
-    click.echo(starting_positions)
-
-    config.logger.info("Found all occurrences of a pattern in a string")
-
-
-@cli.command()
-@click.argument("input_file", type=click.File("rb"))
-@pass_config
 def ba1a(config, input_file):
     """
     Program to solve Rosalind problem BA1A: Compute the Number of Times a Pattern Appears in a Text
@@ -246,6 +93,125 @@ def ba1c(config, input_file):
 @cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
+def ba1d(config, input_file):
+    """
+    Program to solve Rosalind problem BA1D: Find All Occurrences of a Pattern in a String
+
+    https://rosalind.info/problems/ba1d/
+    """
+    config.logger.info("Find all occurrences of a pattern in a string")
+
+    starting_positions = bioinformatics_textbook.code_challenges.ch01.ba1d(input_file)
+    click.echo(starting_positions)
+
+    config.logger.info("Found all occurrences of a pattern in a string")
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1e(config, input_file):
+    """
+    Program to solve Rosalind problem BA1E: Find Patterns Forming Clumps in a String
+
+    https://rosalind.info/problems/ba1e/
+    """
+    config.logger.info("Run CLI command to solve BA1E")
+
+    clump_patterns = bioinformatics_textbook.code_challenges.ch01.ba1e(input_file)
+    click.echo(clump_patterns)
+
+    config.logger.info("Finished CLI command to solve BA1E")
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("r"))
+@pass_config
+def ba1f(config, input_file):
+    """Program to solve Rosalind problem BA1F: Find a Position in a Genome Minimizing the Skew.
+
+    https://rosalind.info/problems/ba1f/
+    """
+    config.logger.info("Run CLI command to solve BA1F")
+
+    min_skew_positions = bioinformatics_textbook.code_challenges.ch01.ba1f(input_file)
+    click.echo(min_skew_positions)
+
+    config.logger.info("Finished CLI command to solve BA1F")
+
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1g(config, input_file):
+    """Program to solve Rosalind problem BA1G: Compute the Hamming Distance Between Two Strings
+
+    https://rosalind.info/problems/ba1g/
+    """
+    config.logger.info("Run CLI command to solve BA1G")
+
+    hamming_distance = bioinformatics_textbook.code_challenges.ch01.ba1g(input_file)
+    click.echo(hamming_distance)
+
+    config.logger.info("Finished CLI command to solve BA1G")
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1h(config, input_file):
+    """Program to solve Rosalind problem BA1H: Find All Approximate Occurrences of a Pattern in a String
+
+    https://rosalind.info/problems/ba1h/
+    """
+    config.logger.info("Run CLI command to solve BA1H")
+
+    approx_occurrence_positions = bioinformatics_textbook.code_challenges.ch01.ba1h(
+        input_file
+    )
+    click.echo(approx_occurrence_positions)
+
+    config.logger.info("Finished CLI command to solve BA1H")
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1i(config, input_file):
+    """Program to solve Rosalind problem BA1I: Find the Most Frequent Words with Mismatches in a String
+
+    https://rosalind.info/problems/ba1i/
+    """
+    config.logger.info(
+        "Run command to solve BA1I: Find the Most Frequent Words with Mismatches in a String"
+    )
+
+    dataset = bioinformatics_textbook.code_challenges.frequent_words.TextKmerLengthHammingDist(
+        input_file
+    )
+
+    freq_words = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_most_freq_words_with_mismatches(
+        text=dataset.text,
+        kmer_length=dataset.kmer_length,
+        num_allowed_mismatches=dataset.hamming_dist,
+    )
+    formatted_freq_words = (
+        bioinformatics_textbook.code_challenges.inout.RosalindSubmission(
+            freq_words
+        ).format_rosalind_answer()
+    )
+
+    click.echo(formatted_freq_words)
+
+    config.logger.info(
+        "Finished command to solve BA1I: Find the Most Frequent Words with Mismatches in a String"
+    )
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
 def ba1j(config, input_file):
     """Program to solve Rosalind problem BA1J: Find Frequent Words with Mismatches and Reverse Complements
 
@@ -274,6 +240,41 @@ def ba1j(config, input_file):
 
     config.logger.info(
         "Finished command to solve BA1J: Find Frequent Words with Mismatches and Reverse Complements"
+    )
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba1n(config, input_file):
+    """Program to solve Rosalind problem BA1N: Generate the d-Neighborhood of a String
+
+    https://rosalind.info/problems/ba1n/
+    """
+    config.logger.info(
+        "Run CLI command to solve BA1N: Generate the d-Neighborhood of a String"
+    )
+
+    pattern_hamming_dist = (
+        bioinformatics_textbook.code_challenges.frequent_words.PatternHammingDist(
+            input_file
+        )
+    )
+
+    neighborhood = bioinformatics_textbook.code_challenges.frequent_words.FrequentWords().find_neighbors(
+        pattern=pattern_hamming_dist.pattern,
+        num_allowed_mismatches=pattern_hamming_dist.hamming_dist,
+    )
+    formatted_neighborhood = (
+        bioinformatics_textbook.code_challenges.inout.RosalindSubmission(
+            neighborhood
+        ).format_rosalind_answer(sep="\n")
+    )
+
+    click.echo(formatted_neighborhood)
+
+    config.logger.info(
+        "Finished CLI command to solve BA1N: Generate the d-Neighborhood of a String"
     )
 
 
