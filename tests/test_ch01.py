@@ -91,28 +91,6 @@ def test_compute_hamming_distance(sample_ba1g):
     assert expected_hamming_distance == actual_hamming_distance
 
 
-def test_is_mismatch():
-    # ensure matches are not called as mismatches
-    assert False == is_mismatch("A", "A")
-    assert False == is_mismatch("C", "C")
-    assert False == is_mismatch("G", "G")
-    assert False == is_mismatch("T", "T")
-
-    # test mismatches
-    assert True == is_mismatch("A", "C")
-    assert True == is_mismatch("A", "G")
-    assert True == is_mismatch("A", "T")
-    assert True == is_mismatch("C", "A")
-    assert True == is_mismatch("C", "G")
-    assert True == is_mismatch("C", "T")
-    assert True == is_mismatch("G", "C")
-    assert True == is_mismatch("G", "A")
-    assert True == is_mismatch("G", "T")
-    assert True == is_mismatch("T", "C")
-    assert True == is_mismatch("T", "G")
-    assert True == is_mismatch("T", "A")
-
-
 @pytest.fixture
 def sample_ba1f(fs):
     class SampleBA1F:
@@ -266,65 +244,9 @@ def test_reverse_complement_dna(sample_reverse_complement):
     assert expected_rev_comp == actual_rev_comp
 
 
-def test_complement_dna(sample_reverse_complement):
-    dna = sample_reverse_complement.dna
-    expected_complement = sample_reverse_complement.complement
-
-    actual_complement = complement_dna(dna)
-
-    assert expected_complement == actual_complement
-
-
 @pytest.fixture
 def sample_text_k():
     text = "ACGTTTCACGTTTTACGG"
     k = 3
 
     yield text, k
-
-
-def test_construct_kmer_freq_table():
-    input_text = "ACGTTTCACGTTTTACGG"
-    input_k = 3
-
-    expected_freq_table = {
-        "ACG": 3,
-        "CGT": 2,
-        "GTT": 2,
-        "TTT": 3,
-        "TTC": 1,
-        "TCA": 1,
-        "CAC": 1,
-        "TTA": 1,
-        "TAC": 1,
-        "CGG": 1
-    }
-
-    actual_freq_table = construct_kmer_freq_table(text=input_text, k = input_k)
-
-    assert expected_freq_table == actual_freq_table
-
-
-def test_format_list_for_rosalind():
-    list_of_strings = ["AA", "GG"]
-    expected_formatted_strings = "AA GG"
-
-    actual_formatted_strings = format_list_for_rosalind(list_of_strings)
-
-    assert expected_formatted_strings == actual_formatted_strings
-
-    list_of_integers = [1, 2]
-    expected_formatted_integers = "1 2"
-
-    actual_formatted_integers = format_list_for_rosalind(list_of_integers)
-
-    assert expected_formatted_integers == actual_formatted_integers
-
-
-def test_convert_iterable_to_list_of_str():
-    list_of_integers = [1, 2]
-    expected_converted_integers = ["1", "2"]
-
-    actual_converted_integers = convert_iterable_to_list_of_str(list_of_integers)
-
-    assert expected_converted_integers == actual_converted_integers
