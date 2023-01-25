@@ -1,3 +1,7 @@
+from bioinformatics_textbook.inout import (
+    RosalindSolution
+)
+
 from bioinformatics_textbook.ch01.pattern_count import (
     PatternCount
 )
@@ -6,9 +10,7 @@ from bioinformatics_textbook.ch01.frequent_words import (
     FrequentWords
 )
 
-from bioinformatics_textbook.inout import (
-    RosalindSolution
-)
+from bioinformatics_textbook.ch01.reverse_complement import ReverseComplement
 
 
 class BA1A(RosalindSolution):
@@ -29,6 +31,13 @@ class BA1B(RosalindSolution):
         )
 
         return self._format_rosalind_answer(most_freq_words)
+
+
+class BA1C(RosalindSolution):
+    def _solve_problem(self) -> str:
+        rev_comp = ReverseComplement().reverse_complement_dna(dna=self.dataset.pattern)
+
+        return rev_comp
 
 
 class BA1I(RosalindSolution):

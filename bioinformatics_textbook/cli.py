@@ -76,8 +76,8 @@ def ba1c(config, input_file):
     """
     config.logger.info("Find the reverse complement of a string")
 
-    reverse_complement = bioinformatics_textbook.ch01.ch01.ba1c(input_file)
-    click.echo(reverse_complement)
+    dataset = bioinformatics_textbook.ch01.reverse_complement.Pattern(input_file)
+    bioinformatics_textbook.ch01.BA1C(dataset=dataset)
 
     config.logger.info("Found the reverse complement of a string")
 

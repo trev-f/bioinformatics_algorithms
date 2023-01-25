@@ -1,7 +1,4 @@
 from bioinformatics_textbook.ch01.ch01 import (
-    ba1c,
-    complement_dna, construct_kmer_freq_table,
-    reverse_complement_dna,
     ba1d, find_starting_positions,
     ba1e, find_clumps,
     ba1f, find_min_skew_positions, define_dna_gc_skews,
@@ -210,38 +207,6 @@ def test_find_starting_positions(sample_pattern_matching):
     actual_positions = find_starting_positions(pattern, genome)
 
     assert expected_positions == actual_positions
-
-
-@pytest.fixture
-def sample_reverse_complement():
-    class SampleReverseComplement:
-        def __init__(self):
-            self.dna = "AAAACCCGGT"
-            self.complement = "TTTTGGGCCA"
-            self.reverse_complement = "ACCGGGTTTT"
-
-            self.dataset_path = "tests/datasets/ch01/ba1c_sample_dataset.txt"
-    
-    yield SampleReverseComplement()
-
-
-def test_ba1c(sample_reverse_complement):
-    input_file = sample_reverse_complement.dataset_path
-    expected_rev_comp = sample_reverse_complement.reverse_complement
-
-    with click.open_file(input_file, "r") as file:
-        actual_rev_comp = ba1c(file)
-    
-    assert expected_rev_comp == actual_rev_comp
-
-
-def test_reverse_complement_dna(sample_reverse_complement):
-    dna = sample_reverse_complement.dna
-    expected_rev_comp = sample_reverse_complement.reverse_complement
-
-    actual_rev_comp = reverse_complement_dna(dna)
-
-    assert expected_rev_comp == actual_rev_comp
 
 
 @pytest.fixture
