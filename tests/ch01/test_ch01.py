@@ -200,11 +200,3 @@ def test_find_starting_positions(sample_pattern_matching):
     actual_positions = find_starting_positions(pattern, genome)
 
     assert expected_positions == actual_positions
-
-
-@pytest.fixture
-def sample_text_k():
-    text = "ACGTTTCACGTTTTACGG"
-    k = 3
-
-    yield text, k
