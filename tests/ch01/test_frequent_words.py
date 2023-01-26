@@ -1,19 +1,20 @@
 import pytest
+
+from dataclasses import dataclass
+
 from bioinformatics_textbook.ch01.frequent_words import FrequentWords
 
 
 @pytest.fixture
 def freq_words():
-    class FreqWords:
-        def __init__(self):
-            self.text = "ACGTTTCACGTTTTACGG"
-            self.kmer_length = 3
+    @dataclass
+    class Sample:
+        text = "ACGTTTCACGTTTTACGG"
+        kmer_length = 3
+        most_freq_words = ["ACG", "TTT"]
 
-            self.most_freq_words = ["ACG", "TTT"]
-    
-
-    yield FreqWords()
-
+    yield Sample()
+       
 
 def test_find_most_freq_words(freq_words):
     expected_most_freq_words = freq_words.most_freq_words
@@ -28,16 +29,14 @@ def test_find_most_freq_words(freq_words):
 
 @pytest.fixture
 def freq_words_mismatches():
-    class FreqWordsMismatches:
-        def __init__(self):
-            self.text = "AACAAGCTGATAAACATTTAAAGAG"
-            self.kmer_length = 5
-            self.num_allowed_mismatches = 1
+    @dataclass
+    class Sample:
+        text = "AACAAGCTGATAAACATTTAAAGAG"
+        kmer_length = 5
+        num_allowed_mismatches = 1
+        most_freq_kmers = ["AAAAA"]
 
-            self.most_freq_kmers = ["AAAAA"]
-    
-
-    yield FreqWordsMismatches()
+    yield Sample()
 
 
 def test_find_most_freq_words_with_mismatches(freq_words_mismatches):

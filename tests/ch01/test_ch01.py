@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from bioinformatics_textbook.ch01.ch01 import (
     ba1d, find_starting_positions,
     ba1e, find_clumps,
@@ -11,21 +13,19 @@ import pytest
 
 @pytest.fixture
 def sample_ba1h(fs):
-    class SampleBA1H:
-        def __init__(self):
-            self.pattern = "AAAAA"
-            self.text = "AACAAGCTGATAAACATTTAAAGAG"
-            self.num_allowed_mismatches = 1
-            self.approx_occurrence_positions = [0, 9, 11, 19]
+    @dataclass
+    class Sample:
+        pattern = "AAAAA"
+        text = "AACAAGCTGATAAACATTTAAAGAG"
+        num_allowed_mismatches = 1
+        approx_occurrence_positions = [0, 9, 11, 19]
+        sample_dataset = fs.create_file(
+            "sample_dataset.txt",
+            contents="ATTCTGGA\nCGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC\n3\n"
+        )
+        sample_output = "6 7 26 27 78"
 
-            self.sample_dataset = fs.create_file(
-                "sample_dataset.txt",
-                contents="ATTCTGGA\nCGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC\n3\n"
-            )
-            self.sample_output = "6 7 26 27 78"
-
-
-    yield SampleBA1H()
+    yield Sample()
 
 
 def test_ba1h(sample_ba1h):
@@ -51,20 +51,18 @@ def test_find_approx_occurrence_positions(sample_ba1h):
 
 @pytest.fixture
 def sample_ba1g(fs):
-    class SampleBA1G:
-        def __init__(self):
-            self.dna_p = "CGAAT"
-            self.dna_q = "CGGAC"
-            self.hamming_distance = 2
+    @dataclass
+    class Sample:
+        dna_q = "CGGAC"
+        hamming_distance = 2
+        dna_p = "CGAAT"
+        sample_dataset = fs.create_file(
+            "sample_dataset.txt",
+            contents="GGGCCGTTGGT\nGGACCGTTGAC\n"
+        )
+        sample_output = 3
 
-            self.sample_dataset = fs.create_file(
-                "sample_dataset.txt",
-                contents="GGGCCGTTGGT\nGGACCGTTGAC\n"
-            )
-            self.sample_output = 3
-
-
-    yield SampleBA1G()
+    yield Sample()
 
 
 def test_ba1g(sample_ba1g):
@@ -89,20 +87,19 @@ def test_compute_hamming_distance(sample_ba1g):
 
 @pytest.fixture
 def sample_ba1f(fs):
-    class SampleBA1F:
-        def __init__(self):
-            self.genome = "CATGGGCATCGGCCATACGCC"
-            self.skews = [int(skew) for skew in "0 -1 -1 -1 0 1 2 1 1 1 0 1 2 1 0 0 0 0 -1 0 -1 -2".split()]
-            self.min_skew_positions = [21]
+    @dataclass
+    class Sample:
+        genome = "CATGGGCATCGGCCATACGCC"
+        skews = [int(skew) for skew in "0 -1 -1 -1 0 1 2 1 1 1 0 1 2 1 0 0 0 0 -1 0 -1 -2".split()]
+        min_skew_positions = [21]
 
-            self.sample_dataset = fs.create_file(
-                "sample_dataset.txt",
-                contents = "CCTATCGGTGGATTAGCATGTCCCTGTACGTTTCGCCGCGAACTAGTTCACACGGCTTGATGGCAAATGGTTTTTCCGGCGACCGTAATCGTCCACCGAG\n"
-            )
-            self.sample_output = "53 97"
-
+        sample_dataset = fs.create_file(
+            "sample_dataset.txt",
+            contents = "CCTATCGGTGGATTAGCATGTCCCTGTACGTTTCGCCGCGAACTAGTTCACACGGCTTGATGGCAAATGGTTTTTCCGGCGACCGTAATCGTCCACCGAG\n"
+        )
+        sample_output = "53 97"
     
-    yield SampleBA1F()
+    yield Sample()
 
 
 def test_ba1f(sample_ba1f):
@@ -135,21 +132,19 @@ def test_define_dna_gc_skews(sample_ba1f):
 
 @pytest.fixture
 def sample_ba1e(fs):
-    class SampleBA1E:
-        def __init__(self):
-            self.genome = "CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC"
-            self.k = 5
-            self.L = 75
-            self.t = 4
-
-            self.fake_file = fs.create_file(
-                "sample_dataset.txt",
-                contents="CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC\n5 75 4\n"
-            )
-
-            self.sample_output = "CGACA GAAGA AATGT"
+    @dataclass
+    class Sample:
+        genome = "CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC"
+        k = 5
+        L = 75
+        t = 4
+        fake_file = fs.create_file(
+            "sample_dataset.txt",
+            contents="CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC\n5 75 4\n"
+        )
+        sample_output = "CGACA GAAGA AATGT"
     
-    yield SampleBA1E()
+    yield Sample()
 
 
 def test_ba1e(sample_ba1e):
@@ -176,16 +171,15 @@ def test_find_clumps(sample_ba1e):
 
 @pytest.fixture
 def sample_pattern_matching(fs):
-    class SamplePatternMatching:
-        def __init__(self):
-            self.pattern = "ATAT"
-            self.genome = "GATATATGCATATACTT"
-            self.positions = "1 3 9"
-            self.positions_list = [1, 3, 9]
-
-            self.fake_file = fs.create_file("file.txt", contents="ATAT\nGATATATGCATATACTT\n")
+    @dataclass
+    class Sample:
+        pattern = "ATAT"
+        genome = "GATATATGCATATACTT"
+        positions = "1 3 9"
+        positions_list = [1, 3, 9]
+        fake_file = fs.create_file("file.txt", contents="ATAT\nGATATATGCATATACTT\n")
     
-    yield SamplePatternMatching()
+    yield Sample()
 
 
 def test_ba1d(sample_pattern_matching):

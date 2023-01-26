@@ -1,4 +1,5 @@
 import pytest
+
 from dataclasses import dataclass
 
 from bioinformatics_textbook.ch01.reverse_complement import ReverseComplement
@@ -7,8 +8,8 @@ from bioinformatics_textbook.ch01.reverse_complement import ReverseComplement
 def sample_reverse_complement():
     @dataclass
     class SampleReverseComplement:
-        dna: str = "AAAACCCGGT"
-        reverse_complement: str = "ACCGGGTTTT"
+        dna = "AAAACCCGGT"
+        reverse_complement = "ACCGGGTTTT"
 
     yield SampleReverseComplement()
 

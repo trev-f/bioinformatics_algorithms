@@ -1,18 +1,19 @@
 import pytest
+
+from dataclasses import dataclass
+
 from bioinformatics_textbook.ch01.pattern_count import PatternCount
 
 
 @pytest.fixture
 def pattern_counts():
-    class CountPattern:
-        def __init__(self):
-            self.text = "GCGCG"
-            self.pattern = "GCG"
+    @dataclass
+    class Sample:
+        text = "GCGCG"
+        pattern = "GCG"
+        counts = 2
 
-            self.counts = 2
-
-    
-    yield CountPattern()
+    yield Sample()
 
 
 def test_count_pattern(pattern_counts):
