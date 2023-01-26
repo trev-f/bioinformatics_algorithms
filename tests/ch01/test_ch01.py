@@ -2,9 +2,8 @@ from bioinformatics_textbook.ch01.ch01 import (
     ba1d, find_starting_positions,
     ba1e, find_clumps,
     ba1f, find_min_skew_positions, define_dna_gc_skews,
-    ba1g, compute_hamming_distance, is_mismatch,
-    ba1h, find_approx_occurrence_positions,
-    convert_iterable_to_list_of_str, format_list_for_rosalind
+    ba1g, compute_hamming_distance,
+    ba1h, find_approx_occurrence_positions
 )
 import click
 import pytest
