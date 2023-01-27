@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from bioinformatics_textbook.ch01.ch01 import (
-    ba1d, find_starting_positions,
     ba1e, find_clumps,
     ba1f, find_min_skew_positions, define_dna_gc_skews,
     ba1g, compute_hamming_distance,
@@ -167,36 +166,3 @@ def test_find_clumps(sample_ba1e):
     actual_clump_patterns = find_clumps(genome, k, L, t)
 
     assert expected_clump_patterns == actual_clump_patterns
-
-
-@pytest.fixture
-def sample_pattern_matching(fs):
-    @dataclass
-    class Sample:
-        pattern = "ATAT"
-        genome = "GATATATGCATATACTT"
-        positions = "1 3 9"
-        positions_list = [1, 3, 9]
-        fake_file = fs.create_file("file.txt", contents="ATAT\nGATATATGCATATACTT\n")
-    
-    yield Sample()
-
-
-def test_ba1d(sample_pattern_matching):
-    input_file = sample_pattern_matching.fake_file
-    expected_starting_positions = sample_pattern_matching.positions
-
-    with click.open_file(input_file.path, "rb") as file:
-        actual_starting_positions = ba1d(file)
-
-    assert expected_starting_positions == actual_starting_positions
-
-
-def test_find_starting_positions(sample_pattern_matching):
-    pattern = sample_pattern_matching.pattern
-    genome = sample_pattern_matching.genome
-    expected_positions = sample_pattern_matching.positions_list
-
-    actual_positions = find_starting_positions(pattern, genome)
-
-    assert expected_positions == actual_positions

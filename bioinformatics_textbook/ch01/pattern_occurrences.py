@@ -5,7 +5,7 @@ import click
 from bioinformatics_textbook.inout import RosalindDataset
 
 
-class PatternCount:
+class PatternOccurrences:
 
     def __init__(self, logger: logging.Logger = logging.getLogger(__name__)) -> None:
         self.logger = logger
@@ -30,6 +30,28 @@ class PatternCount:
                 number_kmer_appearances += 1
 
         return number_kmer_appearances
+    
+
+    def find_starting_positions(self, pattern: str, genome: str) -> list:
+        """Find all occurrences of a pattern (k-mer) in a string (genome)
+
+        :param pattern: A k-mer sequence
+        :type pattern: str
+        :param genome: A DNA string (genome)
+        :type genome: str
+        :return: Starting positions of each occurrence of pattern in genome
+        :rtype: list
+        """
+        k = len(pattern)
+        genome_length = len(genome)
+
+        starting_positions = []
+        for i in range(genome_length - k + 1):
+            window = genome[i: i + k]
+            if window == pattern:
+                starting_positions.append(i)
+
+        return starting_positions
 
 
 class TextPattern(RosalindDataset):
@@ -49,3 +71,22 @@ class TextPattern(RosalindDataset):
         """
         self.logger.info("Text: %s+...", self.text[:10])
         self.logger.info("Pattern: %s", self.pattern)
+
+
+class PatternGenome(RosalindDataset):
+    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        super().__init__(input_file=input_file, logger=logger)
+
+        self.logger.info("Initialize object with a pattern (k-mer) and genome.")
+
+        self.pattern = self._read_not_last_line()
+        self.genome = self._read_last_line()
+
+        self._log_init()
+
+    
+    def _log_init(self) -> None:
+        """Log attributes created during initialization
+        """
+        self.logger.info("Pattern: %s", self.pattern)
+        self.logger.info("Pattern: %s+...", self.genome[:10])

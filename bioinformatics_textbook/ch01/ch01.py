@@ -194,38 +194,6 @@ def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_fr
     return formatted_clump_patterns
 
 
-def ba1d(input_file: click.File) -> str:
-    pattern = bioinformatics_textbook.inout.read_not_last_line(input_file)
-    genome = bioinformatics_textbook.inout.read_last_line(input_file)
-
-    starting_positions = find_starting_positions(pattern, genome)
-    formatted_starting_positions = format_list_for_rosalind(starting_positions)
-
-    return formatted_starting_positions
-
-
-def find_starting_positions(pattern: str, genome: str) -> list:
-    """Find all occurrences of a pattern (k-mer) in a string (genome)
-
-    :param pattern: A k-mer sequence
-    :type pattern: str
-    :param genome: A DNA string (genome)
-    :type genome: str
-    :return: Starting positions of each occurrence of pattern in genome
-    :rtype: list
-    """
-    k = len(pattern)
-    genome_length = len(genome)
-
-    starting_positions = []
-    for i in range(genome_length - k + 1):
-        window = genome[i: i + k]
-        if window == pattern:
-            starting_positions.append(i)
-
-    return starting_positions
-
-
 def construct_kmer_freq_table(text: str, k: int) -> dict:
     """Construct a frequency table of how many times all k-mers appear in a text
 

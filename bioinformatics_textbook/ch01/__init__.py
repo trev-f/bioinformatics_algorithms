@@ -2,8 +2,8 @@ from bioinformatics_textbook.inout import (
     RosalindSolution
 )
 
-from bioinformatics_textbook.ch01.pattern_count import (
-    PatternCount
+from bioinformatics_textbook.ch01.pattern_occurrences import (
+    PatternOccurrences
 )
 
 from bioinformatics_textbook.ch01.frequent_words import (
@@ -15,7 +15,7 @@ from bioinformatics_textbook.ch01.reverse_complement import ReverseComplement
 
 class BA1A(RosalindSolution):
     def _solve_problem(self) -> str:
-        kmer_count = PatternCount().count_pattern(
+        kmer_count = PatternOccurrences().count_pattern(
             text=self.dataset.text,
             pattern=self.dataset.pattern
         )
@@ -38,6 +38,14 @@ class BA1C(RosalindSolution):
         rev_comp = ReverseComplement().reverse_complement_dna(dna=self.dataset.pattern)
 
         return rev_comp
+
+
+class BA1D(RosalindSolution):
+    def _solve_problem(self) -> str:
+        starting_positions = PatternOccurrences().find_starting_positions(pattern=self.dataset.pattern, genome=self.dataset.genome)
+        starting_positions = self._convert_iterable_to_list_of_str(starting_positions)
+        
+        return self._format_rosalind_answer(starting_positions)
 
 
 class BA1I(RosalindSolution):

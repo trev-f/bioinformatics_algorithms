@@ -36,7 +36,7 @@ def ba1a(config, input_file):
         "Run command to solve BA1A: Compute the Number of Times a Pattern Appears in a Text"
     )
 
-    dataset = bioinformatics_textbook.ch01.pattern_count.TextPattern(input_file)
+    dataset = bioinformatics_textbook.ch01.pattern_occurrences.TextPattern(input_file)
     bioinformatics_textbook.ch01.BA1A(dataset=dataset)
 
     config.logger.info(
@@ -93,8 +93,8 @@ def ba1d(config, input_file):
     """
     config.logger.info("Find all occurrences of a pattern in a string")
 
-    starting_positions = bioinformatics_textbook.ch01.ch01.ba1d(input_file)
-    click.echo(starting_positions)
+    dataset = bioinformatics_textbook.ch01.pattern_occurrences.PatternGenome(input_file)
+    bioinformatics_textbook.ch01.BA1D(dataset=dataset)
 
     config.logger.info("Found all occurrences of a pattern in a string")
 
