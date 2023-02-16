@@ -4,9 +4,6 @@ import click
 
 from bioinformatics_textbook.inout import RosalindDataset
 from bioinformatics_textbook.dna import DNA
-from bioinformatics_textbook.ch01.ch01 import (
-    compute_hamming_distance
-)
 
 
 class FrequentWords:
@@ -53,8 +50,8 @@ class FrequentWords:
         # construct frequency table of k-mers with mismatches
         freq_table = {}
         for i in range(self._compute_number_sliding_windows(text=text, kmer_length=kmer_length)):
-            kmer = text[i: i+kmer_length]
-            neighborhood = self.find_neighbors(kmer, num_allowed_mismatches)
+            kmer = DNA(text[i: i+kmer_length])
+            neighborhood = kmer.generate_d_neighborhood(num_allowed_mismatches=num_allowed_mismatches)
             for neighbor in neighborhood:
                 # if a k-mer is not present in frequency table, add it and assign a value of 1,
                 # otherwise, increment the count
@@ -76,8 +73,8 @@ class FrequentWords:
         # construct frequency table of k-mers with mismatches and reverse complements
         freq_table = {}
         for i in range(self._compute_number_sliding_windows(text=text, kmer_length=kmer_length)):
-            kmer = text[i: i+kmer_length]
-            neighborhood = self.find_neighbors(kmer, num_allowed_mismatches)
+            kmer = DNA(text[i: i+kmer_length])
+            neighborhood = kmer.generate_d_neighborhood(num_allowed_mismatches=num_allowed_mismatches)
             for neighbor in neighborhood:
                 freq_table[neighbor] = freq_table.get(neighbor, 0) + 1
                 rc = DNA(neighbor).reverse_complement()
@@ -91,42 +88,6 @@ class FrequentWords:
                 most_freq_words.append(kmer)
 
         return most_freq_words
-
-
-    def find_neighbors(self, pattern: str, num_allowed_mismatches: int) -> list:
-        """Find the set of all k-mers whose Hamming distance from a pattern does not exceed a set maximum.
-
-        :param pattern: A DNA string k-mer
-        :type pattern: str
-        :param num_allowed_mismatches: The maximum allowed Hamming distance.
-        :type num_allowed_mismatches: int
-        :return: k-mers that are in the specified neighborhood of pattern.
-        :rtype: list
-        """
-        nucleotides = {"A", "C", "G", "T"}
-        
-        # if there are no allowed mismatches the pattern's neighborhood is itself
-        if num_allowed_mismatches == 0:
-            return [pattern]
-
-        # if the pattern is only a single nucleotide, its neighborhood is the set of all nucleotides
-        # this  serves as the base condition for the recursion
-        if len(pattern) == 1:
-            return list(nucleotides)
-        
-        # making a neighborhood a set instead of a list means duplicates do not have to be explicitly removed
-        neighborhood = set()
-        suffix_neighbors = self.find_neighbors(self._slice_suffix(pattern), num_allowed_mismatches)
-        for suffix_neighbor in suffix_neighbors:
-            # the suffix neighbors must have a Hamming distance to pattern that is greater than or equal to the max allowed Hamming distance
-            if compute_hamming_distance(self._slice_suffix(pattern), suffix_neighbor) < num_allowed_mismatches:
-                for nucleotide in nucleotides:
-                    neighborhood.add(nucleotide + suffix_neighbor)
-            else:
-                neighborhood.add(self._slice_first_nucleotide(pattern) + suffix_neighbor)
-        
-        return list(neighborhood)
-    
 
     def _construct_kmer_freq_table(self, text: str, kmer_length: int) -> dict:
         """Construct a frequency table of how many times all k-mers appear in a text

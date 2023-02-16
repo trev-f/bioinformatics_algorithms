@@ -63,8 +63,7 @@ class BA1J(RosalindSolution):
 
 class BA1N(RosalindSolution):
     def _solve_problem(self) -> str:
-        neighborhood = FrequentWords().find_neighbors(
-            pattern=self.dataset.pattern,
+        neighborhood = DNA(self.dataset.pattern).generate_d_neighborhood(
             num_allowed_mismatches=self.dataset.hamming_dist,
         )
 
