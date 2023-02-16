@@ -1,4 +1,4 @@
-import bioinformatics_textbook.code_challenges.inout
+import bioinformatics_textbook.inout
 import click
 from collections import OrderedDict
 import logging
@@ -7,9 +7,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 def ba1h(input_file: click.File):
-    pattern = bioinformatics_textbook.code_challenges.inout.read_first_line(input_file)
-    text = bioinformatics_textbook.code_challenges.inout.read_second_line(input_file)
-    num_allowed_mismatches = int(bioinformatics_textbook.code_challenges.inout.read_last_line(input_file))
+    pattern = bioinformatics_textbook.inout.read_first_line(input_file)
+    text = bioinformatics_textbook.inout.read_second_line(input_file)
+    num_allowed_mismatches = int(bioinformatics_textbook.inout.read_last_line(input_file))
 
     logger.info("Pattern = %s", pattern)
     logger.info("Text = %s", text)
@@ -49,8 +49,8 @@ def find_approx_occurrence_positions(pattern: str, text: str, num_allowed_mismat
 
 
 def ba1g(input_file: click.File) -> int:
-    dna_p = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
-    dna_q = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+    dna_p = bioinformatics_textbook.inout.read_not_last_line(input_file)
+    dna_q = bioinformatics_textbook.inout.read_last_line(input_file)
 
     hamming_distance = compute_hamming_distance(dna_p, dna_q)
 
@@ -100,7 +100,7 @@ def ba1f(input_file: click.File) -> str:
     :return: The positions in a genome that minimize GC skew
     :rtype: str
     """
-    genome = bioinformatics_textbook.code_challenges.inout.read_all_lines(input_file)
+    genome = bioinformatics_textbook.inout.read_all_lines(input_file)
 
     gc_skews = define_dna_gc_skews(genome)
     min_skew_positions = find_min_skew_positions(gc_skews)
@@ -150,8 +150,8 @@ def ba1e(input_file: click.File) -> str:
     :return: A string-separated list of k-mers that form clumps
     :rtype: str
     """
-    genome = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
-    last_line = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
+    genome = bioinformatics_textbook.inout.read_not_last_line(input_file)
+    last_line = bioinformatics_textbook.inout.read_last_line(input_file)
     k, L, t = [int(element) for element in last_line.split(" ")]
 
     clump_patterns = find_clumps(genome, k, L, t)
@@ -194,92 +194,6 @@ def find_clumps(genome: str, pattern_length: int, window_length: int, pattern_fr
     return formatted_clump_patterns
 
 
-def ba1d(input_file: click.File) -> str:
-    pattern = bioinformatics_textbook.code_challenges.inout.read_not_last_line(input_file)
-    genome = bioinformatics_textbook.code_challenges.inout.read_last_line(input_file)
-
-    starting_positions = find_starting_positions(pattern, genome)
-    formatted_starting_positions = format_list_for_rosalind(starting_positions)
-
-    return formatted_starting_positions
-
-
-def find_starting_positions(pattern: str, genome: str) -> list:
-    """Find all occurrences of a pattern (k-mer) in a string (genome)
-
-    :param pattern: A k-mer sequence
-    :type pattern: str
-    :param genome: A DNA string (genome)
-    :type genome: str
-    :return: Starting positions of each occurrence of pattern in genome
-    :rtype: list
-    """
-    k = len(pattern)
-    genome_length = len(genome)
-
-    starting_positions = []
-    for i in range(genome_length - k + 1):
-        window = genome[i: i + k]
-        if window == pattern:
-            starting_positions.append(i)
-
-    return starting_positions
-
-
-def ba1c(input_file: click.File) -> str:
-    """Find the reverse complement of a string of DNA
-
-    :param input_file: A file containing a string of DNA
-    :type input_file: click.File
-    :return: The reverse complement of the DNA string
-    :rtype: str
-    """
-    dna_string = bioinformatics_textbook.code_challenges.inout.read_all_lines(input_file)
-
-    reverse_complement = reverse_complement_dna(dna_string)
-
-    return reverse_complement
-
-
-def reverse_complement_dna(dna: str) -> str:
-    """Find the reverse complement of a DNA string
-
-    :param dna: DNA string
-    :type dna: str
-    :return: Reverse complement of DNA string
-    :rtype: str
-    """
-    complement = complement_dna(dna)
-    reverse_complement = complement[::-1]
-    
-    return reverse_complement
-
-
-def complement_dna(dna: str) -> str:
-    """Find the complement of a DNA string
-
-    :param dna: DNA string
-    :type dna: str
-    :return: Complement of DNA string
-    :rtype: str
-    """
-    comp_table = make_dna_complementation_table()
-    complement = dna.translate(comp_table)
-
-    return complement
-
-
-def make_dna_complementation_table() -> dict:
-    """Construct a translation table for complementing DNA
-
-    :return: DNA complementation table
-    :rtype: dict
-    """
-    comp_table = str.maketrans("ATCG", "TAGC")
-
-    return comp_table
-
-
 def construct_kmer_freq_table(text: str, k: int) -> dict:
     """Construct a frequency table of how many times all k-mers appear in a text
 
@@ -301,35 +215,6 @@ def construct_kmer_freq_table(text: str, k: int) -> dict:
         freq_table[pattern] = freq_table.get(pattern, 0) + 1
 
     return freq_table
-
-
-def ba1a(input_file: click.File) -> int:
-    text, pattern = bioinformatics_textbook.code_challenges.inout.read_text_pattern(input_file)
-    
-    kmer_count = count_pattern(text, pattern)
-
-    return kmer_count
-
-
-def count_pattern(text: str, pattern: str) -> int:
-    """Count the number of times a k-mer pattern appears as a substring of text using the sliding window method
-
-    :param text: A string of text (typically a DNA string)
-    :type text: str
-    :param pattern: A k-mer of length less than or equal to that of `text`
-    :type pattern: str
-    :return: A count of times the k-mer pattern appears as a substring of `text`
-    :rtype: int
-    """
-    number_kmer_appearances = 0
-    
-    kmer_length = len(pattern)
-    number_windows = (len(text) - kmer_length) + 1
-    for i in range(number_windows):
-        if text[i:i + kmer_length] == pattern:
-            number_kmer_appearances += 1
-
-    return number_kmer_appearances
 
 
 def format_list_for_rosalind(list_to_format: list) -> str:

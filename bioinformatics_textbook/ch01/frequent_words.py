@@ -1,10 +1,11 @@
-import click
-
 import logging
 
-from bioinformatics_textbook.code_challenges.inout import RosalindDataset
-from bioinformatics_textbook.code_challenges.ch01 import (
-    compute_hamming_distance, reverse_complement_dna
+import click
+
+from bioinformatics_textbook.inout import RosalindDataset
+from bioinformatics_textbook.dna import DNA
+from bioinformatics_textbook.ch01.ch01 import (
+    compute_hamming_distance
 )
 
 
@@ -79,7 +80,7 @@ class FrequentWords:
             neighborhood = self.find_neighbors(kmer, num_allowed_mismatches)
             for neighbor in neighborhood:
                 freq_table[neighbor] = freq_table.get(neighbor, 0) + 1
-                rc = reverse_complement_dna(dna=neighbor)
+                rc = DNA(neighbor).reverse_complement()
                 freq_table[rc] = freq_table.get(rc, 0) + 1
 
         # compute most frequent k-mers with reverse compliments
@@ -146,21 +147,6 @@ class FrequentWords:
             freq_table[pattern] = freq_table.get(pattern, 0) + 1
 
         return freq_table
-    
-
-    def _construct_kmer_rc_neighborhood(self, kmer_neighborhood: list) -> list:
-        """Construct a k-mer mismatch neighborhood that also includes reverse complements
-
-        :param kmer_neighborhood: The d-neighborhood of a k-mer
-        :type kmer_neighborhood: list
-        :return: The d-neighborhood of a k-mer with its reverse complements. Duplicates removed.
-        :rtype: list
-        """
-        rc_neighborhood = [reverse_complement_dna(kmer) for kmer in kmer_neighborhood]
-
-        # coerce to set to remove duplicates then back to list
-        return list(set(kmer_neighborhood + rc_neighborhood))
-
 
 
     def _slice_suffix(self, pattern: str) -> str:

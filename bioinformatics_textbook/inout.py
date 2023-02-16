@@ -1,8 +1,10 @@
-import click
-import re
-import os
-
 import logging
+import os
+import re
+
+from abc import ABC, abstractmethod
+
+import click
 
 
 def read_text_k(input_file: click.File) -> tuple:
@@ -13,16 +15,6 @@ def read_text_k(input_file: click.File) -> tuple:
     k = int(read_last_line(input_file))
 
     return (text, k)
-
-
-def read_text_pattern(input_file: click.File) -> tuple:
-    # get the text from all lines except the last
-    text = read_not_last_line(input_file)
-
-    # get the pattern from the last line
-    pattern = read_last_line(input_file)
-
-    return (text, pattern)
 
 
 def read_all_lines(input_file: click.File) -> str:
@@ -53,13 +45,13 @@ def read_not_last_line(input_file: click.File) -> str:
     while position > 0 and input_file.read(1) != b"\n":
         position -= 1
         input_file.seek(position, os.SEEK_SET)
-    
+
     if position > 0:
         input_file.seek(0, os.SEEK_SET)
         not_last_lines = input_file.read(position).decode()
-    
+
     not_last_lines_stripped = strip_newlines(not_last_lines)
-    
+
     return not_last_lines_stripped
 
 
@@ -73,7 +65,7 @@ def read_first_line(input_file: click.File) -> str:
     """
     # always set the file object position to the very beginning
     input_file.seek(0, os.SEEK_SET)
-    
+
     first_line = input_file.readline().decode()
     first_line_stripped = strip_newlines(first_line)
 
@@ -108,7 +100,7 @@ def read_last_line(input_file: click.File) -> str:
     input_file.seek(-2, os.SEEK_END)
     while input_file.read(1) != b"\n":
         input_file.seek(-2, os.SEEK_CUR)
-    
+
     last_line = input_file.readline().decode().rstrip()
     last_line_stripped = strip_newlines(last_line)
 
@@ -129,13 +121,14 @@ def strip_newlines(text: str) -> str:
 
 
 class RosalindDataset:
-
-    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
-        """Constructor method
-        """
+    def __init__(
+        self,
+        input_file: click.File,
+        logger: logging.Logger = logging.getLogger(__name__),
+    ) -> None:
+        """Constructor method"""
         self._input_file = input_file
         self.logger = logger
-    
 
     def _read_all_lines(self) -> str:
         """Read all lines of a file into a single string with no new lines
@@ -150,7 +143,6 @@ class RosalindDataset:
 
         return all_lines_stripped
 
-    
     def _read_first_line(self) -> str:
         """Read the first line of a file
 
@@ -160,11 +152,10 @@ class RosalindDataset:
         self.logger.info("Read the first line of the input file.")
 
         self._set_file_position_to_beginning()
-        
+
         first_line = self._input_file.readline().decode()
 
         return self._strip_newlines(first_line)
-    
 
     def _read_last_line(self) -> str:
         """Read the last line of a file
@@ -177,11 +168,10 @@ class RosalindDataset:
         self._input_file.seek(-2, os.SEEK_END)
         while self._input_file.read(1) != b"\n":
             self._input_file.seek(-2, os.SEEK_CUR)
-        
+
         last_line = self._input_file.readline().decode().rstrip()
 
         return self._strip_newlines(last_line)
-
 
     def _read_not_last_line(self) -> str:
         """Read every line of a file except for the last line
@@ -197,15 +187,14 @@ class RosalindDataset:
         while position > 0 and self._input_file.read(1) != b"\n":
             position -= 1
             self._input_file.seek(position, os.SEEK_SET)
-        
+
         if position > 0:
             self._input_file.seek(0, os.SEEK_SET)
             not_last_lines = self._input_file.read(position).decode()
-        
+
         not_last_lines_stripped = strip_newlines(not_last_lines)
-        
+
         return not_last_lines_stripped
-    
 
     def _strip_newlines(self, text: str) -> str:
         """Strip carriage return and line feed newline characters from a text string
@@ -216,26 +205,42 @@ class RosalindDataset:
         :rtype: str
         """
         return re.sub(r"\r|\n", "", text)
-    
 
     def _set_file_position_to_beginning(self) -> None:
-        """Set the file position back to the beginning
-        """
+        """Set the file position back to the beginning"""
         self._input_file.seek(0, os.SEEK_SET)
 
         return None
 
 
-class RosalindSubmission:
-    """A representation of a submission to Rosalind
-    """
-    
-    def __init__(self, answer: list, logger: logging.Logger = logging.getLogger(__name__)) -> None:
-        self.answer = answer if isinstance(answer[0], str) else self.convert_iterable_to_list_of_str(answer)
+class RosalindSolution(ABC):
+    """A representation of a submission to Rosalind"""
+
+    def __init__(
+        self,
+        dataset: RosalindDataset,
+        logger: logging.Logger = logging.getLogger(__name__),
+    ) -> None:
         self.logger = logger
+        self.dataset = dataset
 
+        self.solution = self._solve_problem()
 
-    def format_rosalind_answer(self, sep: str = " ") -> str:
+        self.report_solution()
+
+    @abstractmethod
+    def _solve_problem(self) -> str:
+        """Implement the solution to solve the problem in Rosalind
+
+        :return: The solution to the problem in the format expected by Rosalind.
+        :rtype: str
+        """
+
+    def report_solution(self) -> None:
+        """Report the solution"""
+        click.echo(self.solution)
+
+    def _format_rosalind_answer(self, answer: list, sep: str = " ") -> str:
         """Format a list as a string with elements separated by spaces as is commonly expected for solutions to problems for Rosalind.
 
         :param list_to_format: List to format. If elements are not strings they will be converted.
@@ -244,12 +249,11 @@ class RosalindSubmission:
         :rtype: str
         """
         self.logger.info("Formatting answer for submission to Rosalind")
-        
-        formatted_answer = sep.join(self.answer)
-        return formatted_answer
-    
 
-    def convert_iterable_to_list_of_str(self, iterable) -> list:
+        formatted_answer = sep.join(answer)
+        return formatted_answer
+
+    def _convert_iterable_to_list_of_str(self, iterable) -> list:
         """Convert an iterable to a list of strings
 
         :param iterable: An iterable to convert
@@ -262,6 +266,9 @@ class RosalindSubmission:
         try:
             list_of_strings = [str(member) for member in iterable]
         except TypeError as e:
-            self.logger.exception("A TypeError error occurred. Checked that the object to convert is an iterable: %s", e)
+            self.logger.exception(
+                "A TypeError error occurred. Checked that the object to convert is an iterable: %s",
+                e,
+            )
         else:
             return list_of_strings

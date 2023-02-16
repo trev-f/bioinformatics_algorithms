@@ -1,2 +1,0 @@
-import bioinformatics_textbook.code_challenges.ch01
-import bioinformatics_textbook.code_challenges.frequent_words
