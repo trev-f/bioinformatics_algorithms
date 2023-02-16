@@ -230,6 +230,18 @@ def ba1n(config, input_file):
     )
 
 
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
+def ba2a(config, input_file):
+    """Program to solve Rosalind problem BA2A: Implement MotifEnumeration
+
+    https://rosalind.info/problems/ba2a/
+    """
+    dataset = bioinformatics_textbook.ch02.motif.KDDNA(input_file)
+    bioinformatics_textbook.ch02.BA2A(dataset=dataset)
+
+
 def create_root_logger(verbose):
     """
     Create a root logger

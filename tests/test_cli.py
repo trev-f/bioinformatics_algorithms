@@ -99,3 +99,15 @@ def test_ba1n():
     actual_neighborhood = set(result.output.rstrip().split("\n"))
 
     assert expected_neighborhood == actual_neighborhood
+
+
+def test_ba2a():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["ba2a", "tests/datasets/ch02/ba2a_sample_dataset.txt"])
+    
+    assert result.exit_code == 0
+
+    expected_k_d_motifs = set("ATA ATT GTT TTT".split(' '))
+    actual_k_d_motifs = set(result.output.rstrip().split(' '))
+
+    assert expected_k_d_motifs == actual_k_d_motifs

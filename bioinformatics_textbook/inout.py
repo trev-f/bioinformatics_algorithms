@@ -1,10 +1,11 @@
 import logging
 import os
 import re
-
 from abc import ABC, abstractmethod
 
 import click
+
+from bioinformatics_textbook.dna import DNA
 
 
 def read_text_k(input_file: click.File) -> tuple:
@@ -195,6 +196,22 @@ class RosalindDataset:
         not_last_lines_stripped = strip_newlines(not_last_lines)
 
         return not_last_lines_stripped
+
+    def _read_last_lines(self) -> list:
+        """Read every line of a file except for the first line
+
+        :return: The lines.
+        :rtype: list
+        """
+        self.logger.info("Read every line of the input file except for the last line.")
+
+        self._set_file_position_to_beginning()
+
+        last_lines = self._input_file.readlines()
+        last_lines.pop(0)
+        last_lines = [DNA(self._strip_newlines(line.decode())) for line in last_lines]
+
+        return last_lines
 
     def _strip_newlines(self, text: str) -> str:
         """Strip carriage return and line feed newline characters from a text string
