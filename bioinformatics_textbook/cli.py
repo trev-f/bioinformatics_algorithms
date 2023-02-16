@@ -1,5 +1,7 @@
-import click
 import logging
+
+import click
+
 import bioinformatics_textbook
 
 

@@ -1,9 +1,9 @@
-import click
-
 import logging
 
+import click
+
 from bioinformatics_textbook.inout import RosalindDataset
-from bioinformatics_textbook.ch01.reverse_complement import ReverseComplement
+from bioinformatics_textbook.dna import DNA
 from bioinformatics_textbook.ch01.ch01 import (
     compute_hamming_distance
 )
@@ -80,7 +80,7 @@ class FrequentWords:
             neighborhood = self.find_neighbors(kmer, num_allowed_mismatches)
             for neighbor in neighborhood:
                 freq_table[neighbor] = freq_table.get(neighbor, 0) + 1
-                rc = ReverseComplement().reverse_complement_dna(dna=neighbor)
+                rc = DNA(neighbor).reverse_complement()
                 freq_table[rc] = freq_table.get(rc, 0) + 1
 
         # compute most frequent k-mers with reverse compliments

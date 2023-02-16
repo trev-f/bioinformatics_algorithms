@@ -1,17 +1,8 @@
-from bioinformatics_textbook.inout import (
-    RosalindSolution
-)
-
-from bioinformatics_textbook.ch01.pattern_occurrences import (
-    PatternOccurrences
-)
-
-from bioinformatics_textbook.ch01.frequent_words import (
-    FrequentWords
-)
-
-from bioinformatics_textbook.ch01.reverse_complement import ReverseComplement
-
+from bioinformatics_textbook.inout import RosalindSolution
+from bioinformatics_textbook.dna import DNA
+from bioinformatics_textbook.ch01.pattern_occurrences import PatternOccurrences
+from bioinformatics_textbook.ch01.frequent_words import FrequentWords
+from bioinformatics_textbook.ch01.reverse_complement import Pattern
 
 class BA1A(RosalindSolution):
     def _solve_problem(self) -> str:
@@ -35,7 +26,7 @@ class BA1B(RosalindSolution):
 
 class BA1C(RosalindSolution):
     def _solve_problem(self) -> str:
-        rev_comp = ReverseComplement().reverse_complement_dna(dna=self.dataset.pattern)
+        rev_comp = DNA(self.dataset.pattern).reverse_complement()
 
         return rev_comp
 
