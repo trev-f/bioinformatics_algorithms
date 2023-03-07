@@ -238,6 +238,9 @@ def ba2a(config, input_file):
 
     https://rosalind.info/problems/ba2a/
     """
+    config.logger.info(
+        "Run CLI command to solve BA2A: Implement MotifEnumeration"
+    )
     dataset = bioinformatics_textbook.ch02.motif.KDDNA(input_file)
     bioinformatics_textbook.ch02.BA2A(dataset=dataset)
 
