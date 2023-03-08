@@ -1,0 +1,25 @@
+---
+title: "Chapter 02 - Motifs"
+format: html
+---
+
+## Median String Problem
+
+### Generating all possible k-mers
+
+One of the steps in solving the Median String Problem requires generating all possible k-mers for a specified *k*.
+Python makes this simple to do using `itertools.product()`.
+This function returns each k-mer product as a `tup` of `str`, so I use map to create a k-mer `str` from the `tup`.
+Because the brute force Mediant String solution iterates over all possible k-mers, I simply return the `map` object since it is an `iterable`.
+
+```{python}
+import itertools
+from collections.abc import Iterable
+
+def generate_all_possible_kmers(k: int) -> Iterable[str]:
+    prods = itertools.product('ACGT', repeat=k)
+    return map(''.join, prods)
+
+for kmer in generate_all_possible_kmers(k=2):
+    print(kmer)
+```
