@@ -38,3 +38,6 @@ COPY ./setup.py .
 ARG PYTHON_INTERPRETER="python3"
 RUN ${PYTHON_INTERPRETER} -m pip install --user -U pip setuptools wheel
 RUN ${PYTHON_INTERPRETER} -m pip install -r requirements.txt
+
+# default to bash
+ENTRYPOINT ["bash"]
