@@ -1,5 +1,5 @@
-ARG PYTHON_VERSION="3.7"
-FROM python:${PYTHON_VERSION}
+ARG PYTHON_VERSION="3.10.10"
+FROM python:${PYTHON_VERSION}-bullseye
 
 # setup user info
 ARG USERNAME=treevooor
