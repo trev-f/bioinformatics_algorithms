@@ -1,13 +1,16 @@
-import bioinformatics_textbook.inout
-import click
-from collections import OrderedDict
 import logging
+from collections import OrderedDict
+
+import click
+
+import bioinformatics_textbook.inout
+from bioinformatics_textbook.dna import DNA
 
 
 logger = logging.getLogger(__name__)
 
 def ba1h(input_file: click.File):
-    pattern = bioinformatics_textbook.inout.read_first_line(input_file)
+    pattern = DNA(bioinformatics_textbook.inout.read_first_line(input_file))
     text = bioinformatics_textbook.inout.read_second_line(input_file)
     num_allowed_mismatches = int(bioinformatics_textbook.inout.read_last_line(input_file))
 
@@ -24,7 +27,7 @@ def ba1h(input_file: click.File):
     return formatted_approx_occurrence_positions
 
 
-def find_approx_occurrence_positions(pattern: str, text: str, num_allowed_mismatches: str) -> list:
+def find_approx_occurrence_positions(pattern: DNA, text: str, num_allowed_mismatches: int) -> list:
     """
     APPROACH:
         Slide k-mer along text. At each position, compute Hamming distance for k-mer and the window of text.
@@ -42,54 +45,19 @@ def find_approx_occurrence_positions(pattern: str, text: str, num_allowed_mismat
     text_length = len(text)
     kmer_length = len(pattern)
     for i in range(text_length - kmer_length + 1):
-        if compute_hamming_distance(pattern, text[i: i+kmer_length]) <= num_allowed_mismatches:
+        if pattern.compute_hamming_distance(text[i: i+kmer_length]) <= num_allowed_mismatches:
             approx_occurrence_positions.append(i)
 
     return approx_occurrence_positions
 
 
 def ba1g(input_file: click.File) -> int:
-    dna_p = bioinformatics_textbook.inout.read_not_last_line(input_file)
+    dna_p = DNA(bioinformatics_textbook.inout.read_not_last_line(input_file))
     dna_q = bioinformatics_textbook.inout.read_last_line(input_file)
 
-    hamming_distance = compute_hamming_distance(dna_p, dna_q)
+    hamming_distance = dna_p.compute_hamming_distance(dna_q)
 
     return hamming_distance
-
-
-def compute_hamming_distance(dna_p: str, dna_q: str) -> int:
-    """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
-
-    :param dna_p: First DNA string
-    :type dna_p: str
-    :param dna_q: Second DNA string
-    :type dna_q: str
-    :return: Hamming distance
-    :rtype: int
-    """
-    hamming_distance = 0
-    kmer_length = len(dna_p)
-    for i in range(kmer_length):
-        if is_mismatch(dna_p[i], dna_q[i]):
-            hamming_distance += 1
-    
-    return hamming_distance
-
-
-
-def is_mismatch(base_p: str, base_q: str) -> bool:
-    """Are two bases a mismatch?
-
-    :param base_p: Base from first DNA string
-    :type base_p: str
-    :param base_q: Base from second DNA string
-    :type base_q: str
-    :return: Whether the bases are a mismatch
-    :rtype: bool
-    """
-    mismatch = base_p != base_q
-
-    return mismatch
 
 
 def ba1f(input_file: click.File) -> str:

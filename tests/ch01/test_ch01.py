@@ -1,20 +1,22 @@
 from dataclasses import dataclass
 
+import click
+import pytest
+
 from bioinformatics_textbook.ch01.ch01 import (
     ba1e, find_clumps,
     ba1f, find_min_skew_positions, define_dna_gc_skews,
-    ba1g, compute_hamming_distance,
+    ba1g,
     ba1h, find_approx_occurrence_positions
 )
-import click
-import pytest
+from bioinformatics_textbook.dna import DNA
 
 
 @pytest.fixture
 def sample_ba1h(fs):
     @dataclass
     class Sample:
-        pattern = "AAAAA"
+        pattern = DNA("AAAAA")
         text = "AACAAGCTGATAAACATTTAAAGAG"
         num_allowed_mismatches = 1
         approx_occurrence_positions = [0, 9, 11, 19]
@@ -54,7 +56,7 @@ def sample_ba1g(fs):
     class Sample:
         dna_q = "CGGAC"
         hamming_distance = 2
-        dna_p = "CGAAT"
+        dna_p = DNA("CGAAT")
         sample_dataset = fs.create_file(
             "sample_dataset.txt",
             contents="GGGCCGTTGGT\nGGACCGTTGAC\n"
@@ -79,7 +81,7 @@ def test_compute_hamming_distance(sample_ba1g):
     dna_q = sample_ba1g.dna_q
     expected_hamming_distance = sample_ba1g.hamming_distance
 
-    actual_hamming_distance = compute_hamming_distance(dna_p, dna_q)
+    actual_hamming_distance = dna_p.compute_hamming_distance(dna_q)
 
     assert expected_hamming_distance == actual_hamming_distance
 

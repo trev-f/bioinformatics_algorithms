@@ -5,8 +5,6 @@ A module for working with DNA sequences through the DNA class
 
 from typing import Optional
 
-from bioinformatics_textbook.ch01.ch01 import compute_hamming_distance
-
 
 class DNA(str):
     """Representation of a DNA sequence. Contains methods for manipulating a single DNA sequence."""
@@ -54,7 +52,7 @@ class DNA(str):
         for suffix_neighbor in suffix_neighbors:
             # the suffix neighbors must have a Hamming distance to seq that is greater than or equal to the max allowed Hamming distance
             if (
-                compute_hamming_distance(self._slice_suffix(seq), suffix_neighbor)
+                self._slice_suffix(seq).compute_hamming_distance(suffix_neighbor)
                 < num_allowed_mismatches
             ):
                 for nucleotide in nucleotides:
@@ -63,6 +61,34 @@ class DNA(str):
                 neighborhood.add(self._slice_first_nucleotide(seq) + suffix_neighbor)
 
         return list(neighborhood)
+    
+    def compute_hamming_distance(self, dna_q: str) -> int:
+        """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
+
+        :param dna_q: Second k-mer
+        :type dna_q: str
+        :return: Hamming distance
+        
+        :rtype: int
+        """
+        hamming_distance = 0
+        for base_p, base_q in zip(self.seq, dna_q):
+            if self.is_mismatch(base_p, base_q):
+                hamming_distance += 1
+        
+        return hamming_distance
+    
+    def is_mismatch(self, base_p: str, base_q: str) -> bool:
+        """Are two bases a mismatch?
+
+        :param base_p: Base from first DNA string
+        :type base_p: str
+        :param base_q: Base from second DNA string
+        :type base_q: str
+        :return: Whether the bases are a mismatch
+        :rtype: bool
+        """
+        return base_p != base_q
 
     def reverse_complement(self, seq: Optional[str] = None) -> "DNA":
         """Reverse and complement a DNA sequence
