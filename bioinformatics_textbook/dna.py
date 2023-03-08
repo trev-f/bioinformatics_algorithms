@@ -3,7 +3,8 @@
 A module for working with DNA sequences through the DNA class
 """
 
-from typing import Optional
+from __future__ import annotations
+from typing import Iterator, Optional
 
 
 class DNA(str):
@@ -62,6 +63,17 @@ class DNA(str):
 
         return list(neighborhood)
     
+    def generate_kmers(self, kmer_length: int) -> Iterator[DNA]:
+        """Return all k-mers from DNA sequence
+
+        :param kmer_length: k-mer length
+        :type kmer_length: int
+        :yield: k-mers
+        :rtype: Iterator[DNA]
+        """
+        for i in range(len(self.seq) - kmer_length + 1):
+            yield DNA(self.seq[i:i + kmer_length])
+    
     def compute_hamming_distance(self, dna_q: str) -> int:
         """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
 
@@ -90,7 +102,7 @@ class DNA(str):
         """
         return base_p != base_q
 
-    def reverse_complement(self, seq: Optional[str] = None) -> "DNA":
+    def reverse_complement(self, seq: Optional[str] = None) -> DNA:
         """Reverse and complement a DNA sequence
 
         :return: Reverse complemented DNA sequence
@@ -103,7 +115,7 @@ class DNA(str):
 
         return DNA(rev_comp)
 
-    def complement(self, seq: Optional[str] = None) -> "DNA":
+    def complement(self, seq: Optional[str] = None) -> DNA:
         """Complement a DNA sequence
 
         :return: Complemented DNA sequence
@@ -113,7 +125,7 @@ class DNA(str):
 
         return DNA(seq.translate(self._complementation_table))
 
-    def reverse(self, seq: Optional[str] = None) -> "DNA":
+    def reverse(self, seq: Optional[str] = None) -> DNA:
         """Reverse a DNA sequence
 
         :return: Reversed DNA sequence
@@ -123,7 +135,7 @@ class DNA(str):
 
         return DNA(seq[::-1])
 
-    def _slice_suffix(self, seq: Optional[str] = None) -> "DNA":
+    def _slice_suffix(self, seq: Optional[str] = None) -> DNA:
         """Get the suffix of a string
 
         :param pattern: The string to slice
@@ -135,7 +147,7 @@ class DNA(str):
 
         return DNA(seq[1:])
 
-    def _slice_first_nucleotide(self, seq: Optional[str] = None) -> "DNA":
+    def _slice_first_nucleotide(self, seq: Optional[str] = None) -> DNA:
         """Get the first nucleotide of a DNA string
 
         :param pattern: The DNA string to slice

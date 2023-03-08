@@ -158,6 +158,20 @@ TT</code></pre>
 </div>
 </div>
 </section>
+<section id="generating-all-k-mers-from-a-dna-sequence" class="level3">
+<h3 class="anchored" data-anchor-id="generating-all-k-mers-from-a-dna-sequence">Generating all k-mers from a DNA sequence</h3>
+<p>I am admittedly getting a little tired of rewriting code to generate k-mers from a DNA sequence, and it seems I will keep having to generate k-mers from strings so I will finally write a method to tackle this. This is a different problem from the one above (generating all possible k-mers). This is something I’ve been meaning to tackle here for a while, but now is a good time to do it.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Iterator</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_kmers(dna: <span class="bu">str</span>, k: <span class="bu">int</span>) <span class="op">-&gt;</span> Iterator[<span class="bu">str</span>]:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(dna) <span class="op">-</span> k <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> dna[i:i <span class="op">+</span> k]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">list</span>(generate_kmers(dna<span class="op">=</span><span class="st">'ACGT'</span>, k<span class="op">=</span><span class="dv">2</span>)) <span class="op">==</span> [<span class="st">'AC'</span>, <span class="st">'CG'</span>, <span class="st">'GT'</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">list</span>(generate_kmers(dna<span class="op">=</span><span class="st">'ACGTACGT'</span>, k<span class="op">=</span><span class="dv">7</span>)) <span class="op">==</span> [<span class="st">'ACGTACG'</span>, <span class="st">'CGTACGT'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 </section>
 
 </main>

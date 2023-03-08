@@ -23,3 +23,20 @@ def generate_all_possible_kmers(k: int) -> Iterable[str]:
 for kmer in generate_all_possible_kmers(k=2):
     print(kmer)
 ```
+
+### Generating all k-mers from a DNA sequence
+
+I am admittedly getting a little tired of rewriting code to generate k-mers from a DNA sequence, and it seems I will keep having to generate k-mers from strings so I will finally write a method to tackle this.
+This is a different problem from the one above (generating all possible k-mers).
+This is something I've been meaning to tackle here for a while, but now is a good time to do it.
+
+```{python}
+from typing import Iterator
+
+def generate_kmers(dna: str, k: int) -> Iterator[str]:
+    for i in range(len(dna) - k + 1):
+        yield dna[i:i + k]
+
+assert list(generate_kmers(dna='ACGT', k=2)) == ['AC', 'CG', 'GT']
+assert list(generate_kmers(dna='ACGTACGT', k=7)) == ['ACGTACG', 'CGTACGT']
+```
