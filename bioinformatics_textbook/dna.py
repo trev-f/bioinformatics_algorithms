@@ -4,7 +4,8 @@ A module for working with DNA sequences through the DNA class
 """
 
 from __future__ import annotations
-from typing import Iterator, Optional
+import itertools
+from typing import Iterable, Iterator, Optional
 
 
 class DNA(str):
@@ -74,6 +75,17 @@ class DNA(str):
         for i in range(len(self.seq) - kmer_length + 1):
             yield DNA(self.seq[i:i + kmer_length])
     
+    @staticmethod
+    def generate_all_possible_kmers(kmer_length: int) -> Iterable[DNA]:
+        """Generate all possible k-mers of specified length
+
+        :param kmer_length: Length of k-mers
+        :type kmer_length: int
+        :return: k-mers
+        :rtype: Iterable[DNA]
+        """
+        return map(''.join, itertools.product('ACGT', repeat=kmer_length))
+    
     def compute_hamming_distance(self, dna_q: str) -> int:
         """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
 
@@ -134,7 +146,7 @@ class DNA(str):
         seq = seq if seq is not None else self.seq
 
         return DNA(seq[::-1])
-
+    
     def _slice_suffix(self, seq: Optional[str] = None) -> DNA:
         """Get the suffix of a string
 
