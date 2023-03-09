@@ -111,3 +111,16 @@ def test_ba2a():
     actual_k_d_motifs = set(result.output.rstrip().split(' '))
 
     assert expected_k_d_motifs == actual_k_d_motifs
+
+
+
+def test_ba2h():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["ba2h", "tests/datasets/ch02/ba2h_sample_dataset.txt"])
+    
+    assert result.exit_code == 0
+
+    expected_distance = '5'
+    actual_distance = result.output.rstrip()
+
+    assert actual_distance == expected_distance

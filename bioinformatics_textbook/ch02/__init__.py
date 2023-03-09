@@ -1,4 +1,5 @@
 from bioinformatics_textbook.inout import RosalindSolution
+from bioinformatics_textbook.ch02.median_string import MedianString
 from bioinformatics_textbook.ch02.motif import Motif
 
 
@@ -11,3 +12,13 @@ class BA2A(RosalindSolution):
         )
 
         return self._format_rosalind_answer(k_d_motifs)
+
+
+class BA2H(RosalindSolution):
+    def _solve_problem(self) -> int:
+        distance = MedianString().compute_pattern_strings_distance(
+            pattern=self.dataset.pattern,
+            dnas=self.dataset.dnas,
+        )
+
+        return distance

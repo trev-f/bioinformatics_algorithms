@@ -1,4 +1,10 @@
+import logging
+
+import click
+
 from bioinformatics_textbook.dna import DNA
+from bioinformatics_textbook.inout import RosalindDataset
+
 
 class MedianString:
     def find_median_string(self) -> None:
@@ -24,3 +30,24 @@ class MedianString:
             global_distance += local_distance
 
         return global_distance
+
+
+class PatternDNAs(RosalindDataset):
+    """Read and represent a Rosalind dataset that contains a k-mer 'pattern' and DNA strings
+    """
+
+    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        super().__init__(input_file=input_file, logger=logger)
+
+        self.logger.info("Initialize object with k-mer pattern and DNA strings")
+
+        self.pattern = DNA(self._read_first_line())
+        self.dnas = [DNA(seq) for seq in self._read_last_line().split(' ')]
+
+        self._log_init()
+
+    def _log_init(self) -> None:
+        """Log attributes created during initializtion
+        """
+        self.logger.info("Pattern: %s", self.pattern)
+        self.logger.info("Number DNA strings: %s", len(self.dnas))
