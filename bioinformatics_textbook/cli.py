@@ -264,7 +264,9 @@ def ba2h(config, input_file):
 
     https://rosalind.info/problems/ba2h/
     """
-    config.logger.info("Run CLI command to solve BA2H: Implement DistanceBetweenPatternAndStrings")
+    config.logger.info(
+        "Run CLI command to solve BA2H: Implement DistanceBetweenPatternAndStrings"
+    )
     dataset = bioinformatics_textbook.ch02.median_string.PatternDNAs(input_file)
     bioinformatics_textbook.ch02.BA2H(dataset=dataset)
 

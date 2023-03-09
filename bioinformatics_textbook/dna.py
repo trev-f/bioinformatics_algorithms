@@ -63,7 +63,7 @@ class DNA(str):
                 neighborhood.add(self._slice_first_nucleotide(seq) + suffix_neighbor)
 
         return list(neighborhood)
-    
+
     def generate_kmers(self, kmer_length: int) -> Iterator[DNA]:
         """Return all k-mers from DNA sequence
 
@@ -73,8 +73,8 @@ class DNA(str):
         :rtype: Iterator[DNA]
         """
         for i in range(len(self.seq) - kmer_length + 1):
-            yield DNA(self.seq[i:i + kmer_length])
-    
+            yield DNA(self.seq[i : i + kmer_length])
+
     @staticmethod
     def generate_all_possible_kmers(kmer_length: int) -> Iterable[DNA]:
         """Generate all possible k-mers of specified length
@@ -84,26 +84,26 @@ class DNA(str):
         :return: k-mers
         :rtype: Iterable[DNA]
         """
-        kmers = map(''.join, itertools.product('ACGT', repeat=kmer_length))
+        kmers = map("".join, itertools.product("ACGT", repeat=kmer_length))
 
         return map(DNA, kmers)
-    
+
     def compute_hamming_distance(self, dna_q: str) -> int:
         """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
 
         :param dna_q: Second k-mer
         :type dna_q: str
         :return: Hamming distance
-        
+
         :rtype: int
         """
         hamming_distance = 0
         for base_p, base_q in zip(self.seq, dna_q):
             if self.is_mismatch(base_p, base_q):
                 hamming_distance += 1
-        
+
         return hamming_distance
-    
+
     def is_mismatch(self, base_p: str, base_q: str) -> bool:
         """Are two bases a mismatch?
 
@@ -148,7 +148,7 @@ class DNA(str):
         seq = seq if seq is not None else self.seq
 
         return DNA(seq[::-1])
-    
+
     def _slice_suffix(self, seq: Optional[str] = None) -> DNA:
         """Get the suffix of a string
 
