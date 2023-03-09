@@ -7,6 +7,31 @@ from bioinformatics_textbook.dna import DNA
 
 
 @pytest.fixture
+def median_string():
+    @dataclass
+    class Sample:
+        k = 3
+        dnas = [
+            DNA(dna) for dna in ['AAATTGACGCAT', 'GACGACCACGTT', 'CGTCAGCGCCTG', 'GCTGAGCACCGG', 'AGTACGGGACAG',]
+        ]
+
+        med_string = 'GAC'
+
+    yield Sample()
+
+
+def test_find_median_string(median_string):
+    expected_median_string = median_string.med_string
+
+    actual_median_string = MedianString().find_median_strings(
+        kmer_length=median_string.k,
+        dnas=median_string.dnas
+    )
+
+    assert expected_median_string in actual_median_string
+    
+
+@pytest.fixture
 def pattern_strings_distance():
     @dataclass
     class Sample:

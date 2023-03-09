@@ -7,8 +7,32 @@ from bioinformatics_textbook.inout import RosalindDataset
 
 
 class MedianString:
-    def find_median_string(self) -> None:
-        pass
+
+    def __init__(self) -> None:
+        self.median_strings = []
+        self.minimum_distance = None
+    
+    def find_median_strings(self, kmer_length: int, dnas: list[DNA]) -> list[DNA]:
+        """Find median string(s), i.e. k-mer(s) that minimize the distance between all k-mers and DNA sequences.
+
+        :param kmer_length: k-mer length
+        :type kmer_length: int
+        :param dnas: DNA sequences
+        :type dnas: list[DNA]
+        :return: Median string(s)
+        :rtype: list[DNA]
+        """
+        self.minimum_distance = kmer_length * len(dnas)
+        for kmer in DNA.generate_all_possible_kmers(kmer_length=kmer_length):
+            distance = self.compute_pattern_strings_distance(pattern=kmer, dnas=dnas)
+            if distance == self.minimum_distance:
+                self.median_strings.append(kmer)
+            elif distance < self.minimum_distance:
+                self.median_strings = [kmer]
+                self.minimum_distance = distance
+
+        return self.median_strings
+        
 
     def compute_pattern_strings_distance(self, pattern: DNA, dnas: list[DNA]) -> int:
         """Compute the distance between a pattern and a collection of DNA sequences
