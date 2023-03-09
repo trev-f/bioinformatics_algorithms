@@ -14,6 +14,16 @@ class BA2A(RosalindSolution):
         return self._format_rosalind_answer(k_d_motifs)
 
 
+class BA2B(RosalindSolution):
+    def _solve_problem(self) -> int:
+        median_strings = MedianString().find_median_strings(
+            kmer_length=self.dataset.k,
+            dnas=self.dataset.dnas,
+        )
+
+        return median_strings[0]
+
+
 class BA2H(RosalindSolution):
     def _solve_problem(self) -> int:
         distance = MedianString().compute_pattern_strings_distance(

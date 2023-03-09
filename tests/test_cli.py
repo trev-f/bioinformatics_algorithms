@@ -113,6 +113,17 @@ def test_ba2a():
     assert expected_k_d_motifs == actual_k_d_motifs
 
 
+def test_ba2b():
+    runner = CliRunner()
+    result = runner.invoke(cli, ["ba2b", "tests/datasets/ch02/ba2b_sample_dataset.txt"])
+    
+    assert result.exit_code == 0
+
+    expected_median_string = 'ACG'
+    actual_median_string = result.output.rstrip()
+
+    assert actual_median_string == expected_median_string
+
 
 def test_ba2h():
     runner = CliRunner()

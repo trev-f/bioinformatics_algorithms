@@ -246,6 +246,19 @@ def ba2a(config, input_file):
 @cli.command()
 @click.argument("input_file", type=click.File("rb"))
 @pass_config
+def ba2b(config, input_file):
+    """Program to solve Rosalind problem BA2B: Find a median string
+
+    https://rosalind.info/problems/ba2h/
+    """
+    config.logger.info("Run CLI command to solve BA2B: Find a Median String")
+    dataset = bioinformatics_textbook.ch02.median_string.KDNAs(input_file)
+    bioinformatics_textbook.ch02.BA2B(dataset=dataset)
+
+
+@cli.command()
+@click.argument("input_file", type=click.File("rb"))
+@pass_config
 def ba2h(config, input_file):
     """Program to solve Rosalind problem BA2H: Implement DistanceBetweenPatternAndStrings
 

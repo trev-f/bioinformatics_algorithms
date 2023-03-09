@@ -56,6 +56,27 @@ class MedianString:
         return global_distance
 
 
+class KDNAs(RosalindDataset):
+    """Read and represent a Rosalind dataset that contains a k-mer 'pattern' and DNA strings
+    """
+
+    def __init__(self, input_file: click.File, logger: logging.Logger = logging.getLogger(__name__)) -> None:
+        super().__init__(input_file=input_file, logger=logger)
+
+        self.logger.info("Initialize object with k-mer pattern and DNA strings")
+
+        self.k = int(self._read_first_line())
+        self.dnas = [DNA(seq) for seq in self._read_last_lines()]
+
+        self._log_init()
+
+    def _log_init(self) -> None:
+        """Log attributes created during initializtion
+        """
+        self.logger.info("k: %s", self.k)
+        self.logger.info("Number DNA strings: %s", len(self.dnas))
+
+
 class PatternDNAs(RosalindDataset):
     """Read and represent a Rosalind dataset that contains a k-mer 'pattern' and DNA strings
     """
