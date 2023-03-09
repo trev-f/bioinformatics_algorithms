@@ -84,7 +84,9 @@ class DNA(str):
         :return: k-mers
         :rtype: Iterable[DNA]
         """
-        return map(''.join, itertools.product('ACGT', repeat=kmer_length))
+        kmers = map(''.join, itertools.product('ACGT', repeat=kmer_length))
+
+        return map(DNA, kmers)
     
     def compute_hamming_distance(self, dna_q: str) -> int:
         """Compute the Hamming distance of two k-mers defined as the number of mismatches between two strings
